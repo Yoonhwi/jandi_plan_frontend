@@ -1,0 +1,12 @@
+html {
+  font-family: "Montserrat", "42dot Sans", serif;
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-normal);
+  font-style: normal;
+}
+
+@media screen and (max-width: 1440px) {
+  html {
+    font-size: var(--text-sm);
+  }
+}

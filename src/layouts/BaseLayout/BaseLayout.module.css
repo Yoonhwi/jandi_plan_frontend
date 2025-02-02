@@ -1,0 +1,28 @@
+.container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.centered {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--breakpoint-lg);
+}
+
+.content {
+  flex: 1;
+  background-color: var(--color-gray-100);
+}
+
+/*현재 media query선언에서 css variable 적용이 안됨.*/
+@media screen and (max-width: 1480px) {
+  .container {
+    padding: 0 1rem;
+  }
+}
