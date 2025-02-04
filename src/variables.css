@@ -264,8 +264,8 @@
   --color-stone-900: oklch(0.216 0.006 56.043);
   --color-stone-950: oklch(0.147 0.004 49.25);
 
-  --color-bg: #fff;
-  --color-text: #000;
+  --color-white: oklch(0.985 0.001 106.423);
+  --color-black: oklch(0 0 0);
 
   /* breakpoint  */
   --breakpoint-sm: 390px;
@@ -307,15 +307,59 @@
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
   --radius-4xl: 2rem;
+  --radius-full: 100%;
 
   /* shadow */
-  --shadow-2xs: 0 1px rgb(0 0 0 / 0.05);
-  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-    0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --color-shadow: 0 0 0;
+
+  --shadow-2xs: 0 1px rgb(var(--color-shadow) / 0.05);
+  --shadow-xs: 0 1px 2px 0 rgb(var(--color-shadow) / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(var(--color-shadow) / 0.1),
+    0 1px 2px -1px rgb(var(--color-shadow) / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(var(--color-shadow) / 0.1),
+    0 2px 4px -2px rgb(var(--color-shadow) / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(var(--color-shadow) / 0.1),
+    0 4px 6px -4px rgb(var(--color-shadow) / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(var(--color-shadow) / 0.2),
+    0 8px 10px -6px rgb(var(--color-shadow) / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(var(--color-shadow) / 0.3);
+
+  /* common semantic tokens */
+  --radius-button-sm: var(--radius-sm);
+  --radius-button-md: var(--radius-md);
+  --radius-button-lg: var(--radius-lg);
+
+  --shadow-above: 0 0 4px rgb(var(--color-shadow));
+}
+
+:root[theme="light"] {
+  --color-primary: var(--color-blue-600);
+
+  --color-button-bg: var(--color-blue-500);
+  --color-button-hover-bg: var(--color-blue-400); /* 버튼 hover */
+
+  --color-text-primary: var(--color-blue-500); /* 기본 텍스트 색상 */
+  --color-text-dynamic: var(--color-black); /* 동적 텍스트 색상 */
+  --color-subtext-primary: var(--color-gray-200); /* 설명란 같은 text */
+  --color-button-text: var(--color-white);
+
+  --color-bg-primary: var(--color-white);
+
+  --color-shadow: 0 0 0;
+}
+
+:root[theme="dark"] {
+  --color-primary: var(--color-gray-500);
+
+  --color-button-bg: var(--color-primary);
+  --color-button-hover-bg: var(--color-gray-400);
+
+  --color-text-primary: var(--color-white);
+  --color-text-dynamic: var(--color-white);
+  --color-subtext-primary: var(--color-gray-500);
+  --color-button-text: var(--color-white);
+
+  --color-bg-primary: var(--color-gray-950);
+
+  --color-shadow: 255 255 255;
 }

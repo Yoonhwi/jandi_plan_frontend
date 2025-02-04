@@ -3,6 +3,9 @@ html {
   font-optical-sizing: auto;
   font-weight: var(--font-weight-normal);
   font-style: normal;
+
+  color: var(--color-text-dynamic);
+  background-color: var(--color-bg-primary);
 }
 
 @media screen and (max-width: 1440px) {
