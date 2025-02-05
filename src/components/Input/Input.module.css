@@ -1,0 +1,24 @@
+.input {
+    width: fit-content;
+    border: 0.125rem solid black;
+    outline: none; 
+    transition: border-color 0.2s ease-in-out;
+  }
+
+.input:focus {
+    border-color: #5c70d5; 
+    box-shadow: 0 0 5px rgba(92, 112, 213, 1); 
+}
+  /* Size variants */
+.input_title-sm {
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.8rem;
+    font-size: var(--text-2xl);
+}
+
+.input_text-lg {
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.4rem;
+    font-size: var(--text-lg);
+}
+  /* Variant styles */
