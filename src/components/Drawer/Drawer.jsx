@@ -1,4 +1,4 @@
-import { cloneElement, useState } from "react";
+import { cloneElement, useCallback, useState } from "react";
 import styles from "./Drawer.module.css";
 import { DrawerContext, useDrawer } from "./DrawerContext";
 import { Button } from "@/components";
@@ -7,13 +7,13 @@ import { AnimatePresence, motion } from "framer-motion";
 const Drawer = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openDrawer = () => {
+  const openDrawer = useCallback(() => {
     setIsOpen(true);
-  };
+  }, []);
 
-  const closeDrawer = () => {
+  const closeDrawer = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
 
   return (
     <DrawerContext.Provider
