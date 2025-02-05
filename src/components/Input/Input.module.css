@@ -6,8 +6,8 @@
   }
 
 .input:focus {
-    border-color: #5c70d5; 
-    box-shadow: 0 0 5px rgba(92, 112, 213, 1); 
+    border-color: var(--color-indigo-600); 
+    box-shadow: 0 0 5px var(--color-indigo-600); 
 }
   /* Size variants */
 .input_title-sm {
