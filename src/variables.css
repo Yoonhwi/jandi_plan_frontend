@@ -349,20 +349,26 @@
   --color-bg-primary: var(--color-white);
 
   --color-shadow: 0 0 0;
+
+  --color-tooltip-bg: var(--color-gray-800);
+  --color-tooltip-text: var(--color-white);
 }
 
 :root[theme="dark"] {
   --color-primary: var(--color-gray-500);
 
-  --color-button-bg: var(--color-primary);
+  --color-button-bg: var(--color-white);
   --color-button-hover-bg: var(--color-gray-400);
 
   --color-text-primary: var(--color-white);
   --color-text-dynamic: var(--color-white);
   --color-subtext-primary: var(--color-gray-500);
-  --color-button-text: var(--color-white);
+  --color-button-text: var(--color-black);
 
   --color-bg-primary: var(--color-gray-950);
 
   --color-shadow: 255 255 255;
+
+  --color-tooltip-bg: var(--color-white);
+  --color-tooltip-text: var(--color-gray-800);
 }

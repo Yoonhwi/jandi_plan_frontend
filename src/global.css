@@ -8,8 +8,16 @@ html {
   background-color: var(--color-bg-primary);
 }
 
+/* breakpoint-xl */
 @media screen and (max-width: 1440px) {
   html {
     font-size: var(--text-sm);
+  }
+}
+
+/* breakpoint-md */
+@media screen and (max-width: 720px) {
+  html {
+    font-size: var(--text-xs);
   }
 }
