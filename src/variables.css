@@ -270,7 +270,8 @@
   /* breakpoint  */
   --breakpoint-sm: 390px;
   --breakpoint-md: 720px;
-  --breakpoint-lg: 1440px;
+  --breakpoint-lg: 1296px;
+  --breakpoint-xl: 1440px;
 
   /* text */
   --text-xs: 0.75rem;
@@ -330,15 +331,17 @@
   --radius-button-lg: var(--radius-lg);
 
   --shadow-above: 0 0 4px rgb(var(--color-shadow));
+
+  --font-family-logo: "Permanent Marker", serif;
 }
 
 :root[theme="light"] {
-  --color-primary: var(--color-blue-600);
+  --color-primary: var(--color-gray-500);
 
-  --color-button-bg: var(--color-blue-500);
-  --color-button-hover-bg: var(--color-blue-400); /* 버튼 hover */
+  --color-button-bg: var(--color-gray-500);
+  --color-button-hover-bg: var(--color-gray-400); /* 버튼 hover */
 
-  --color-text-primary: var(--color-blue-500); /* 기본 텍스트 색상 */
+  --color-text-primary: var(--color-gray-900); /* 기본 텍스트 색상 */
   --color-text-dynamic: var(--color-black); /* 동적 텍스트 색상 */
   --color-subtext-primary: var(--color-gray-200); /* 설명란 같은 text */
   --color-button-text: var(--color-white);

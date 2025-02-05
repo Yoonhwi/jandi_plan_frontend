@@ -3,24 +3,27 @@
   justify-content: space-between;
   align-items: center;
 
-  height: 5rem;
+  height: 4rem;
   width: 100%;
+  color: var(--color-text-primary);
 }
 
 .title {
-  font-size: var(--text-xl);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-normal);
+  font-family: var(--font-family-logo);
 }
 
 .nav_container {
   display: flex;
   align-items: center;
   gap: 2.5rem;
-  font-weight: var(--font-weight-medium);
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-bold);
 }
 
 .icon_container {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
