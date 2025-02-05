@@ -1,0 +1,85 @@
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login_box {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.logo {
+  font-size: var(--text-2xl);
+  font-family: var(--font-family-logo);
+}
+
+.input_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.input_box > input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-gray-300);
+  height: 3rem;
+  max-width: 30rem;
+  font-family: inherit;
+}
+
+.btn_box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.divider {
+  width: 100%;
+  border: 0;
+  height: 2px;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--color-gray-300),
+    transparent
+  );
+  text-align: center;
+}
+
+.divider::after {
+  content: "OR";
+  padding: 0 0.5rem;
+  position: relative;
+  top: -0.4rem;
+  background-color: var(--color-bg-primary);
+  color: var(--color-gray-300);
+  font-weight: var(--font-weight-semibold);
+}
+
+.social_login_btns {
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.social_btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+}
