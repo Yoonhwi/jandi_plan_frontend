@@ -119,6 +119,7 @@ q:after {
 }
 
 button {
+  font-family: inherit;
   background: none;
   border: none;
   outline: none;
