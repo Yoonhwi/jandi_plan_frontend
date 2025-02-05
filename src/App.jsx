@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home, Test, AuthLayout } from "@/pages";
 import { PageEndPoints } from "@/constants";
-import { DarkmodeProvider } from "@/contexts";
+import { DarkModeProvider } from "@/contexts";
 
 function App() {
   return (
-    <DarkmodeProvider>
+    <DarkModeProvider>
       <BrowserRouter>
         <Routes>
           <Route path={PageEndPoints.HOME} element={<Home />} />
@@ -13,7 +13,7 @@ function App() {
           <Route path={PageEndPoints.AUTH} element={<AuthLayout />} />
         </Routes>
       </BrowserRouter>
-    </DarkmodeProvider>
+    </DarkModeProvider>
   );
 }
 

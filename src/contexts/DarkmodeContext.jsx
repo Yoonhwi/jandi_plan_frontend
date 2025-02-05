@@ -2,6 +2,7 @@ import { createContext, useContext } from "react";
 
 export const DarkModeContext = createContext({
   toggleDarkMode: () => {},
+  isDarkMode: false,
 });
 
 export const useDarkModeContext = () => {

@@ -26,7 +26,7 @@ const useDarkMode = () => {
     }
   }, [isDarkMode]);
 
-  return { toggleDarkMode };
+  return { toggleDarkMode, isDarkMode };
 };
 
 export default useDarkMode;
