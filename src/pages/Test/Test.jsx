@@ -1,4 +1,5 @@
 import { Button } from "@/components";
+import { Input } from "@/components";
 import styles from "./Test.module.css";
 import { BaseLayout } from "@/layouts";
 
@@ -49,6 +50,14 @@ const TestPage = () => {
             <Button size="lg" variant="none">
               size-lg
             </Button>
+          </div>
+        </div>
+        {/** Input UI */}
+        <div className={styles.button_container}>
+          <div className={styles.input_title}>
+          <p>variant : Input_title</p>
+          <Input size="title-sm" placeholder="Input_title" />
+          <Input size="text-lg" placeholder="Input_title" />
           </div>
         </div>
       </div>
