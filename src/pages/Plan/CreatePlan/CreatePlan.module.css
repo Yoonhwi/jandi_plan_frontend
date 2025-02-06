@@ -61,4 +61,5 @@
 
 .input_text{
   font-size: var(--text-base);
+  color: var(--color-black);
 }

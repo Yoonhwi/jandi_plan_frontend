@@ -41,7 +41,7 @@ const CreatePlanPage = () => {
                                 </p>
                                 <Modal>
                                     <ModalTrigger>
-                                        <Button size="sm" variant="ghost"><FaRegCalendarAlt /></Button>
+                                        <Button size="sm" variant="ghost"><FaRegCalendarAlt className={styles.input_text}/></Button>
                                     </ModalTrigger>
                                     <ModalContent>
                                         <div  className={styles.modal_container}>
@@ -59,7 +59,7 @@ const CreatePlanPage = () => {
                                 </p>
                                 <Modal>
                                     <ModalTrigger>
-                                        <Button size="sm" variant="ghost"><FaRegCalendarAlt /></Button>
+                                        <Button size="sm" variant="ghost"><FaRegCalendarAlt className={styles.input_text}/></Button>
                                     </ModalTrigger>
                                     <ModalContent>
                                         <div  className={styles.modal_container}>
