@@ -55,8 +55,9 @@ const TestPage = () => {
         <div className={styles.button_container}>
           <div className={styles.input_title}>
           <p>variant : Input_title</p>
-            <Input size="2xl" placeholder="Input_title" />
             <Input size="lg" placeholder="Input_title" />
+            <Input size="md" placeholder="Input_title" />
+            <Input size="sm" placeholder="Input_title" />
           </div>
         </div>
         {/** Modal UI */}

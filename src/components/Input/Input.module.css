@@ -1,22 +1,22 @@
 .input {
     width: fit-content;
-    border: 0.125rem solid var(--color-gray-500);
+    border: 1px solid var(--color-gray-300);
     outline: none; 
     padding: 0.5rem 0.5rem;
     border-radius: var(--radius-input);
-    transition: border-color 0.2s ease-in-out;
   }
 
 .input:focus {
-    border-color: var(--color-indigo-600); 
-    box-shadow: 0 0 5px var(--color-indigo-600); 
+    border-color: var(--color-gray-400); 
 }
   /* Size variants */
-.input_2xl {
-    font-size: var(--text-2xl);
+.input_sm {
+    font-size: var(--text-sm);
+}
+.input_md {
+  font-size: var(--text-md);
 }
 
 .input_lg {
     font-size: var(--text-lg);
 }
-  /* Variant styles */

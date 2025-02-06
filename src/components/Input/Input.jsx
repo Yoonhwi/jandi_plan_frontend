@@ -1,6 +1,6 @@
 import styles from "./Input.module.css";
 
-const Input =({ size = "sm", placeholder= "입력하세요", children, ...props }) => {
+const Input =({ size = "lg", placeholder= "입력하세요", children, ...props }) => {
 
     const sizeClass = styles[`input_${size}`];
 
