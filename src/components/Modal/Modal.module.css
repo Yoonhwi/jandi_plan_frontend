@@ -22,6 +22,5 @@
   padding: 2rem;
   min-width: 20vw;
   border-radius: var(--radius-modal);
-  box-shadow: var(--shadow-above);
   z-index: 1000;
 }

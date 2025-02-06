@@ -2,7 +2,6 @@ import { cloneElement, useCallback, useState } from "react";
 import styles from "./Modal.module.css";
 import { ModalContext, useModal } from "./ModalContext";
 import { Button } from "@/components";
-import { AnimatePresence} from "framer-motion";
 
 const Modal = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,17 +42,6 @@ const ModalTrigger = ({ children }) => {
 
 const ModalContent = ({ children }) => {
   const { isOpen, closeModal } = useModal();
-
-  const variants = {
-    hidden: {
-      x: "-100%",
-      opacity: 0.5,
-    },
-    visible: {
-      x: "0",
-      opacity: 1,
-    },
-  };
 
   return (
     <>
