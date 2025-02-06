@@ -14,7 +14,7 @@
     font-size: var(--text-sm);
 }
 .input_md {
-  font-size: var(--text-md);
+  font-size: var(--text-base);
 }
 
 .input_lg {
