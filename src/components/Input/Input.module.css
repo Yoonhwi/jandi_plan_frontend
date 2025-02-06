@@ -6,6 +6,16 @@
     border-radius: var(--radius-input);
   }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox에서 spin 버튼 숨기기 */
+}
+
 .input:focus {
     border-color: var(--color-gray-400); 
 }
