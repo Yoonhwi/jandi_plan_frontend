@@ -1,16 +1,23 @@
 .background{
   width: 100%;
-  height: calc(100vh - 4rem);
   display: flex;
   justify-content: center;
   align-items: center;
+  /* background-image: url('/public/create_plan.jpg'); 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; */
 }
+
 .plan_container{
   border: 1px solid  var( --color-text-dynamic);
+  border-radius: var(--radius-xl);
   width: 65%;
   height: 80vh;
+  background-color: var(--color-bg-primary);
   color: var( --color-text-dynamic);
   padding: 2rem;
+  margin: 4rem 0;
 }
 
 .title{
@@ -54,7 +61,7 @@
 }
 
 .button_container{
-  margin-top: 4rem;
+  margin: 4rem 0;
   display: flex;
   justify-content: center;
 }

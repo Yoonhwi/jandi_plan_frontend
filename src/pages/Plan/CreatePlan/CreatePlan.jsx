@@ -7,8 +7,18 @@ import { useState } from "react";
 
 const CreatePlanPage = () => {
     const [destination, setDestination] = useState(null);
+    const [planName, setPlanName] = useState(null);
+    const [budget, setBudget] = useState(null);
     const [departureDate, setDepartureDate] = useState(null);
     const [arrivalDate, setArrivalDate] = useState(null);
+
+    const handlePlanNameChange = (event) => {
+        setPlanName(event.target.value);
+    };
+
+    const handleBudgetChange = (event) => {
+        setBudget(event.target.value);
+    }
 
     return(
         <BaseLayout>
@@ -34,7 +44,12 @@ const CreatePlanPage = () => {
                     </div>
                     <div className={styles.plan_columns}>
                         <div className={styles.input_name}>플랜 제목</div>
-                            <Input size="md" placeholder="플랜 제목을 입력하세요."  type="text" style={{ width: '70%' }}/>
+                            <Input 
+                                size="md" 
+                                placeholder="플랜 제목을 입력하세요."  
+                                type="text" style={{ width: '70%' }} 
+                                value={planName} 
+                                onChange={handlePlanNameChange} />
                     </div>
                     <div className={styles.plan_columns}>
                         <div className={styles.input_name}>출발일</div>
@@ -74,7 +89,14 @@ const CreatePlanPage = () => {
                     </div>
                     <div className={styles.plan_columns}>
                         <div className={styles.input_name}>예산안</div>
-                            <Input size="md" placeholder="1인당 예산안(￦)" type="number" style={{ width: '70%' }}/>
+                            <Input 
+                                size="md"
+                                placeholder="1인당 예산안(￦)" 
+                                type="number" 
+                                style={{ width: '70%' }}
+                                value={budget} 
+                                onChange={handleBudgetChange} 
+                                />
                     </div>
                     <div className={styles.plan_columns}>
                         <div className={styles.input_name}>친구 추가</div>
