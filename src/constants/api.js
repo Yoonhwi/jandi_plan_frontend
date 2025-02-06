@@ -5,6 +5,7 @@ export const PageEndPoints = {
   LOGIN: "/auth/login",
   JOIN: "/auth/join",
   CREATEPLAN: "/create",
+  SEARCH: "/search",
 };
 
 export const APIEndPoints = {
