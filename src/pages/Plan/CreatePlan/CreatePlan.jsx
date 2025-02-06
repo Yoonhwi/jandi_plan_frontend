@@ -6,7 +6,8 @@ import Calendar from "./Constants/Calender";
 import { useState } from "react";
 
 const CreatePlanPage = () => {
-    const [departureDate, setDepartureDate] = useState(" ");
+    const [destination, setDestination] = useState(null);
+    const [departureDate, setDepartureDate] = useState(null);
     const [arrivalDate, setArrivalDate] = useState(null);
 
     return(
@@ -18,7 +19,9 @@ const CreatePlanPage = () => {
                     <div className={styles.plan_columns}>
                         <div className={styles.input_name}>여행지</div>
                             <div className={styles.input}>
-                                <p className={styles.input_text}>-</p>
+                                <p className={styles.input_text}>
+                                    {destination || "-"}
+                                </p>
                                 <Modal>
                                     <ModalTrigger>
                                         <Button size="sm" >여행지 선택하기</Button>
@@ -37,7 +40,7 @@ const CreatePlanPage = () => {
                         <div className={styles.input_name}>출발일</div>
                             <div className={styles.input}>
                                 <p className={styles.input_text}>
-                                    {arrivalDate}
+                                    {arrivalDate || "-"}
                                 </p>
                                 <Modal>
                                     <ModalTrigger>
@@ -55,7 +58,7 @@ const CreatePlanPage = () => {
                         <div className={styles.input_name}>도착일</div>
                             <div className={styles.input}>
                                 <p className={styles.input_text}>
-                                    {departureDate}
+                                    {departureDate || "-"}
                                 </p>
                                 <Modal>
                                     <ModalTrigger>
@@ -71,11 +74,23 @@ const CreatePlanPage = () => {
                     </div>
                     <div className={styles.plan_columns}>
                         <div className={styles.input_name}>예산안</div>
-                            <Input size="md" placeholder="인당 예산안(￦)" type="number" style={{ width: '70%' }}/>
+                            <Input size="md" placeholder="1인당 예산안(￦)" type="number" style={{ width: '70%' }}/>
                     </div>
                     <div className={styles.plan_columns}>
-                        <div className={styles.input_name}>친구추가</div>
-                            <Input size="md" placeholder="추가하고 싶은 친구를 추가하세요." type="text" style={{ width: '70%' }}/>
+                        <div className={styles.input_name}>친구 추가</div>
+                            <div className={styles.input}>
+                                <p className={styles.input_text}>
+                                    {destination || "-"}
+                                </p>
+                                <Modal>
+                                    <ModalTrigger>
+                                        <Button size="sm" >친구 추가하기</Button>
+                                    </ModalTrigger>
+                                    <ModalContent>
+                                        <p>친구추가 모달</p>
+                                    </ModalContent>
+                                </Modal>
+                            </div>
                     </div>
                 </div>
                 <div className={styles.button_container}>
