@@ -330,6 +330,9 @@
   --radius-button-md: var(--radius-md);
   --radius-button-lg: var(--radius-lg);
 
+  --radius-input: var(--radius-sm);
+
+  --radius-modal: var(--radius-md);
   --radius-toast: var(--radius-md);
 
   --shadow-above: 0 0 4px rgb(var(--color-shadow));

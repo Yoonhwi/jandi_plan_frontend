@@ -16,7 +16,9 @@
 .button_solid,
 .button_ghost,
 .button_outline,
-.button_none {
+.button_none,
+.input_title,
+.input_text {
   display: flex;
   align-items: center;
   gap: 0.5rem;
