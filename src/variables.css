@@ -332,6 +332,8 @@
 
   --radius-input: var(--radius-sm);
 
+  --radius-modal: var(--radius-md);
+
   --shadow-above: 0 0 4px rgb(var(--color-shadow));
 
   --font-family-logo: "Permanent Marker", serif;
@@ -348,12 +350,14 @@
   --color-subtext-primary: var(--color-gray-200); /* 설명란 같은 text */
   --color-button-text: var(--color-white);
 
+
   --color-bg-primary: var(--color-white);
 
   --color-shadow: 0 0 0;
 
   --color-tooltip-bg: var(--color-gray-800);
   --color-tooltip-text: var(--color-white);
+
 }
 
 :root[theme="dark"] {
@@ -373,4 +377,5 @@
 
   --color-tooltip-bg: var(--color-white);
   --color-tooltip-text: var(--color-gray-800);
+
 }

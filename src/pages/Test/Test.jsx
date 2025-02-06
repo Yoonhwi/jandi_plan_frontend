@@ -1,5 +1,4 @@
-import { Button } from "@/components";
-import { Input } from "@/components";
+import { Button, Input,  Modal, ModalContent, ModalTrigger, } from "@/components";
 import styles from "./Test.module.css";
 import { BaseLayout } from "@/layouts";
 
@@ -56,8 +55,22 @@ const TestPage = () => {
         <div className={styles.button_container}>
           <div className={styles.input_title}>
           <p>variant : Input_title</p>
-          <Input size="2xl" placeholder="Input_title" />
-          <Input size="lg" placeholder="Input_title" />
+            <Input size="2xl" placeholder="Input_title" />
+            <Input size="lg" placeholder="Input_title" />
+          </div>
+        </div>
+        {/** Modal UI */}
+        <div className={styles.button_container}>
+          <div className={styles.input_title}>
+            <p>Modal</p>
+            <Modal>
+              <ModalTrigger>
+                <Button size="sm">Open Modal</Button>
+              </ModalTrigger>
+              <ModalContent>
+                <p>모달 내용입니다.</p>
+              </ModalContent>
+            </Modal>
           </div>
         </div>
       </div>
