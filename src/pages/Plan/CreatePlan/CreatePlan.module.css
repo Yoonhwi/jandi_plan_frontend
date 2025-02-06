@@ -1,0 +1,19 @@
+.background{
+  width: 100%;
+  height: calc(100vh - 4rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.plan_container{
+  border: 0.125rem solid  var( --color-text-primary);
+  width: 80%;
+  height: 80vh;
+  color: var( --color-text-primary);
+}
+
+.title{
+  margin: 2rem 0 0 2rem;
+  font-size: var(--text-4xl);
+  font-weight: var(--font-weight-semibold);
+}
