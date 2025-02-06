@@ -56,8 +56,8 @@ const TestPage = () => {
         <div className={styles.button_container}>
           <div className={styles.input_title}>
           <p>variant : Input_title</p>
-          <Input size="title-sm" placeholder="Input_title" />
-          <Input size="text-lg" placeholder="Input_title" />
+          <Input size="2xl" placeholder="Input_title" />
+          <Input size="lg" placeholder="Input_title" />
           </div>
         </div>
       </div>

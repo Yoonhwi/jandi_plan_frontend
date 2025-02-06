@@ -1,7 +1,9 @@
 .input {
     width: fit-content;
-    border: 0.125rem solid black;
+    border: 0.125rem solid var(--color-gray-500);
     outline: none; 
+    padding: 0.5rem 0.5rem;
+    border-radius: var(--radius-input);
     transition: border-color 0.2s ease-in-out;
   }
 
@@ -10,15 +12,11 @@
     box-shadow: 0 0 5px var(--color-indigo-600); 
 }
   /* Size variants */
-.input_title-sm {
-    padding: 0.5rem 0.5rem;
-    border-radius: 0.8rem;
+.input_2xl {
     font-size: var(--text-2xl);
 }
 
-.input_text-lg {
-    padding: 0.5rem 0.5rem;
-    border-radius: 0.4rem;
+.input_lg {
     font-size: var(--text-lg);
 }
   /* Variant styles */
