@@ -1,5 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Test, AuthLayout, CreatePlan, SearchLayout } from "@/pages";
+import {
+  Home,
+  Test,
+  AuthLayout,
+  CreatePlan,
+  SearchLayout,
+  Notice,
+} from "@/pages";
 import { PageEndPoints } from "@/constants";
 import { DarkModeProvider, ToastProvider } from "@/contexts";
 import { ToastList } from "./components";
@@ -16,6 +23,7 @@ function App() {
             <Route path={PageEndPoints.AUTH} element={<AuthLayout />} />
             <Route path={PageEndPoints.CREATEPLAN} element={<CreatePlan />} />
             <Route path={PageEndPoints.SEARCH} element={<SearchLayout />} />
+            <Route path={PageEndPoints.NOTICE} element={<Notice />} />
           </Routes>
         </BrowserRouter>
       </ToastProvider>
