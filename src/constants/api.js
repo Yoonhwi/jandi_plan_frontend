@@ -6,6 +6,9 @@ export const PageEndPoints = {
   JOIN: "/auth/join",
   CREATEPLAN: "/create",
   SEARCH: "/search",
+  PREFERENCE: "/preference/*",
+  CONTINENT: "/prefernce/continent",
+  DESTINATION: "/prefermce/destination"
 };
 
 export const APIEndPoints = {
