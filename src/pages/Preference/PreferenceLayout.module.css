@@ -10,14 +10,11 @@
 
 .content {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
     width: 100%;
-    max-width: 81rem;
-    min-height: 60vh;
+    max-width: 70rem;
+    height: 45rem;
     box-shadow: var(--shadow-above);
     border-radius: var(--radius-xl);
-    border-color: var(--color-text-dynamic);
     overflow: hidden;
+    overflow-y: auto;
 }

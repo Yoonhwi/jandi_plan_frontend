@@ -1,12 +1,14 @@
 .container {
     box-sizing: border-box;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    padding: 2rem;
 }
 
 .title_box {
-    padding: 1rem 2rem;
+    margin-bottom: 2rem;
 }
 
 .title {
@@ -14,10 +16,13 @@
 }
 
 .continent_box {
+    border: 1px solid red;
+    height: 80%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+    overflow-y: auto;
 }
 
 .continent {
@@ -31,14 +36,16 @@
     text-align: center;
     position: relative;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    border-radius: var(--radius-xl);
+    transition: background-color 0.2s ease;
 }
 
 .cont_img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: opacity 0.3s ease;
+    border-radius: var(--radius-xl);
+    transition: opacity 0.2s ease;
 }
 
 .cont_img.selected_img {
@@ -50,9 +57,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
+    color: var(--color-black);
+    font-weight: var(--font-weight-semibold);
     padding: 0.5rem 1rem;
+    font-size: var(--text-2xl);
     border-radius: var(--radius-md);
 }
 

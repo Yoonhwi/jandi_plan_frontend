@@ -3,6 +3,7 @@ import styles from "./Continent.module.css";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components";
 import { ContinentItems } from "./constants";
+import {PageEndPoints} from "@/constants";
 
 const Continent = () => {
     const [selectedContinents, setSelectedContinents] = useState([]);
@@ -37,7 +38,7 @@ const Continent = () => {
                                 alt="continent"
                                 className={`${styles.cont_img} ${isSelected ? styles.selected_img : ""}`}
                             />
-                            {isSelected && <div className={styles.selected_text}>선택됨</div>}
+                            {isSelected && <div className={styles.selected_text}>{item.name}</div>}
                         </div>
                     );
                 })}
