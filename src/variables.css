@@ -339,6 +339,8 @@
 
   --font-family-logo: "Permanent Marker", serif;
 
+  --color-chart-bar: var(--color-teal-600);
+
   --color-bg-toast-success: var(--color-green-600);
   --color-bg-toast-error: var(--color-red-600);
 }

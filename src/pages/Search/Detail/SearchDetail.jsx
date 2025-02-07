@@ -143,6 +143,8 @@ const SearchDetail = ({ keyword }) => {
           <DetailItem key={item.plan.id} item={item} />
         ))}
       </div>
+
+      {/** 페이지네이션 */}
     </div>
   );
 };
