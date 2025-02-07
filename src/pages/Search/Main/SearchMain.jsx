@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import styles from "./SearchMain.module.css";
 import SearchTooltip from "./SearchTooltip";
+import { FaCrown } from "react-icons/fa";
 
 // pc는 포스팅 수 postCount를 의미하고 , sc는 검색 수 searchCount를 의미합니다.
 const dummy = [
@@ -26,33 +27,39 @@ const dummy = [
 
 const SearchMain = () => {
   return (
-    <ResponsiveContainer className={styles.responsive_container}>
-      <BarChart
-        margin={{
-          right: 30,
-        }}
-        data={dummy}
-        className={styles.chart}
-      >
-        <XAxis
-          dataKey="name"
-          scale="point"
-          padding={{ left: 25, right: 30 }}
-          fontSize={"var(--text-sm)"}
-        />
-        <YAxis fontSize={"var(--text-sm)"} />
-        <Legend />
-        <Tooltip content={<SearchTooltip />} />
-        <Bar
-          dataKey="pc"
-          name="포스팅 수"
-          fill="var(--color-chart-bar)"
-          barSize={40}
-          radius={[100, 100, 0, 0]}
-          className={styles.bar}
-        />
-      </BarChart>
-    </ResponsiveContainer>
+    <div className={styles.container}>
+      <div className={styles.title}>
+        <FaCrown className={styles.icon_crown} />
+        <p> BEST TOP 10</p>
+      </div>
+      <ResponsiveContainer className={styles.responsive_container}>
+        <BarChart
+          margin={{
+            right: 30,
+          }}
+          data={dummy}
+          className={styles.chart}
+        >
+          <XAxis
+            dataKey="name"
+            scale="point"
+            padding={{ left: 25, right: 30 }}
+            fontSize={"var(--text-sm)"}
+          />
+          <YAxis fontSize={"var(--text-sm)"} />
+          <Legend />
+          <Tooltip content={<SearchTooltip />} />
+          <Bar
+            dataKey="pc"
+            name="포스팅 수"
+            fill="var(--color-chart-bar)"
+            barSize={40}
+            radius={[100, 100, 0, 0]}
+            className={styles.bar}
+          />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

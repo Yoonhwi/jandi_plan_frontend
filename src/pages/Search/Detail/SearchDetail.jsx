@@ -8,8 +8,8 @@ const dummy = [
     user: {
       id: 1,
       userId: "ush0105",
-      profile_url: "https://avatars.githubusercontent.com/u/77326480?v=4",
-      nickname: "승휘",
+      profile_url: "/user2.jpg",
+      nickname: "민근",
     },
 
     plan: {
@@ -28,7 +28,7 @@ const dummy = [
     user: {
       id: 1,
       userId: "ush0105",
-      profile_url: "https://avatars.githubusercontent.com/u/77326480?v=4",
+      profile_url: "/user1.png",
       nickname: "승휘",
     },
     plan: {
@@ -47,7 +47,7 @@ const dummy = [
     user: {
       id: 1,
       userId: "ush0105",
-      profile_url: "https://avatars.githubusercontent.com/u/77326480?v=4",
+      profile_url: "/user1.png",
       nickname: "승휘",
     },
     plan: {
@@ -65,7 +65,7 @@ const dummy = [
     user: {
       id: 1,
       userId: "ush0105",
-      profile_url: "https://avatars.githubusercontent.com/u/77326480?v=4",
+      profile_url: "/user1.png",
       nickname: "승휘",
     },
 
@@ -85,8 +85,8 @@ const dummy = [
     user: {
       id: 1,
       userId: "ush0105",
-      profile_url: "https://avatars.githubusercontent.com/u/77326480?v=4",
-      nickname: "승휘",
+      profile_url: "/user2.jpg",
+      nickname: "민근",
     },
     plan: {
       id: 5,
@@ -104,8 +104,8 @@ const dummy = [
     user: {
       id: 1,
       userId: "ush0105",
-      profile_url: "https://avatars.githubusercontent.com/u/77326480?v=4",
-      nickname: "승휘",
+      profile_url: "/user2.jpg",
+      nickname: "민근",
     },
     plan: {
       id: 6,
