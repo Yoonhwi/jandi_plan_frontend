@@ -12,9 +12,12 @@ import {
 } from "@/components";
 import { RiSearchLine } from "react-icons/ri";
 import { LuMenu } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
+import { PageEndPoints } from "@/constants";
 
 const Header = () => {
   const { toggleDarkMode, isDarkMode } = useDarkModeContext();
+  const navigate = useNavigate();
 
   const tooltips = [
     {
@@ -23,7 +26,7 @@ const Header = () => {
     },
     {
       text: "로그인",
-      icon: <LuLogIn size={20} />,
+      icon: <LuLogIn size={20} onClick={() => navigate(PageEndPoints.LOGIN)} />,
     },
     {
       text: isDarkMode ? "밝게" : "어둡게",
@@ -31,7 +34,12 @@ const Header = () => {
     },
     {
       text: "검색",
-      icon: <RiSearchLine size={20} />,
+      icon: (
+        <RiSearchLine
+          size={20}
+          onClick={() => navigate(PageEndPoints.SEARCH)}
+        />
+      ),
     },
   ];
 
@@ -41,20 +49,24 @@ const Header = () => {
     },
     {
       text: "게시판",
+      onClick: () => navigate(PageEndPoints.BOARD),
     },
     {
       text: "공지사항",
+      onClick: () => navigate(PageEndPoints.NOTICE),
     },
   ];
 
   return (
     <header className={styles.container}>
-      <p className={styles.title}>JUST PLAN IT !</p>
+      <p className={styles.title} onClick={() => navigate(PageEndPoints.HOME)}>
+        JUST PLAN IT !
+      </p>
 
       {/** web */}
       <nav className={styles.nav_container}>
         {menus.map((menu, index) => (
-          <p key={index} className={styles.nav_item}>
+          <p key={index} className={styles.nav_item} onClick={menu.onClick}>
             {menu.text}
           </p>
         ))}

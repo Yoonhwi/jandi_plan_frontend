@@ -7,6 +7,7 @@ export const PageEndPoints = {
   CREATEPLAN: "/create",
   SEARCH: "/search/*",
   NOTICE: "/notice",
+  BOARD: "/board",
 };
 
 export const APIEndPoints = {

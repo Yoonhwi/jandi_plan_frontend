@@ -12,6 +12,7 @@
   font-size: var(--text-2xl);
   font-weight: var(--font-weight-normal);
   font-family: var(--font-family-logo);
+  cursor: pointer;
 }
 
 .nav_container {
