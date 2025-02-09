@@ -5,6 +5,8 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import Calendar from "./Constants/Calender";
 import { useState } from "react";
 import AddUser from "./Constants/AddUser";
+import { useNavigate } from "react-router-dom";
+import { PageEndPoints } from "@/constants";
 
 const CreatePlanPage = () => {
     const [destination, setDestination] = useState(null);
@@ -13,6 +15,7 @@ const CreatePlanPage = () => {
     const [budget, setBudget] = useState(null);
     const [departureDate, setDepartureDate] = useState(null);
     const [arrivalDate, setArrivalDate] = useState(null);
+    const navigate = useNavigate();
 
     const handlePlanNameChange = (event) => {
         setPlanName(event.target.value);
@@ -25,7 +28,22 @@ const CreatePlanPage = () => {
     const handleConfirmUsers = (users) => {
         setWithUser(users.join(", "));
     };
+
+    const handleAdd = () => {
+        if (checkInfo()) {
+            navigate(PageEndPoints.HOME);
+        } else {
+            console.log("입력되지 않은 항목이 있습니다.");
+        }
+    };
     
+    const checkInfo = () => {
+        if (destination===null || budget===null ||  departureDate===null ||arrivalDate===null || planName===null) {
+            console.log("모든 항목을 입력하세요.");
+            return false;
+        }
+        return true;
+    };
 
     return(
         <BaseLayout>
@@ -123,7 +141,7 @@ const CreatePlanPage = () => {
                     </div>
                 </div>
                 <div className={styles.button_container}>
-                    <Button size="lg" variant="solid">플랜 추가하기</Button>
+                    <Button size="lg" variant="solid" onClick={() => handleAdd()}>플랜 추가하기</Button>
                 </div>
             </div>
            
