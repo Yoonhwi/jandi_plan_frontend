@@ -7,8 +7,8 @@ export const PageEndPoints = {
   CREATEPLAN: "/create",
   SEARCH: "/search",
   PREFERENCE: "/preference/*",
-  CONTINENT: "/prefernce/continent",
-  DESTINATION: "/prefermce/destination"
+  CONTINENT: "/preference/continent",
+  DESTINATION: "/preference/destination"
 };
 
 export const APIEndPoints = {
