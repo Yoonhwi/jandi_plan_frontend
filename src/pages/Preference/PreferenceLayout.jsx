@@ -12,8 +12,8 @@ const PreferenceLayout = () => {
             <div className={styles.content}>
                 <div>
                     <Routes location={location}>
-                        <Route path="continent" element={<Continent />} />
-                        <Route path="destination" element={<Destination />} />
+                        <Route path="continent"  element={<Continent />} />
+                        <Route path="destination"  element={<Destination />} />
                     </Routes>
                 </div>
             </div>
