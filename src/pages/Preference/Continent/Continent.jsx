@@ -19,6 +19,12 @@ const Continent = () => {
         });
     };
 
+    const handleNextClick = ()=>{
+        console.log(selectedContinents);
+        {selectedContinents.length === 0 ? null:navigate(PageEndPoints.DESTINATION, {state:{selectedContinents}})}
+        
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.title_box}>
@@ -38,7 +44,11 @@ const Continent = () => {
                                 alt="continent"
                                 className={`${styles.cont_img} ${isSelected ? styles.selected_img : ""}`}
                             />
-                            {isSelected && <div className={styles.selected_text}>{item.name}</div>}
+                            {isSelected ? (
+                                <div className={styles.selected_text}>✔{item.name}</div>
+                            ) : (
+                                <div className={styles.hover_text}>{item.name}</div>
+                            )}
                         </div>
                     );
                 })}
@@ -47,7 +57,7 @@ const Continent = () => {
                 <Button
                     size="lg"
                     variant="outline"
-                    onClick={() => navigate(PageEndPoints.DESTINATION)}
+                    onClick={() => handleNextClick()}
                 >
                     다음
                 </Button>
