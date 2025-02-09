@@ -4,9 +4,11 @@ import styles from "./CreatePlan.module.css";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import Calendar from "./Constants/Calender";
 import { useState } from "react";
+import AddUser from "./Constants/AddUser";
 
 const CreatePlanPage = () => {
     const [destination, setDestination] = useState(null);
+    const [withUser, setWithUser] = useState(null);
     const [planName, setPlanName] = useState(null);
     const [budget, setBudget] = useState(null);
     const [departureDate, setDepartureDate] = useState(null);
@@ -19,6 +21,11 @@ const CreatePlanPage = () => {
     const handleBudgetChange = (event) => {
         setBudget(event.target.value);
     }
+
+    const handleConfirmUsers = (users) => {
+        setWithUser(users.join(", "));
+    };
+    
 
     return(
         <BaseLayout>
@@ -102,14 +109,14 @@ const CreatePlanPage = () => {
                         <div className={styles.input_name}>친구 추가</div>
                             <div className={styles.input}>
                                 <p className={styles.input_text}>
-                                    {destination || "-"}
+                                    {withUser || "-"}
                                 </p>
                                 <Modal>
                                     <ModalTrigger>
                                         <Button size="sm" >친구 추가하기</Button>
                                     </ModalTrigger>
                                     <ModalContent>
-                                        <p>친구추가 모달</p>
+                                        <AddUser onConfirm={handleConfirmUsers}/>
                                     </ModalContent>
                                 </Modal>
                             </div>
