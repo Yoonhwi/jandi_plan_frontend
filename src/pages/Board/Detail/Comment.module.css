@@ -28,6 +28,9 @@
 }
 
 .comment_container {
+  box-sizing: border-box;
+  padding: 0 1rem;
+
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -72,4 +75,10 @@
 .recomment_container {
   box-sizing: border-box;
   padding-left: 3.5rem;
+  color: var(--color-blue-600);
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
 }

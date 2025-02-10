@@ -1,5 +1,7 @@
 import { Button, Input } from "@/components";
 import styles from "./Comment.module.css";
+import { RiArrowDownWideLine, RiArrowUpWideLine } from "react-icons/ri";
+import { useState } from "react";
 
 const currentUserDummy = {
   id: 1,
@@ -8,6 +10,8 @@ const currentUserDummy = {
 };
 
 const Comment = ({ item }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -55,7 +59,11 @@ const Comment = ({ item }) => {
               </div>
 
               {comment.recomment_count > 0 && (
-                <div className={styles.recomment_container}>
+                <div
+                  className={styles.recomment_container}
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  {isOpen ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
                   <p>답글 {comment.recomment_count}개</p>
                 </div>
               )}
