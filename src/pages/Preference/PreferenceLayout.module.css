@@ -11,9 +11,9 @@
 .content {
     display: flex;
     width: 100%;
-    max-width: 70rem;
-    height: 45rem;
-    box-shadow: var(--shadow-above);
+    /* max-width: 70rem; */
+    min-height: 45rem;
+    /* box-shadow: var(--shadow-above); */
     border-radius: var(--radius-xl);
     overflow: hidden;
     overflow-y: auto;

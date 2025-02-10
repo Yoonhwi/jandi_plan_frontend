@@ -49,35 +49,43 @@ const Destination = () => {
             </div>
 
             <div className={styles.destination_box}>
+            <h2 className={styles.continent_title}>{currentDestination.title}</h2>
                 {currentDestination && (
                     <div key={currentDestination.title} className={styles.continent_section}>
-                        <h2 className={styles.continent_title}>{currentDestination.title}</h2>
                         <div className={styles.destination_list}>
-                            {currentDestination.data.map((destination) => {
-                                const isSelected = selectedDestinations.includes(destination.name);
-                                return (
+                            {currentDestination.subCategories.map((category) => (
+                            <div key={category.subTitle} className={styles.category_section}>
+                                <h3 className={styles.category_title}>{category.subTitle}</h3>
+                                <div className={styles.destination_items}>
+                                {category.data.map((destination) => {
+                                    const isSelected = selectedDestinations.includes(destination.name);
+                                    return (
                                     <div
                                         key={destination.name}
-                                        className={styles.destination}
+                                        className={`${styles.destination} ${isSelected ? styles.selected : ""}`}
                                         onClick={() => handleSelectDestination(destination.name)}
                                     >
                                         <img
-                                            src={destination.imgSrc}
-                                            alt={destination.name}
-                                            className={`${styles.dest_img} ${isSelected ? styles.selected_img : ""}`}
+                                        src={destination.imgSrc}
+                                        alt={destination.name}
+                                        className={`${styles.dest_img} ${isSelected ? styles.selected_img : ""}`}
                                         />
                                         {isSelected ? (
-                                            <div className={styles.selected_text}>✔{destination.name}</div>
+                                        <div className={styles.selected_text}>✔ {destination.name}</div>
                                         ) : (
-                                            <div className={styles.hover_text}>{destination.name}</div>
+                                        <div className={styles.hover_text}>{destination.name}</div>
                                         )}
                                     </div>
-                                );
-                            })}
+                                    );
+                                })}
+                                </div>
+                            </div>
+                            ))}
                         </div>
                     </div>
                 )}
-            </div>
+                </div>
+
 
             <div className={styles.button_box}>
                 <Button size="lg" variant="outline" onClick={handlePrev}>
