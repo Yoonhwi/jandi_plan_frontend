@@ -3,6 +3,7 @@ import {Input, Button, Modal, ModalContent, ModalTrigger} from "@/components";
 import styles from "./CreatePlan.module.css";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import Calendar from "./Constants/Calender";
+import AddDestination from "./Constants/AddDestination";
 import { useState } from "react";
 import AddUser from "./Constants/AddUser";
 import { useNavigate } from "react-router-dom";
@@ -62,7 +63,7 @@ const CreatePlanPage = () => {
                                         <Button size="sm" >여행지 선택하기</Button>
                                     </ModalTrigger>
                                     <ModalContent>
-                                        <p>여행지 선택 모달</p>
+                                        <AddDestination />
                                     </ModalContent>
                                 </Modal>
                             </div>
@@ -70,7 +71,7 @@ const CreatePlanPage = () => {
                     <div className={styles.plan_columns}>
                         <div className={styles.input_name}>플랜 제목</div>
                             <Input 
-                                size="md" 
+                                size="l" 
                                 placeholder="플랜 제목을 입력하세요."  
                                 type="text" style={{ width: '70%' }} 
                                 value={planName} 
