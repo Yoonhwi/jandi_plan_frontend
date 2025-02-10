@@ -144,7 +144,14 @@ const SearchDetail = ({ keyword }) => {
         ))}
       </div>
 
-      {/** 페이지네이션 */}
+      {/** UI확인 용 임시 페이지네이션 */}
+      <div className={styles.footer}>
+        <Button variant="ghost">이전</Button>
+        <Button variant="ghost">1</Button>
+        <Button variant="ghost">2</Button>
+        <Button variant="ghost">3</Button>
+        <Button variant="ghost">다음</Button>
+      </div>
     </div>
   );
 };
