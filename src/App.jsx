@@ -7,6 +7,7 @@ import {
   SearchLayout,
   Notice,
   Board,
+  BoardDetail,
 } from "@/pages";
 import { PageEndPoints } from "@/constants";
 import { DarkModeProvider, ToastProvider } from "@/contexts";
@@ -26,6 +27,10 @@ function App() {
             <Route path={PageEndPoints.SEARCH} element={<SearchLayout />} />
             <Route path={PageEndPoints.NOTICE} element={<Notice />} />
             <Route path={PageEndPoints.BOARD} element={<Board />} />
+            <Route
+              path={PageEndPoints.BOARD_DETAIL}
+              element={<BoardDetail />}
+            />
           </Routes>
         </BrowserRouter>
       </ToastProvider>

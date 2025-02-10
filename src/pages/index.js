@@ -5,3 +5,4 @@ export { default as CreatePlan } from "./Plan/CreatePlan/CreatePlan";
 export { default as SearchLayout } from "./Search/SearchLayout";
 export { default as Notice } from "./Notice/Notice";
 export { default as Board } from "./Board/Board";
+export { default as BoardDetail } from "./Board/Detail/BoardDetail";

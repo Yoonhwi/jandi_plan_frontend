@@ -8,6 +8,7 @@ export const PageEndPoints = {
   SEARCH: "/search/*",
   NOTICE: "/notice",
   BOARD: "/board",
+  BOARD_DETAIL: "/board/:id",
 };
 
 export const APIEndPoints = {
