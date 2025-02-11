@@ -30,6 +30,10 @@ const CreatePlanPage = () => {
         setWithUser(users.join(", "));
     };
 
+    const handleConfirmDestination = (subtitle, destination) => {
+        setDestination(subtitle+" / "+destination);
+    };
+
     const handleAdd = () => {
         if (checkInfo()) {
             navigate(PageEndPoints.HOME);
@@ -63,7 +67,7 @@ const CreatePlanPage = () => {
                                         <Button size="sm" >여행지 선택하기</Button>
                                     </ModalTrigger>
                                     <ModalContent>
-                                        <AddDestination />
+                                        <AddDestination onConfirm={handleConfirmDestination}/>
                                     </ModalContent>
                                 </Modal>
                             </div>

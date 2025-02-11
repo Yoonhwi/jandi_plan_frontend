@@ -6,7 +6,7 @@ export const destinationItems = [
         subTitle: "일본",
         data: [
           { name: "오사카", imgSrc: "/osaka.jpg" },
-          { name: "도쿄", imgSrc: "/tokyo.jpg" },
+          { name: "도쿄", imgSrc: "/osaka.jpg" },
           { name: "후쿠오카", imgSrc: "/fukuoka.jpg" },
           { name: "구마모토", imgSrc: "/fukuoka.jpg" },
           { name: "삿포로", imgSrc: "/fukuoka.jpg" },
