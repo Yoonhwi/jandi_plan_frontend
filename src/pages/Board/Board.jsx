@@ -2,6 +2,8 @@ import { BaseLayout } from "@/layouts";
 import styles from "./Board.module.css";
 import { Button } from "@/components";
 import BoardItem from "./BoardItem";
+import { useNavigate } from "react-router-dom";
+import { PageEndPoints } from "@/constants";
 
 const dummy = [
   {
@@ -133,12 +135,19 @@ const dummy = [
 ];
 
 const BoardPage = () => {
+  const navigate = useNavigate();
+
   return (
     <BaseLayout>
       <div className={styles.container}>
         <div className={styles.header}>
           <p className={styles.header_title}>Community</p>
-          <Button variant="ghost">게시글 작성하기</Button>
+          <Button
+            variant="ghost"
+            onClick={() => navigate(PageEndPoints.BOARD_WRITE)}
+          >
+            게시글 작성하기
+          </Button>
         </div>
 
         <div className={styles.content}>

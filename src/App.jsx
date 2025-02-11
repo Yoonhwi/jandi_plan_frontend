@@ -8,6 +8,7 @@ import {
   Notice,
   Board,
   BoardDetail,
+  BoardWrite,
 } from "@/pages";
 import { PageEndPoints } from "@/constants";
 import { DarkModeProvider, ToastProvider } from "@/contexts";
@@ -31,6 +32,7 @@ function App() {
               path={PageEndPoints.BOARD_DETAIL}
               element={<BoardDetail />}
             />
+            <Route path={PageEndPoints.BOARD_WRITE} element={<BoardWrite />} />
           </Routes>
         </BrowserRouter>
       </ToastProvider>
