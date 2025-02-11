@@ -9,16 +9,18 @@ import { BiSolidPlaneAlt } from "react-icons/bi";
 const AddDestination = ({onConfirm}) => {
   const [selectedSubTitle, setSelectedSubTitle] = useState("");
   const [selectedDestination, setSelectedDestination] = useState("");
+  const [selectedImg, setSelectedImg] = useState("");
   const { closeModal } = useModal();
 
   const handleConfirmClick = () => {
-    onConfirm(selectedSubTitle, selectedDestination); 
+    onConfirm(selectedSubTitle, selectedDestination, selectedImg); 
     closeModal();
   };
 
-  const handleSelectDestination = (subtitle,destinationName) => {
+  const handleSelectDestination = (subtitle,destinationName,imgSrc) => {
     setSelectedSubTitle(subtitle);
     setSelectedDestination(destinationName);
+    setSelectedImg(imgSrc);
   };
 
   return (
@@ -40,7 +42,7 @@ const AddDestination = ({onConfirm}) => {
                   <div
                     key={destination.name}
                     className={`${styles.destination} ${selectedDestination === destination.name ? styles.selected : ""}`}
-                    onClick={() => handleSelectDestination(subCategory.subTitle,destination.name)}
+                    onClick={() => handleSelectDestination(subCategory.subTitle,destination.name,destination.imgSrc)}
                   >
                     <img
                       src={destination.imgSrc}

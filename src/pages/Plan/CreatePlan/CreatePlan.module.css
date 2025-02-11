@@ -1,24 +1,67 @@
-.background{
-  width: 100%;
+.container{
+  box-sizing: border-box;
+  min-height: 90vh;
+  width:100%;
   display: flex;
-  justify-content: center;
+}
+
+.plan_photo_box{
+  border-radius: var(--radius-xl);
+  margin: 4rem 0;
+  height: 80vh;
+  transition: width 0.5s ease-in-out;
+  display: flex;
   align-items: center;
-  /* background-image: url('/public/create_plan.jpg'); 
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat; */
+  justify-content: center;
+  overflow: hidden;
+  /* flex-grow: 1; */
+}
+
+.plan_photo_box.has_image {
+  width: 50%;
+}
+
+.plan_photo_box.no_image {
+  width: 25%;
+}
+
+.plan_photo{
+  border-radius: var(--radius-xl);
+  width:100%;
+  aspect-ratio: 1;
+  object-fit: cover;
 }
 
 .plan_container{
+  box-sizing: border-box;
   border: 1px solid  var( --color-text-dynamic);
   border-radius: var(--radius-xl);
-  width: 65%;
+  width: 50%;
   height: 80vh;
   background-color: var(--color-bg-primary);
   color: var( --color-text-dynamic);
   padding: 2rem;
   margin: 4rem 0;
 }
+
+@media (max-width: 1000px) {
+  .plan_photo_box.has_image {
+    width: 5%; 
+  }
+
+  .plan_photo_box.no_image {
+    width: 5%;
+  }
+  
+  .plan_photo {
+    display: none;
+  }
+
+  .plan_container {
+    width: 90%; 
+  }
+}
+
 
 .title{
   font-size: var(--text-4xl);
@@ -45,7 +88,7 @@
 }
 
 .input{
-  width: 70%;
+  width: 52%;
   background-color: var(--color-whitepure);
   border: 1px solid var(--color-gray-300);
   padding: 0.25rem 0.25rem;
