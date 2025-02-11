@@ -5,6 +5,7 @@ import { Button } from "@/components";
 import { destinationItems } from "./constants";
 import { PageEndPoints } from "@/constants";
 import { FaCheck } from "react-icons/fa";
+import { BiSolidPlaneAlt } from "react-icons/bi";
 
 const Destination = () => {
     const navigate = useNavigate();
@@ -73,7 +74,7 @@ const Destination = () => {
                                             alt={destination.name}
                                             className={`${styles.dest_img} ${isSelected ? styles.selected_img : ""}`}
                                             />
-                                            {isSelected ? <FaCheck className={styles.check_box}/>:null}
+                                            {isSelected ? <BiSolidPlaneAlt className={styles.check_box}/>:null}
                                             {/* 뒷면 */}
                                             <img
                                             src={destination.imgSrc}

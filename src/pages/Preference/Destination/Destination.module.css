@@ -75,7 +75,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: var(--text-8xl);
+    font-size: var(--text-5xl);
     z-index: 500;
     backface-visibility: hidden;
 }
@@ -144,8 +144,9 @@
 
 .destination_text {
     color: black;
-    font-size: var(--text-xl);
-    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-lg);
+    margin-top: 0.25rem;
+    font-weight: var(--font-weight-medium);
 }
 
 .button_box {
