@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components";
 import { destinationItems } from "./constants";
 import { PageEndPoints } from "@/constants";
+import { FaCheck } from "react-icons/fa";
 
 const Destination = () => {
     const navigate = useNavigate();
@@ -62,19 +63,29 @@ const Destination = () => {
                                     return (
                                     <div
                                         key={destination.name}
-                                        className={`${styles.destination} ${isSelected ? styles.selected : ""}`}
+                                        className={styles.destination}
                                         onClick={() => handleSelectDestination(destination.name)}
                                     >
-                                        <img
-                                        src={destination.imgSrc}
-                                        alt={destination.name}
-                                        className={`${styles.dest_img} ${isSelected ? styles.selected_img : ""}`}
-                                        />
-                                        {isSelected ? (
-                                        <div className={styles.selected_text}>✔ {destination.name}</div>
-                                        ) : (
-                                        <div className={styles.hover_text}>{destination.name}</div>
-                                        )}
+                                        <div className={styles.dest_trans}>                                        
+                                            {/* 앞면 */}
+                                            <img
+                                            src={destination.imgSrc}
+                                            alt={destination.name}
+                                            className={`${styles.dest_img} ${isSelected ? styles.selected_img : ""}`}
+                                            />
+                                            {isSelected ? <FaCheck className={styles.check_box}/>:null}
+                                            {/* 뒷면 */}
+                                            <img
+                                            src={destination.imgSrc}
+                                            alt={destination.name}
+                                            className={styles.dest_back_img}
+                                            />
+                                            {isSelected ? <FaCheck className={styles.check_box_back}/>:null}
+                                            <div className={styles.dest_back_box}>
+                                                <h1>여행지 설명</h1>
+                                            </div>
+                                        </div>
+                                        <div className={styles.destination_text}>{destination.name}</div>
                                     </div>
                                     );
                                 })}

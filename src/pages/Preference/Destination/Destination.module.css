@@ -57,57 +57,95 @@
 }
 
 .destination {
-    width: calc(33.333% - 1rem);
-    min-width: 15rem;
-    aspect-ratio: 16/9;
+    width: calc(18%);
+    /* min-width: 15rem; */
+    aspect-ratio: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    position: relative;
+    text-align: center;   
     cursor: pointer;
     border-radius: var(--radius-4xl);
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    position: relative;
+}
+
+.check_box {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: var(--text-8xl);
+    z-index: 500;
+    backface-visibility: hidden;
+}
+
+.check_box_back {
+    position:absolute;
+    top: 0%;
+    left: 0%;
+    font-size: var(--text-4xl);
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+}
+
+.dest_trans {
+    width: calc(18%);
+    width:100%;
+    aspect-ratio: 1;
+    transition: transform 1s ease;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.dest_trans:hover {
+    transform: rotateY(180deg);
 }
 
 .dest_img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    backface-visibility: hidden;
     border-radius: var(--radius-4xl);
-    transition: opacity 0.2s ease;
 }
-
 .dest_img.selected_img {
     opacity: 0.5;
 }
-
-.destination:hover .dest_img {
-    opacity: 0.5;
-}
-
-
-.selected_text, .hover_text {
+.dest_back_img {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--color-text-dynamic);
-    font-weight: var(--font-weight-semibold);
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    aspect-ratio: 1;
+    object-fit: cover;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    border-radius: var(--radius-4xl);
+
+}
+
+
+.dest_back_box{
+    box-sizing: border-box;
+    position: absolute;
     padding: 0.5rem;
-    font-size: var(--text-3xl);
-    border-radius: var(--radius-md);
-    text-align: center;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    border-radius: var(--radius-4xl);
+    text-align: justify;
 }
 
-.hover_text {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.destination:hover .hover_text {
-    opacity: 1;
+.destination_text {
+    color: black;
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
 }
 
 .button_box {
@@ -125,14 +163,19 @@
     margin-right: 1rem;
 } 
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     .destination {
-        width: calc(50% - 1rem);
+        width: calc(25% - 1rem);
+    }
+}
+@media (max-width: 744px) {
+    .destination {
+        width: calc(33% - 1rem);
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 460px) {
     .destination {
-        width: 100%;
+        width: calc(50% - 1rem);
     }
 }
