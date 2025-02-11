@@ -27,6 +27,19 @@
     padding-bottom: 1rem;
 }
 
+.continent_section::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+  
+  .continent_section::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-sm);
+  }
+  
+  .continent_section::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
 .continent_title {
     color: var(--color-text-dynamic);
     font-size: var(--text-3xl);
