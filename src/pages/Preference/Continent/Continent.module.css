@@ -18,7 +18,7 @@
 }
 
 .continent_box {
-    max-height: 40rem;
+    max-height: 60rem;
     height: 80%;
     display: flex;
     flex-wrap: wrap;
@@ -28,7 +28,7 @@
 }
 
 .continent {
-    width: calc(30%);
+    width: calc(33% - 1rem);
     min-width: 20rem;
     aspect-ratio: 16/9;
     display: flex;
