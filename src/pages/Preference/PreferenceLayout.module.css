@@ -5,13 +5,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 .content {
     display: flex;
     width: 100%;
-    /* max-width: 70rem; */
+    max-width: var(--breakpoint-lg);
+    flex: 1;
     min-height: 45rem;
     /* box-shadow: var(--shadow-above); */
     border-radius: var(--radius-xl);
