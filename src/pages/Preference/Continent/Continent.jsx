@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components";
 import { ContinentItems } from "./constants";
 import {PageEndPoints} from "@/constants";
+import { FaCheck } from "react-icons/fa";
 
 const Continent = () => {
     const [selectedContinents, setSelectedContinents] = useState([]);
@@ -44,8 +45,9 @@ const Continent = () => {
                                 alt="continent"
                                 className={`${styles.cont_img} ${isSelected ? styles.selected_img : ""}`}
                             />
+                            {isSelected ? <FaCheck className={styles.check_box}/>:null}
                             {isSelected ? (
-                                <div className={styles.selected_text}>✔{item.name}</div>
+                                <div className={styles.selected_text}>{item.name}</div>
                             ) : (
                                 <div className={styles.hover_text}>{item.name}</div>
                             )}
