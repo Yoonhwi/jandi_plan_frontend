@@ -31,6 +31,7 @@ const Continent = () => {
             <div className={styles.title_box}>
                 <p className={styles.title}>관심있는 여행지가 어디신가요?</p>
             </div>
+            
             <div className={styles.continent_box}>
                 {ContinentItems.map((item) => {
                     const isSelected = selectedContinents.includes(item.name);

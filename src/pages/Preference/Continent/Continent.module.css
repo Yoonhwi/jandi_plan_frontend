@@ -18,6 +18,7 @@
 }
 
 .continent_box {
+    max-height: 40rem;
     height: 80%;
     display: flex;
     flex-wrap: wrap;
