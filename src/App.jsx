@@ -13,6 +13,7 @@ import {
 import { PageEndPoints } from "@/constants";
 import { DarkModeProvider, ToastProvider } from "@/contexts";
 import { ToastList } from "./components";
+import PreferenceLayout from "./pages/Preference/PreferenceLayout";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
             <Route path={PageEndPoints.TEST} element={<Test />} />
             <Route path={PageEndPoints.AUTH} element={<AuthLayout />} />
             <Route path={PageEndPoints.CREATEPLAN} element={<CreatePlan />} />
+            <Route
+              path={PageEndPoints.PREFERENCE}
+              element={<PreferenceLayout />}
+            />
             <Route path={PageEndPoints.SEARCH} element={<SearchLayout />} />
             <Route path={PageEndPoints.NOTICE} element={<Notice />} />
             <Route path={PageEndPoints.BOARD} element={<Board />} />

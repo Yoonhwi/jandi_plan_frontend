@@ -2,6 +2,7 @@ import { cloneElement, useCallback, useState } from "react";
 import styles from "./Modal.module.css";
 import { ModalContext, useModal } from "./ModalContext";
 import { Button } from "@/components";
+import { MdClose } from "react-icons/md";
 
 const Modal = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,14 +55,15 @@ const ModalContent = ({ children }) => {
           <div
             className={styles.container}
           >
-            <Button
+            <div className={styles.modal_header}>
+            <MdClose
               onClick={closeModal}
-              variant="solid"
-              style={{ position: "absolute", top: "1rem", right: "1rem" }}
-            >
-              Close
-            </Button>
-            {children}
+              style={{ position: "absolute", top: "1rem", right: "1rem", cursor: "pointer" }}
+            />
+            </div>
+            <div>
+              {children}
+            </div>
           </div>
         </>
       )}
