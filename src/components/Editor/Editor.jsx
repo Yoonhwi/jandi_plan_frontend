@@ -12,11 +12,11 @@ const toolbarOptions = {
     ["image", "link"],
     ["clean"],
   ],
-  handlers: {
-    image: function () {
-      console.log("hit image toolbar");
-    },
-  },
+  // handlers: {
+  //   image: function () {
+  //     console.log("hit image toolbar");
+  //   },
+  // },
 };
 
 class NoOpClipboard {
