@@ -2,8 +2,10 @@ import styles from "./Input.module.css";
 
 const Input = ({
   size = "lg",
-  placeholder = "입력하세요",
+  placeholder = "",
   type = "text",
+  register,
+  name,
   ...props
 }) => {
   const sizeClass = styles[`input_${size}`];
@@ -13,6 +15,7 @@ const Input = ({
       className={`${sizeClass} ${styles.input}`}
       placeholder={placeholder}
       type={type}
+      {...(register ? register(name) : {})}
       {...props}
     />
   );
