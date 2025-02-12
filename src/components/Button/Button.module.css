@@ -61,5 +61,5 @@
 
 .btn_none {
   background-color: transparent;
-  color: var(--color-text-primary);
+  color: var(--color-text-dynamic);
 }

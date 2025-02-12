@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-medium);
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-board-border);
+  cursor: pointer;
+}
+
+.title_box {
+  box-sizing: border-box;
+  padding-right: 2rem;
+  flex: 1;
+  display: flex;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.writer {
+  width: 5rem;
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.writer_img {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-full);
+}
+
+.writer_name {
+  flex: 1;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+
+.index,
+.date,
+.recommend {
+  width: 5rem;
+  text-align: center;
+}
+
+.index {
+  font-weight: var(--font-weight-bold);
+}
+
+.comment_count {
+  color: var(--color-indigo-500);
+  font-weight: var(--font-weight-bold);
+}
