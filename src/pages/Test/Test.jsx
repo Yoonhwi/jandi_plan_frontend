@@ -1,8 +1,10 @@
-import { Button, Input,  Modal, ModalContent, ModalTrigger, } from "@/components";
+import { Button, Input, Modal, ModalContent, ModalTrigger } from "@/components";
 import styles from "./Test.module.css";
 import { BaseLayout } from "@/layouts";
+import { useToastContext } from "@/contexts";
 
 const TestPage = () => {
+  const { createToast } = useToastContext();
   return (
     <BaseLayout>
       <div className={styles.container}>
@@ -54,7 +56,7 @@ const TestPage = () => {
         {/** Input UI */}
         <div className={styles.button_container}>
           <div className={styles.input_title}>
-          <p>variant : Input_title</p>
+            <p>variant : Input_title</p>
             <Input size="lg" placeholder="Input_title" />
             <Input size="md" placeholder="Input_title" />
             <Input size="sm" placeholder="Input_title" />
@@ -72,6 +74,34 @@ const TestPage = () => {
                 <p>모달 내용입니다.</p>
               </ModalContent>
             </Modal>
+          </div>
+        </div>
+
+        <div className={styles.button_container}>
+          <div className={styles.input_title}>
+            <p>toast</p>
+            <Button
+              size="sm"
+              onClick={() =>
+                createToast({
+                  type: "success",
+                  text: "포스팅에 성공했습니다",
+                })
+              }
+            >
+              success
+            </Button>
+            <Button
+              size="sm"
+              onClick={() =>
+                createToast({
+                  type: "error",
+                  text: "포스팅에 실패했습니다.",
+                })
+              }
+            >
+              error
+            </Button>
           </div>
         </div>
       </div>

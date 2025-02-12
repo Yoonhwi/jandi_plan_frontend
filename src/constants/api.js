@@ -5,7 +5,11 @@ export const PageEndPoints = {
   LOGIN: "/auth/login",
   JOIN: "/auth/join",
   CREATEPLAN: "/create",
-  SEARCH: "/search",
+  SEARCH: "/search/*",
+  NOTICE: "/notice",
+  BOARD: "/board",
+  BOARD_DETAIL: "/board/:id",
+  BOARD_WRITE: "/board/write",
 };
 
 export const APIEndPoints = {
