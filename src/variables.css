@@ -349,6 +349,7 @@
 
 :root[theme="light"] {
   --color-primary: var(--color-gray-500);
+  --color-secondary: var(--color-indigo-500);
   --color-bg-primary: var(--color-white);
 
   --color-button-bg: var(--color-gray-500);
@@ -373,6 +374,7 @@
 
 :root[theme="dark"] {
   --color-primary: var(--color-gray-500);
+  --color-secondary: var(--color-gray-500);
   --color-bg-primary: var(--color-gray-950);
 
   --color-button-bg: var(--color-white);
