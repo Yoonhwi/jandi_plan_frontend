@@ -1,8 +1,7 @@
 import { cloneElement, useCallback, useState } from "react";
+import { MdClose } from "react-icons/md";
 import styles from "./Modal.module.css";
 import { ModalContext, useModal } from "./ModalContext";
-import { Button } from "@/components";
-import { MdClose } from "react-icons/md";
 
 const Modal = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,22 +47,19 @@ const ModalContent = ({ children }) => {
     <>
       {isOpen && (
         <>
-          <div
-            className={styles.backdrop}
-            onClick={closeModal}
-          />
-          <div
-            className={styles.container}
-          >
-            <div className={styles.modal_header}>
+          <div className={styles.backdrop} onClick={closeModal} />
+          <div className={styles.container}>
             <MdClose
               onClick={closeModal}
-              style={{ position: "absolute", top: "1rem", right: "1rem", cursor: "pointer" }}
+              style={{
+                position: "absolute",
+                top: "1rem",
+                right: "1rem",
+                cursor: "pointer",
+              }}
+              size={20}
             />
-            </div>
-            <div>
-              {children}
-            </div>
+            {children}
           </div>
         </>
       )}
@@ -71,4 +67,4 @@ const ModalContent = ({ children }) => {
   );
 };
 
-export { Modal, ModalTrigger, ModalContent };
+export { Modal, ModalContent, ModalTrigger };
