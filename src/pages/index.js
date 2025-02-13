@@ -8,3 +8,4 @@ export { default as Notice } from "./Notice/Notice";
 export { default as Board } from "./Board/Board";
 export { default as BoardDetail } from "./Board/Detail/BoardDetail";
 export { default as BoardWrite } from "./Board/Write/BoardWrite";
+export { default as PlanDetail } from "./Plan/Detail/PlanDetail";
