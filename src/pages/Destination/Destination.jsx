@@ -6,7 +6,7 @@ import { useState } from "react";
 import DetailItem from "./components/DetailItem";
 
 const Destination = () => {
-    const [selectedPlace, setSelectedPlace] = useState("london");
+    const [selectedPlace, setSelectedPlace] = useState("Osaka");
 
     return(
         <BaseLayout>
