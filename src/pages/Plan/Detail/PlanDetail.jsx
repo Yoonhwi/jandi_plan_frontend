@@ -4,27 +4,24 @@ import PlanInfo from "./PlanInfo/PlanInfo";
 import PlanMap from "./PlanMap/PlanMap";
 import PlanBudget from "./PlanBudget/PlanBudget";
 import PlanDes from "./PlanDes/PlanDes";
-
-const dummy = {
-  title: "오사카 가자아",
-  country: "일본",
-  destination: "오사카",
-  startDate: "2023.06.30",
-  endDate: "2023.07.04",
-  peopleCount: 1,
-  latitude: 34.6937,
-  longitude: 135.5023,
-};
+import { APIProvider } from "@vis.gl/react-google-maps";
+import PlanDetailProvider from "./PlanDetailProvider";
 
 const PlanDetail = () => {
+  const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
   return (
     <BaseLayout>
-      <div className={styles.container}>
-        <PlanInfo plan={dummy} />
-        <PlanMap plan={dummy} />
-        <PlanBudget plan={dummy} />
-        <PlanDes plan={dummy} />
-      </div>
+      <PlanDetailProvider>
+        <APIProvider apiKey={API_KEY}>
+          <div className={styles.container}>
+            <PlanInfo />
+            <PlanMap />
+            <PlanDes />
+            <PlanBudget />
+          </div>
+        </APIProvider>
+      </PlanDetailProvider>
     </BaseLayout>
   );
 };

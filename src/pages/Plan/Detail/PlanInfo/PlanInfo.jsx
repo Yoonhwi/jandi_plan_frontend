@@ -2,8 +2,10 @@ import styles from "./PlanInfo.module.css";
 import { IoLocationSharp } from "react-icons/io5";
 import { BsPersonArmsUp } from "react-icons/bs";
 import { MdDateRange } from "react-icons/md";
+import { usePlanDetail } from "../PlanDetailContext";
 
-const PlanInfo = ({ plan }) => {
+const PlanInfo = () => {
+  const { plan } = usePlanDetail();
   const { title, country, destination, startDate, endDate, peopleCount } = plan;
 
   return (
