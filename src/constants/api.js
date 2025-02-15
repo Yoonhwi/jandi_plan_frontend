@@ -22,8 +22,8 @@ export const PageEndPoints = {
 
   MYPAGE: "/mypage",
 
-  DESTINATION: "/destination",
-  
+  DESTINATION_DETAIL: "/destination/:id",
+  DESTINATION_LIST: "/destination/list",
 };
 
 export const APIEndPoints = {

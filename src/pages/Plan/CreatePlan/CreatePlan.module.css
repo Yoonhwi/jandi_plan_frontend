@@ -44,6 +44,11 @@
   margin: 4rem 0;
 }
 
+.plan_box{
+  width:80%;
+  margin: 0 auto;
+}
+
 @media (max-width: 1000px) {
   .plan_photo_box.has_image {
     width: 5%; 
@@ -65,7 +70,7 @@
 
 .title{
   font-size: var(--text-4xl);
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   font-weight: var(--font-weight-semibold);
 }
 
@@ -77,7 +82,14 @@
 .plan_columns{
   display: flex;
   align-items: center; 
-  margin: 2rem 0;
+  margin: 1rem 0;
+}
+
+.place {
+  display: flex;
+  align-items: center; 
+  gap: 1rem; 
+  width: 100%;
 }
 
 .input_name{
@@ -104,7 +116,7 @@
 }
 
 .button_container{
-  margin: 4rem 0;
+  margin: 1rem 0;
   display: flex;
   justify-content: center;
 }
@@ -112,4 +124,9 @@
 .input_text{
   font-size: var(--text-base);
   color: var(--color-black);
+}
+
+.error {
+  color: var(--color-red-600);
+  font-size: var(--text-xs);
 }
