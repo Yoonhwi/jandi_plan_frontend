@@ -11,16 +11,15 @@ import { usePlanDetail } from "../PlanDetailContext";
 
 const PlanDes = () => {
   const { plan, focusDay, setFocusDay } = usePlanDetail();
-  const [focusIndex, setFocusIndex] = useState(null);
   const { reserved, data } = plan;
 
   const renderItem = useMemo(() => {
-    if (focusIndex === null) {
+    if (focusDay === null) {
       return <Reserved reserved={reserved} />;
     } else {
-      return <DayDetail data={data} focus={focusIndex} />;
+      return <DayDetail data={data} focus={focusDay} />;
     }
-  }, [data, focusIndex, reserved]);
+  }, [data, focusDay, reserved]);
 
   return (
     <div className={styles.container}>
