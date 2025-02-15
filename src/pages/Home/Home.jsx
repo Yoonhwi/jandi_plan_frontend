@@ -1,6 +1,7 @@
 import { BaseLayout } from "@/layouts";
 import { formatPrice } from "@/utils";
 import { TiHeartFullOutline } from "react-icons/ti";
+import Banner from "./Banner";
 import styles from "./Home.module.css";
 import { descriptionItems } from "./constants";
 
@@ -8,7 +9,7 @@ const HomePage = () => {
   return (
     <BaseLayout>
       <div className={styles.container}>
-        <img src="/banner_img.jpg" alt="banner" className={styles.banner_img} />
+        <Banner />
 
         {descriptionItems.map((item) => {
           const { title, data } = item;

@@ -1,12 +1,33 @@
+import { forwardRef } from "react";
 import styles from "./Input.module.css";
 
-const Input =({ size = "lg", placeholder= "입력하세요", children, ...props }) => {
-
+const Input = forwardRef(
+  (
+    {
+      size = "lg",
+      placeholder = "",
+      type = "text",
+      register,
+      name = "",
+      ...props
+    },
+    ref
+  ) => {
     const sizeClass = styles[`input_${size}`];
 
-    return(
-        <input className={`${sizeClass} ${styles.input}`} placeholder={placeholder}{...props} />
+    return (
+      <input
+        ref={ref}
+        className={`${sizeClass} ${styles.input}`}
+        placeholder={placeholder}
+        type={type}
+        {...(register ? register(name) : {})}
+        {...props}
+      />
     );
-};
+  }
+);
+
+Input.displayName = "Input";
 
 export default Input;

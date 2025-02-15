@@ -6,23 +6,12 @@
   flex-direction: column;
 
   gap: 4rem;
-  padding-bottom: 6rem;
 }
 
 .title {
-  color: var(--color-text-primary);
+  color: var(--color-text-dynamic);
   font-size: var(--text-4xl);
   font-weight: var(--font-weight-bold);
-}
-
-.banner_img {
-  width: 100%;
-  max-height: 20rem;
-
-  object-fit: cover;
-  object-position: center;
-
-  border-radius: var(--radius-sm);
 }
 
 .des_container {
@@ -85,7 +74,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  color: var(--color-text-primary);
+  color: var(--color-text-dynamic);
   font-weight: var(--font-weight-bold);
 
   display: flex;

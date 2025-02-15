@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.title {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-2xl);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.flex_row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
