@@ -12,7 +12,8 @@ import {
   BoardWrite,
   PlanDetail,
   MyPage,
-  Destination,
+  DestinationDetail,
+  DestinationList,
 } from "@/pages";
 import { PageEndPoints } from "@/constants";
 import { DarkModeProvider, ToastProvider } from "@/contexts";
@@ -32,7 +33,10 @@ function App() {
             <Route path={PageEndPoints.SEARCH} element={<SearchLayout />} />
             <Route path={PageEndPoints.NOTICE} element={<Notice />} />
             <Route path={PageEndPoints.MYPAGE} element={<MyPage />} />
-            <Route path={PageEndPoints.DESTINATION} element={<Destination />} />
+            
+            <Route path={PageEndPoints.DESTINATION_DETAIL} element={<DestinationDetail />} />
+            <Route path={PageEndPoints.DESTINATION_LIST} element={<DestinationList />} />
+            
             <Route
               path={PageEndPoints.PREFERENCE}
               element={<PreferenceLayout />}

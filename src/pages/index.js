@@ -11,4 +11,5 @@ export { default as BoardDetail } from "./Board/Detail/BoardDetail";
 export { default as BoardWrite } from "./Board/Write/BoardWrite";
 export { default as PlanDetail } from "./Plan/Detail/PlanDetail";
 export {default as MyPage} from "./MyPage/MyPage";
-export {default as Destination} from "./Destination/Destination";
+export {default as DestinationDetail} from "./Destination/Detail/Destination";
+export {default as DestinationList} from "./Destination/List/DestinationList";

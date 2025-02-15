@@ -1,62 +1,57 @@
 import { BaseLayout } from "@/layouts";
-import { Input, Button, Modal, ModalContent, ModalTrigger } from "@/components";
+import {
+  Field,
+  Input,
+  Button,
+  Modal,
+  ModalContent,
+  ModalTrigger,
+} from "@/components";
 import styles from "./CreatePlan.module.css";
-import { FaRegCalendarAlt } from "react-icons/fa";
-import Calendar from "./Constants/Calender";
-import AddDestination from "./Constants/AddDestination";
 import { useState } from "react";
+import AddDestination from "./Constants/AddDestination";
 import AddUser from "./Constants/AddUser";
 import { useNavigate } from "react-router-dom";
 import { PageEndPoints } from "@/constants";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const schema = z.object({
+  destination: z.string().nonempty({ message: "여행지를 입력하세요." }),
+  planName: z.string().nonempty({ message: "제목을 입력하세요." }),
+  arrivalDate: z.string().nonempty({ message: "출발일을 입력하세요." }),
+  departureDate: z.string().nonempty({ message: "도착일을 입력하세요." }),
+  budget: z.string().nonempty({ message: "예산안을 입력하세요." }),
+});
 
 const CreatePlanPage = () => {
   const [destination, setDestination] = useState(null);
   const [withUser, setWithUser] = useState(null);
-  const [planName, setPlanName] = useState(null);
-  const [budget, setBudget] = useState(null);
-  const [departureDate, setDepartureDate] = useState(null);
-  const [arrivalDate, setArrivalDate] = useState(null);
-  const navigate = useNavigate();
   const [selectedImg, setSelectedImg] = useState(null);
+  const navigate = useNavigate();
 
-  const handlePlanNameChange = (event) => {
-    setPlanName(event.target.value);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
 
-  const handleBudgetChange = (event) => {
-    setBudget(event.target.value);
+  const handleConfirmDestination = (subtitle, destination, selectedImg) => {
+    setDestination(`${subtitle} / ${destination}`);
+    setSelectedImg(selectedImg);
   };
 
   const handleConfirmUsers = (users) => {
     setWithUser(users.join(", "));
   };
 
-  const handleConfirmDestination = (subtitle, destination, selectedImg) => {
-    console.log(selectedImg);
-    setDestination(subtitle + " / " + destination);
-    setSelectedImg(selectedImg);
-  };
-
-  const handleAdd = () => {
-    if (checkInfo()) {
+  const handleAdd = (data) => {
+    if (data) {
       navigate(PageEndPoints.HOME);
-    } else {
-      console.log("입력되지 않은 항목이 있습니다.");
     }
-  };
-
-  const checkInfo = () => {
-    if (
-      destination === null ||
-      budget === null ||
-      departureDate === null ||
-      arrivalDate === null ||
-      planName === null
-    ) {
-      console.log("모든 항목을 입력하세요.");
-      return false;
-    }
-    return true;
   };
 
   return (
@@ -78,113 +73,128 @@ const CreatePlanPage = () => {
 
         <div className={styles.plan_container}>
           <p className={styles.title}>어디로 놀러가시나요?</p>
-          <div className={styles.plan_inputs}>
+
+          <form className={styles.plan_box} onSubmit={handleSubmit(handleAdd)}>
             <div className={styles.plan_columns}>
-              <div className={styles.input_name}>여행지</div>
-              <div className={styles.input}>
-                <p className={styles.input_text}>{destination || "-"}</p>
-                <Modal>
-                  <ModalTrigger>
-                    <Button size="sm">여행지 선택하기</Button>
-                  </ModalTrigger>
-                  <ModalContent>
-                    <AddDestination onConfirm={handleConfirmDestination} />
-                  </ModalContent>
-                </Modal>
-              </div>
+              <Field label="여행지" isRequire>
+                <div className={styles.place}>
+                  <Input
+                    style={{
+                      boxSizing: "border-box",
+                      flex: 1,
+                    }}
+                    size="sm"
+                    value={destination || ""}
+                    readOnly
+                  />
+                  <Modal>
+                    <ModalTrigger>
+                      <Button type="button">선택</Button>
+                    </ModalTrigger>
+                    <ModalContent>
+                      <AddDestination onConfirm={handleConfirmDestination} />
+                    </ModalContent>
+                  </Modal>
+                </div>
+                {errors.destination && (
+                  <p className={styles.error}>{errors.destination.message}</p>
+                )}
+              </Field>
             </div>
 
             <div className={styles.plan_columns}>
-              <div className={styles.input_name}>플랜 제목</div>
-              <Input
-                size="md"
-                placeholder="플랜 제목을 입력하세요."
-                type="text"
-                style={{ flex: 1 }}
-                value={planName}
-                onChange={handlePlanNameChange}
-              />
+              <Field
+                label="플랜 제목"
+                helperText="ex)오사카 가족여행"
+                isRequire
+              >
+                <Input
+                  type="text"
+                  style={{
+                    boxSizing: "border-box",
+                    width: "100%",
+                  }}
+                  size="sm"
+                  {...register("planName")}
+                />
+                {errors.planName && (
+                  <p className={styles.error}>{errors.planName.message}</p>
+                )}
+              </Field>
             </div>
 
             <div className={styles.plan_columns}>
-              <div className={styles.input_name}>출발일</div>
-              <div className={styles.input}>
-                <p className={styles.input_text}>{arrivalDate || "-"}</p>
-                <Modal>
-                  <ModalTrigger>
-                    <Button size="sm" variant="ghost">
-                      <FaRegCalendarAlt className={styles.input_text} />
-                    </Button>
-                  </ModalTrigger>
-                  <ModalContent>
-                    <div className={styles.modal_container}>
-                      <Calendar
-                        onSelectDate={(date) => {
-                          setArrivalDate(date);
-                        }}
-                      />
-                    </div>
-                  </ModalContent>
-                </Modal>
-              </div>
+              <Field label="출발일" isRequire>
+                <Input
+                  type="date"
+                  style={{ width: "100%" }}
+                  size="sm"
+                  {...register("arrivalDate")}
+                />
+                {errors.arrivalDate && (
+                  <p className={styles.error}>{errors.arrivalDate.message}</p>
+                )}
+              </Field>
             </div>
 
             <div className={styles.plan_columns}>
-              <div className={styles.input_name}>도착일</div>
-              <div className={styles.input}>
-                <p className={styles.input_text}>{departureDate || "-"}</p>
-                <Modal>
-                  <ModalTrigger>
-                    <Button size="sm" variant="ghost">
-                      <FaRegCalendarAlt className={styles.input_text} />
-                    </Button>
-                  </ModalTrigger>
-                  <ModalContent>
-                    <div className={styles.modal_container}>
-                      <Calendar
-                        onSelectDate={(date) => {
-                          setDepartureDate(date);
-                        }}
-                      />
-                    </div>
-                  </ModalContent>
-                </Modal>
-              </div>
+              <Field label="도착일" isRequire>
+                <Input
+                  type="date"
+                  style={{ width: "100%" }}
+                  size="sm"
+                  {...register("departureDate")}
+                />
+                {errors.departureDate && (
+                  <p className={styles.error}>{errors.departureDate.message}</p>
+                )}
+              </Field>
             </div>
 
             <div className={styles.plan_columns}>
-              <div className={styles.input_name}>예산안</div>
-              <Input
-                size="md"
-                placeholder="1인당 예산안(￦)"
-                type="number"
-                style={{ flex: 1 }}
-                value={budget}
-                onChange={handleBudgetChange}
-              />
+              <Field label="예산안" isRequire>
+                <Input
+                  type="number"
+                  size="sm"
+                  style={{ width: "100%" }}
+                  {...register("budget")}
+                />
+                {errors.budget && (
+                  <p className={styles.error}>{errors.budget.message}</p>
+                )}
+              </Field>
             </div>
 
             <div className={styles.plan_columns}>
-              <div className={styles.input_name}>친구 추가</div>
-              <div className={styles.input}>
-                <p className={styles.input_text}>{withUser || "-"}</p>
-                <Modal>
-                  <ModalTrigger>
-                    <Button size="sm">친구 추가하기</Button>
-                  </ModalTrigger>
-                  <ModalContent>
-                    <AddUser onConfirm={handleConfirmUsers} />
-                  </ModalContent>
-                </Modal>
-              </div>
+              <Field label="친구 추가">
+                <div className={styles.place}>
+                  <Input
+                    type="text"
+                    style={{ flex: 1 }}
+                    size="sm"
+                    value={withUser || ""}
+                    readOnly
+                  />
+                  <Modal>
+                    <ModalTrigger>
+                      <Button size="md" type="button">
+                        추가
+                      </Button>
+                    </ModalTrigger>
+                    <ModalContent>
+                      <AddUser onConfirm={handleConfirmUsers} />
+                    </ModalContent>
+                  </Modal>
+                </div>
+              </Field>
             </div>
-          </div>
 
-          <div className={styles.button_container}>
-            <Button size="lg" variant="solid" onClick={() => handleAdd()}>
-              플랜 추가하기
-            </Button>
-          </div>
+            <div className={styles.button_container}>
+              <Button size="lg" variant="ghost" type="submit">
+                플랜 추가하기
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
     </BaseLayout>
