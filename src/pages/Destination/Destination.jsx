@@ -4,6 +4,8 @@ import { destinationItems,dummy } from "./constants";
 import Weather from "./components/Weather";
 import { useState } from "react";
 import DetailItem from "./components/DetailItem";
+import { Map, AdvancedMarker, } from "@vis.gl/react-google-maps";
+import DestinationMap from "./components/DestinationMap";
 
 const Destination = () => {
     const [selectedPlace, setSelectedPlace] = useState("Osaka");
@@ -16,7 +18,7 @@ const Destination = () => {
                 </div>
                 <div className={styles.info_container}>
                     <div className={styles.map_container}>
-                        <h1>지도</h1>
+                        <DestinationMap />
                     </div>
                     <div className={styles.info_box}>
                         <div className={styles.weather_box}>
