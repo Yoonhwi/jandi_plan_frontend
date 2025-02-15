@@ -5,12 +5,13 @@ export const PageEndPoints = {
   LOGIN: "/auth/login",
   JOIN: "/auth/join",
 
-  CREATEPLAN: "/create",
   PLAN_DETAIL: "/plan/:id",
-
+  PLAN_LIST: "/plan/list",
+  PLAN_CREATE: "/plan/create",
+  
   PREFERENCE: "/preference/*",
-  CONTINENT: "/preference/continent",
-  DESTINATION: "/preference/destination",
+  PREF_CONT: "/preference/continent",
+  PREF_DEST: "/preference/destination",
 
   SEARCH: "/search/*",
   NOTICE: "/notice",
@@ -18,6 +19,11 @@ export const PageEndPoints = {
   BOARD: "/board",
   BOARD_DETAIL: "/board/:id",
   BOARD_WRITE: "/board/write",
+
+  MYPAGE: "/mypage",
+
+  DESTINATION: "/destination",
+  
 };
 
 export const APIEndPoints = {
