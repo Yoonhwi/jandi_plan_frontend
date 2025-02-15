@@ -125,3 +125,8 @@
   font-size: var(--text-base);
   color: var(--color-black);
 }
+
+.error {
+  color: var(--color-red-600);
+  font-size: var(--text-xs);
+}
