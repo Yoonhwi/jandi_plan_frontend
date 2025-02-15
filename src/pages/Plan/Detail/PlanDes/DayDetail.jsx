@@ -6,7 +6,7 @@ import { formatPrice } from "@/utils";
 const DayDetail = ({ data, focus }) => {
   const [dummy, setDummy] = useState(data);
 
-  const s = dummy.find((v) => v.day === focus);
+  const s = dummy.find((v) => v.date === focus);
   const { contentData } = s;
 
   return (

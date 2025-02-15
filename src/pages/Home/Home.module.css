@@ -14,16 +14,6 @@
   font-weight: var(--font-weight-bold);
 }
 
-.banner_img {
-  width: 100%;
-  max-height: 20rem;
-
-  object-fit: cover;
-  object-position: center;
-
-  border-radius: var(--radius-sm);
-}
-
 .des_container {
   display: flex;
   flex-direction: column;
