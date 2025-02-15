@@ -141,7 +141,7 @@ const BoardPage = () => {
     <BaseLayout>
       <div className={styles.container}>
         <div className={styles.header}>
-          <p className={styles.header_title}>Community</p>
+          <p className={styles.header_title}>잡담부터 정보까지 !</p>
           <Button
             variant="ghost"
             onClick={() => navigate(PageEndPoints.BOARD_WRITE)}

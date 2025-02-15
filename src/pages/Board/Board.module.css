@@ -15,7 +15,7 @@
 }
 
 .header_title {
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
 }
 

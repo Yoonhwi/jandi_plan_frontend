@@ -125,17 +125,18 @@ const dummy = [
 const PlanList = () => {
   return (
     <BaseLayout>
-      <div className={styles.continer}>
+      <div className={styles.container}>
         <div className={styles.title_box}>
-          <p className={styles.title}>Travel Plans</p>
+          <p className={styles.title}>이런 여행 일정은 어때요?</p>
           <form className={styles.search_input}>
             <Input
-              size="lg"
+              size="md"
               placeholder="Search Plans ..."
               style={{
                 width: "100%",
                 borderRadius: "28px",
                 boxSizing: "border-box",
+                padding: "0.5rem 3rem 0.5rem 1.5rem",
               }}
             />
 
