@@ -1,0 +1,20 @@
+.container {
+  width: 40rem;
+  min-height: 35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.map_container {
+  height: 30rem;
+
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+}

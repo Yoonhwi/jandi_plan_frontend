@@ -10,6 +10,7 @@ import {
   Board,
   BoardDetail,
   BoardWrite,
+  PlanDetail,
   MyPage,
   Destination,
 } from "@/pages";
@@ -28,22 +29,26 @@ function App() {
             <Route path={PageEndPoints.HOME} element={<Home />} />
             <Route path={PageEndPoints.TEST} element={<Test />} />
             <Route path={PageEndPoints.AUTH} element={<AuthLayout />} />
-            <Route path={PageEndPoints.PLAN_CREATE} element={<PlanCreate />} />
-            <Route path={PageEndPoints.PLAN_LIST} element={<PlanList />} />
+            <Route path={PageEndPoints.SEARCH} element={<SearchLayout />} />
+            <Route path={PageEndPoints.NOTICE} element={<Notice />} />
+            <Route path={PageEndPoints.MYPAGE} element={<MyPage />} />
+            <Route path={PageEndPoints.DESTINATION} element={<Destination />} />
             <Route
               path={PageEndPoints.PREFERENCE}
               element={<PreferenceLayout />}
             />
-            <Route path={PageEndPoints.SEARCH} element={<SearchLayout />} />
-            <Route path={PageEndPoints.NOTICE} element={<Notice />} />
+
+            <Route path={PageEndPoints.PLAN_DETAIL} element={<PlanDetail />} />
+            <Route path={PageEndPoints.PLAN_CREATE} element={<PlanCreate />} />
+            <Route path={PageEndPoints.PLAN_LIST} element={<PlanList />} />
+
+
             <Route path={PageEndPoints.BOARD} element={<Board />} />
             <Route
               path={PageEndPoints.BOARD_DETAIL}
               element={<BoardDetail />}
             />
             <Route path={PageEndPoints.BOARD_WRITE} element={<BoardWrite />} />
-            <Route path={PageEndPoints.MYPAGE} element={<MyPage />} />
-            <Route path={PageEndPoints.DESTINATION} element={<Destination />} />
           </Routes>
         </BrowserRouter>
       </ToastProvider>

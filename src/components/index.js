@@ -3,5 +3,6 @@ export { default as Input } from "./Input/Input.jsx";
 export { default as Tooltip } from "./Tooltip/Tooltip.jsx";
 export { default as ToastList } from "./Toast/ToastList.jsx";
 export { default as Editor } from "./Editor/Editor.jsx";
+export { default as Field } from "./Field/Field.jsx";
 export * from "./Drawer/Drawer.jsx";
 export * from "./Modal/Modal.jsx";

@@ -5,8 +5,9 @@ export const PageEndPoints = {
   LOGIN: "/auth/login",
   JOIN: "/auth/join",
 
-  PLAN_CREATE: "/plan/create",
+  PLAN_DETAIL: "/plan/:id",
   PLAN_LIST: "/plan/list",
+  PLAN_CREATE: "/plan/create",
   
   PREFERENCE: "/preference/*",
   PREF_CONT: "/preference/continent",
