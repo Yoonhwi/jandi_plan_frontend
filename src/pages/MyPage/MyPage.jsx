@@ -10,7 +10,7 @@ const MyPage = () => {
   return (
     <BaseLayout>
       <div className={styles.container}>
-        <div className={styles.plan_box}>
+        <div className={styles.myplan_box}>
           <div className={styles.title_box}>
             <p className={styles.title}>민근 님의 Travel Plan</p>
             <Modal>
@@ -26,7 +26,7 @@ const MyPage = () => {
           </div>
 
           <div className={styles.flex_column}>
-            <div className={styles.plan_container}>
+            <div className={styles.myplan_container}>
               {dummy.map((item) => (
                 <DetailItem key={item.plan.id} item={item} />
               ))}
@@ -49,26 +49,47 @@ const MyPage = () => {
               관심 여행지 수정하기
             </Button>
           </div>
-            <Slider items={destinationItems} type="destination" />
+          <Slider items={destinationItems}>
+            {(item) => (
+              <>
+                <div
+                  className={styles.img_container}
+                  style={{
+                    backgroundImage: `url(${item.imgSrc})`,
+                  }}
+                />
+                <div className={styles.dest_container}>
+                  <div className={styles.dest_title}>
+                    <p className={styles.dest_name}>{item.name}</p>
+                  </div>
+                </div>
+              </>
+            )}
+        </Slider>
         </div>
 
         <div className={styles.like_container}>
           <div className={styles.title_box}>
             <p className={styles.title}>좋아요한 플랜</p>
           </div>
-          <Slider items={dummy} type="plan" />
-          {/* <div className={styles.place_container} >
-            {destinationItems.map((item) => (
-              <div className={styles.place_box} key={item.name}>
-                <img
-                  src={item.imgSrc}
-                  alt="destination"
-                  className={styles.des_img}
-                />
-                <p className={styles.des_img_title}>{item.name}</p>
+          <Slider items={dummy}>
+          {(item) => (
+            <>
+              <div
+                className={styles.img_container}
+                style={{
+                  backgroundImage: `url(${item.plan.profile_url})`,
+                }}
+              />
+              <div className={styles.plan_container}>
+                <div className={styles.plan_title}>
+                  <p className={styles.plan_name}>{item.plan.title}</p>
+                  <p className={styles.plan_destination}>{item.plan.destination}</p>
+                </div>
               </div>
-            ))}
-          </div> */}
+            </>
+          )}
+        </Slider>
         </div>
       </div>
     </BaseLayout>
