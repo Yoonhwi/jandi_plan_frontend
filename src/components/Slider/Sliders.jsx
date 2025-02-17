@@ -11,6 +11,7 @@ const Sliders = ({ items, children, size="sm" }) => {
         infinite: false,
         speed: 500,
         slidesToShow: 3,
+        arrows: false,
         responsive: [
           {
             breakpoint: 900,
