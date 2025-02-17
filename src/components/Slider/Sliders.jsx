@@ -5,19 +5,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Sliders = ({ items, children }) => {
+const Sliders = ({ items, children, size="sm" }) => {
     const settings = {
         dots: false,
         infinite: false,
         speed: 500,
         slidesToShow: 3,
-        // arrow:true,
-        // nextArrow: (
-        //     <Button className={styles.slick_next_arrow} size="md" variant="none"><MdNavigateNext /></Button>
-        // ),
-        // prevArrow: (
-        //     <Button className={styles.slick_next_arrow} size="md" variant="none"><MdNavigateBefore /></Button>
-        // ),
         responsive: [
           {
             breakpoint: 900,
@@ -35,10 +28,19 @@ const Sliders = ({ items, children }) => {
       };
 
       return(
-        <div className={styles.slider_container}>
+        <div
+            className={`${styles.slider_container} ${
+            size === "sm" ? styles.sm_container : styles.md_container
+            }`}
+        >
             <Slider {...settings}>
                 {items.map((item, index) => (
-                <div key={index} className={styles.place_box}>
+                <div
+                    key={index}
+                    className={`${styles.place_box} ${
+                        size === "sm" ? styles.sm_place_box : styles.md_place_box
+                    }`}
+                >
                     {children(item)}
                 </div>
                 ))}
