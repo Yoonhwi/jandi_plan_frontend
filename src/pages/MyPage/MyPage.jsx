@@ -1,11 +1,12 @@
 import { BaseLayout } from "@/layouts";
 import styles from "./MyPage.module.css";
-import { Button, Modal, ModalContent, ModalTrigger } from "@/components";
+import { Button, Modal, ModalContent, ModalTrigger, Slider } from "@/components";
 import DetailItem from "./Components/DetailItem";
 import { destinationItems, dummy } from "./constants";
 import MyInfo from "./Components/MyInfo";
 
 const MyPage = () => {
+
   return (
     <BaseLayout>
       <div className={styles.container}>
@@ -43,27 +44,20 @@ const MyPage = () => {
 
         <div className={styles.interest_container}>
           <div className={styles.title_box}>
-            <p className={styles.title}>민근 님의 Interested Place</p>
+            <p className={styles.title}>민근 님의 관심 여행지 리스트</p>
+            <Button variant="ghost" size="sm">
+              관심 여행지 수정하기
+            </Button>
           </div>
-          <div className={styles.place_container}>
-            {destinationItems.map((item) => (
-              <div className={styles.place_box} key={item.name}>
-                <img
-                  src={item.imgSrc}
-                  alt="destination"
-                  className={styles.des_img}
-                />
-                <p className={styles.des_img_title}>{item.name}</p>
-              </div>
-            ))}
-          </div>
+            <Slider items={destinationItems} type="destination" />
         </div>
 
         <div className={styles.like_container}>
           <div className={styles.title_box}>
-            <p className={styles.title}>Like / Favorite Trip</p>
+            <p className={styles.title}>좋아요한 플랜</p>
           </div>
-          <div className={styles.place_container}>
+          <Slider items={dummy} type="plan" />
+          {/* <div className={styles.place_container} >
             {destinationItems.map((item) => (
               <div className={styles.place_box} key={item.name}>
                 <img
@@ -74,7 +68,7 @@ const MyPage = () => {
                 <p className={styles.des_img_title}>{item.name}</p>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </BaseLayout>

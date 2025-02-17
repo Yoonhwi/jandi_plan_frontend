@@ -57,16 +57,16 @@
   flex: 1;
   gap: 2rem;
   height: 14rem;
-  overflow-x: auto;
+  overflow: hidden;
 }
 
 .place_box {
   display: flex;
   gap: 1rem;
-  width: calc(33% - 2rem);
+  min-width: 25rem;
   align-items: center;
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--color-text-dynamic);
+  border-radius: var(--radius-4xl);
+  border: 3px solid var(--color-gray-200);
   position: relative;
 }
 
@@ -75,7 +75,7 @@
   aspect-ratio: 1.5 / 1;
   object-fit: cover;
   object-position: center;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-4xl);
   opacity: 0.6;
 }
 
@@ -95,4 +95,5 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 1rem;
 }
