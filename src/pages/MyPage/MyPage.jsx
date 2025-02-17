@@ -10,46 +10,36 @@ const MyPage = () => {
   return (
     <BaseLayout>
       <div className={styles.container}>
+        <div className={styles.main_title_box}>
+            <p className={styles.main_title}>민근 님, 반갑습니다!</p>
+          <Modal>
+            <ModalTrigger>
+              <Button variant="ghost" size="lg">
+                내 정보 수정
+              </Button>
+            </ModalTrigger>
+            <ModalContent>
+              <MyInfo />
+            </ModalContent>
+          </Modal>
+        </div>
         <div className={styles.myplan_box}>
           <div className={styles.title_box}>
-            <p className={styles.title}>민근 님의 Travel Plan</p>
-            <Modal>
-              <ModalTrigger>
-                <Button variant="ghost" size="md">
-                  내 정보 수정
-                </Button>
-              </ModalTrigger>
-              <ModalContent>
-                <MyInfo />
-              </ModalContent>
-            </Modal>
+            <p className={styles.title}>여행 계획</p>
           </div>
-
-          <div className={styles.flex_column}>
-            <div className={styles.myplan_container}>
-              {dummy.map((item) => (
-                <DetailItem key={item.plan.id} item={item} />
-              ))}
-            </div>
-
-            <div className={styles.footer}>
-              <Button variant="ghost">이전</Button>
-              <Button variant="ghost">1</Button>
-              <Button variant="ghost">2</Button>
-              <Button variant="ghost">3</Button>
-              <Button variant="ghost">다음</Button>
-            </div>
-          </div>
+          <Slider items={dummy} size="md">
+            {(item) => <DetailItem key={item.plan.id} item={item} />}
+          </Slider>
         </div>
 
         <div className={styles.interest_container}>
           <div className={styles.title_box}>
-            <p className={styles.title}>민근 님의 관심 여행지 리스트</p>
+            <p className={styles.title}>관심 여행지 리스트</p>
             <Button variant="ghost" size="sm">
               관심 여행지 수정하기
             </Button>
           </div>
-          <Slider items={destinationItems}>
+          <Slider items={destinationItems} size="sm">
             {(item) => (
               <>
                 <div
@@ -72,7 +62,7 @@ const MyPage = () => {
           <div className={styles.title_box}>
             <p className={styles.title}>좋아요한 플랜</p>
           </div>
-          <Slider items={dummy}>
+          <Slider items={dummy} size="sm">
           {(item) => (
             <>
               <div

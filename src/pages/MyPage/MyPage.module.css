@@ -7,6 +7,17 @@
   gap: 4rem;
 }
 
+.main_title_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main_title {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-extrabold);
+}
+
 .myplan_box {
   display: flex;
   flex-direction: column;
@@ -38,11 +49,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-}
-
-.footer {
-  padding-top: 1rem;
-  align-self: center;
 }
 
 .like_container,
