@@ -125,7 +125,22 @@ const getDetailPlanDummy = {
       day: 2,
       date: "2025-07-01",
       total: 0,
-      contentData: [],
+      contentData: [
+        {
+          id: 5,
+          cost: 20000,
+          date: "2025-07-01",
+          place: {
+            address:
+              "대한민국 서울특별시 번지 지4 동 5층 KR 서울특별시 서대문구 창천동 510-2",
+            lat: 37.55881610000001,
+            lng: 126.9274137,
+            name: "홍대24시불가마사우나",
+          },
+          time: "21:40",
+          title: "사우나",
+        },
+      ],
     },
     {
       day: 3,

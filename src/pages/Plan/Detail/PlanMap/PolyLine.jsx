@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 
 const Polyline = ({ path }) => {
-  const map = useMap();
+  const map = useMap("main-map");
   const maps = useMapsLibrary("maps");
 
   useEffect(() => {
