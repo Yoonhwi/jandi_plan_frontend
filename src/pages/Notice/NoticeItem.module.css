@@ -28,6 +28,10 @@
   gap: 1rem;
 }
 
+.icon {
+  color: var(--color-notice-border);
+}
+
 .container:not(:last-child) {
   border-bottom: none;
 }
