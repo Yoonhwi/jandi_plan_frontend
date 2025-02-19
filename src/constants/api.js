@@ -8,7 +8,7 @@ export const PageEndPoints = {
   PLAN_DETAIL: "/plan/:id",
   PLAN_LIST: "/plan/list",
   PLAN_CREATE: "/plan/create",
-  
+
   PREFERENCE: "/preference/*",
   PREF_CONT: "/preference/continent",
   PREF_DEST: "/preference/destination",
@@ -27,5 +27,6 @@ export const PageEndPoints = {
 };
 
 export const APIEndPoints = {
-  user: "/user",
+  USER: "/users",
+  NOTICEALL: "/notice/lists",
 };
