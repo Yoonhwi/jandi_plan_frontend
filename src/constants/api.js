@@ -29,4 +29,7 @@ export const PageEndPoints = {
 export const APIEndPoints = {
   USER: "/users",
   NOTICEALL: "/notice/lists",
+  BANNER: "/banner/lists",
+
+  BOARD:"/community/posts",
 };
