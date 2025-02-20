@@ -1,15 +1,3 @@
-export const bannerItems = [
-  {
-    imgSrc: "/banner_img.jpg",
-  },
-  {
-    imgSrc: "/airplane.jpg",
-  },
-  {
-    imgSrc: "/hotel.jpg",
-  },
-];
-
 export const descriptionItems = [
   {
     title: "WHERE TO GO?",
