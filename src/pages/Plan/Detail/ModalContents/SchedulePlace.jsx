@@ -86,7 +86,7 @@ const SchedulePlace = ({ handleScheduleStep, formController }) => {
       lat: location.lat(),
       lng: location.lng(),
     };
-
+    console.log("flattenPlace", flattenPlace);
     setValue("place", flattenPlace);
   }, [selectedPlace, setValue]);
 
