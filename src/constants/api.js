@@ -29,4 +29,6 @@ export const PageEndPoints = {
 export const APIEndPoints = {
   USER: "/users",
   NOTICEALL: "/notice/lists",
+  COMMUNITY_COMMENTS: "/community/comments/:id",
+  COMMENTS_REPLIES: "/community/replies/:id",
 };

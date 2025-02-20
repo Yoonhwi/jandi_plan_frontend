@@ -1,0 +1,52 @@
+.comment_item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comment {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.comment_user_img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+}
+
+.flex_column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.comment_info {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.comment_date,
+.recomment,
+.report {
+  font-size: var(--text-sm);
+  color: var(--color-gray-400);
+}
+
+.recomment_container {
+  box-sizing: border-box;
+  padding-left: 3.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.recomment_info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--color-blue-600);
+}
