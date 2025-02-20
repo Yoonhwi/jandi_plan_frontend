@@ -9,7 +9,7 @@ const BoardItem = ({ item }) => {
   const commentCount = Number(item.comment_count);
 
   const handleClick = useCallback(() => {
-    const path = buildPath(PageEndPoints.BOARD, { id: item.postId });
+    const path = buildPath(PageEndPoints.BOARD_DETAIL, { id: item.postId });
     navigate(path);
   }, [item.id, navigate]);
 
