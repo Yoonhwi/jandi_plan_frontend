@@ -2,7 +2,7 @@ import { BaseLayout } from "@/layouts";
 import styles from "./Board.module.css";
 import { Button,Loading } from "@/components";
 import BoardItem from "./BoardItem";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams  } from "react-router-dom";
 import { useAxios } from "@/hooks";
 import { PageEndPoints, APIEndPoints } from "@/constants";
 import { useState, useEffect } from "react";
@@ -10,7 +10,9 @@ import { useState, useEffect } from "react";
 
 const BoardPage = () => {
   const navigate = useNavigate();
-  const [page, setPage] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageFromParams = parseInt(searchParams.get("page")) || 1;
+  const [page, setPage] = useState(pageFromParams - 1);
   const [totalPage, setTotalPage] = useState(0);
   const { loading, fetchData, response } = useAxios();
 
@@ -29,15 +31,20 @@ const BoardPage = () => {
 
 
     const handlePrevPage = () => {
-      if (page > 1) setPage((prev) => prev - 1);
+      if (page > 0) {
+        setPage((prev) => prev - 1);
+        setSearchParams({ page: page });
+      };
     };
   
     const handleNextPage = () => {
-      if(page < response.pageInfo.totalPages) setPage((prev) => prev + 1);
+      if(page < totalPage - 1) setPage((prev) => prev + 1);
+      setSearchParams({ page: page + 2 });
     };
 
     const handlePageChange = (num) => {
       setPage(num);
+      setSearchParams({ page: num + 1 });
     };
 
   return (
@@ -98,7 +105,7 @@ const BoardPage = () => {
 
           {totalPage > 1 && (
             <Button
-              variant={page === page - 1 ? "solid" : "ghost"}
+              variant={page === totalPage - 1 ? "solid" : "ghost"}
               onClick={() => handlePageChange(totalPage-1)}
               disabled={page === totalPage-1}
             >
