@@ -27,6 +27,7 @@ export const PageEndPoints = {
 };
 
 export const APIEndPoints = {
+  LOGIN: "/users/login",
   USER: "/users",
   NOTICEALL: "/notice/lists",
   BANNER: "/banner/lists",
