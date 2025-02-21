@@ -36,7 +36,7 @@ const BoardDetail = () => {
         <p className={styles.title}>{item.title}</p>
         <div className={styles.header}>
           <div className={styles.user_info}>
-            {/* <img src={item.user.profile_img} className={styles.user_img} /> */}
+            <img src={item.user.profileImageUrl} className={styles.user_img} />
             <p className={styles.user_name}>{item.user.userName}</p>
             <p className={styles.recommend}>조회수 654818</p>
             <p className={styles.recommend}>추천 {item.likeCount}</p>

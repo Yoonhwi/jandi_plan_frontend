@@ -25,7 +25,7 @@ const BoardItem = ({ item }) => {
       </div>
 
       <div className={styles.writer}>
-        <img src={item.user.profile_img} className={styles.writer_img} />
+        <img src={item.user.profileImageUrl} className={styles.writer_img} />
         <p className={styles.writer_name}>{item.user.userName}</p>
       </div>
       <div className={styles.date}>{formatDay(item.createdAt)}</div>
