@@ -19,7 +19,7 @@ const BoardItem = ({ item }) => {
 
       <div className={styles.title_box}>
         <p className={styles.title}>{item.title}</p>
-        {commentCount > 0 && (
+        {item.commentCount > 0 && (
           <p className={styles.comment_count}>[{item.commentCount}]</p>
         )}
       </div>
