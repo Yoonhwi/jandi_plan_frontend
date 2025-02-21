@@ -31,4 +31,6 @@ export const APIEndPoints = {
   NOTICEALL: "/notice/lists",
   COMMUNITY_COMMENTS: "/community/comments/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
+  USER_RESISTER: "/users/register",
+  USER_VERIFY: "/users/verify",
 };
