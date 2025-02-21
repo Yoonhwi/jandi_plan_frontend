@@ -19,16 +19,16 @@ const BoardPage = () => {
     useEffect(()=> {
       fetchData({
         method: "GET",
-        url: `${APIEndPoints.BOARD}?page=${page}`,
+        url: `${APIEndPoints.BOARD}`,
+        params: { page },
       });
     },[fetchData,page]);
 
     useEffect(() => {
-      if (response?.pageInfo?.totalPages) {
+      if (response?.pageInfo.totalPages) {
         setTotalPage(response.pageInfo.totalPages);
       }
     }, [response]);
-
 
     const handlePrevPage = () => {
       if (page > 0) {
