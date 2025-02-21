@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useAxios } from "@/hooks";
+import { useAuth } from "@/contexts";
 
 
 const schema = z.object({
@@ -19,6 +20,7 @@ const schema = z.object({
 const LoginPage = () => {
   const navigate = useNavigate();
   const { loading, fetchData, response } = useAxios();
+  const { currentUser, signIn } = useAuth(); //로그인 관리
 
   const {
     register,
