@@ -27,7 +27,7 @@ const useAxios = () => {
       setResponse(res.data);
       setIsSuccess(true);
     } catch (err) {
-      setError(err);
+      setError(err.response.data);
       setResponse(null);
     } finally {
       setLoading(false);
