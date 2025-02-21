@@ -1,24 +1,36 @@
-import { Button, Input } from "@/components";
+import { Button, Input, Loading } from "@/components";
 import styles from "./Comment.module.css";
-import { RiArrowDownWideLine, RiArrowUpWideLine } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useAxios } from "@/hooks";
+import CommentItem from "./CommentItem";
+import { buildPath } from "@/utils";
+import { APIEndPoints } from "@/constants";
 
-const currentUserDummy = {
-  id: 1,
-  name: "승휘",
-  profile_img: "/user2.jpg",
-};
+const Comment = () => {
+  const { id } = useParams();
+  const { loading, response, fetchData } = useAxios();
 
-const Comment = ({ item }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    (async () => {
+      await fetchData({
+        url: buildPath(APIEndPoints.COMMUNITY_COMMENTS, { id }),
+        method: "GET",
+      });
+    })();
+  }, [fetchData, id]);
+
+  if (loading) return <Loading />;
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <p className={styles.comment_count}>댓글 {item.comment_count} 개</p>
+        <p className={styles.comment_count}>
+          댓글 {response?.pageInfo.totalSize} 개
+        </p>
         <div className={styles.form_box}>
           <img
-            src={currentUserDummy.profile_img}
+            src={response?.user?.profileImageUrl ?? "/user1.png"}
             className={styles.current_user_img}
           />
           <Input
@@ -36,39 +48,8 @@ const Comment = ({ item }) => {
       </div>
 
       <div className={styles.comment_container}>
-        {item.comment.map((comment) => {
-          console.log("comment", comment);
-          return (
-            <div key={comment.id} className={styles.comment_item}>
-              <div className={styles.comment}>
-                <img
-                  src={comment.user.profile_img}
-                  className={styles.comment_user_img}
-                />
-                <div className={styles.flex_column}>
-                  <div className={styles.comment_info}>
-                    <p className={styles.comment_user_name}>
-                      {comment.user.name}
-                    </p>
-                    <p className={styles.comment_date}>1일전</p>
-                    <p className={styles.recomment}>답글</p>
-                    <p className={styles.report}>신고</p>
-                  </div>
-                  <p className={styles.comment_text}>{comment.content}</p>
-                </div>
-              </div>
-
-              {comment.recomment_count > 0 && (
-                <div
-                  className={styles.recomment_container}
-                  onClick={() => setIsOpen(!isOpen)}
-                >
-                  {isOpen ? <RiArrowUpWideLine /> : <RiArrowDownWideLine />}
-                  <p>답글 {comment.recomment_count}개</p>
-                </div>
-              )}
-            </div>
-          );
+        {response?.items.map((comment) => {
+          return <CommentItem key={comment.commentId} comment={comment} />;
         })}
       </div>
     </div>

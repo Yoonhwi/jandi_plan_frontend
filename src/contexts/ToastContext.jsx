@@ -29,7 +29,7 @@ export const ToastContext = createContext(
   }
 );
 
-export const useToastContext = () => {
+export const useToast = () => {
   const context = useContext(ToastContext);
 
   if (!context) {
