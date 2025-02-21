@@ -5,7 +5,6 @@ import { PageEndPoints, APIEndPoints } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { useAxios } from "@/hooks";
 import { useAuth } from "@/contexts";
 
 
@@ -19,8 +18,7 @@ const schema = z.object({
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { loading, fetchData, response } = useAxios();
-  const { currentUser, signIn } = useAuth(); //로그인 관리
+  const { signIn } = useAuth(); //로그인 관리
 
   const {
     register,
@@ -30,45 +28,12 @@ const LoginPage = () => {
     resolver: zodResolver(schema),
   });
 
-  const handleAdd = (data) => {
+  const handleAdd = async (data) => {
     if (data) {
-      if(handleLogin(data)){
-        // navigate(PageEndPoints.HOME);
-        console.log("login성공");
-      }
-      else {
-        console.log("login실패");
-      }
+      console.log("여기");
+      signIn(data);
     }
   };
-
-  const handleLogin = (data)=> {
-    try{
-      fetchData({
-        method: "POST",
-        url: `${APIEndPoints.LOGIN}`,
-        data: {
-          email: data.id,
-          password: data.password, 
-        }
-      })
-
-      if(response.accessToken){
-        // localStorage.setItem("accessToken", response.accessToken);
-        // localStorage.setItem("refreshToken", response.refreshToken);
-        
-        console.log(response.accessToken);
-        return true;
-      }else{
-        console.log();
-        return false;
-      }
-    }catch (error) {
-      console.log(error.message);
-      console.error("로그인 요청 중 오류 발생:", error);
-    }
-    
-  }
 
   return (
     <div className={styles.container}>

@@ -28,6 +28,7 @@ export const PageEndPoints = {
 
 export const APIEndPoints = {
   LOGIN: "/users/login",
+  REFRESH: "/users/token/refresh",
   USER: "/users",
   NOTICEALL: "/notice/lists",
   BANNER: "/banner/lists",
