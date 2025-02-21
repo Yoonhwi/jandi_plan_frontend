@@ -26,9 +26,11 @@ const useAxios = () => {
       const res = await axiosInstance(params);
       setResponse(res.data);
       setIsSuccess(true);
+      return res;
     } catch (err) {
       setError(err.response.data);
       setResponse(null);
+      throw err;
     } finally {
       setLoading(false);
     }
