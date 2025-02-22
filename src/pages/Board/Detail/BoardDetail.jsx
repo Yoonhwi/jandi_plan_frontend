@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { useEffect,useState } from "react";
 import { Loading } from "@/components";
 import { useAxios } from "@/hooks";
-import {formatISO} from "@/utils";
+import { formatDistanceToNow } from "date-fns";
 
 const BoardDetail = () => {
   const { id } = useParams();
@@ -43,7 +43,7 @@ const BoardDetail = () => {
             <p className={styles.recommend}>조회수 654818</p>
             <p className={styles.recommend}>추천 {item.likeCount}</p>
           </div>
-          <p className={styles.date}>{formatISO(item.createdAt)}</p>
+          <p className={styles.date}>{formatDistanceToNow(item.createdAt)}</p>
         </div>
 
         <div className={styles.divider} />
