@@ -29,7 +29,8 @@ const AuthProvider = ({ children }) => {
   const signOut = () => {
     localStorage.removeItem("access-token");
     localStorage.removeItem("refresh-token");
-    setIsLoggedIn(false); 
+    setIsLoggedIn(false);
+    window.location.reload();
   }
 
   useEffect(() => {
