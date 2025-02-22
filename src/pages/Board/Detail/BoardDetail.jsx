@@ -64,7 +64,7 @@ const BoardDetail = () => {
         </div>
         <div className={styles.divider} />
 
-        {/* <Comment item={item} /> */}
+        <Comment item={item} />
       </div>
         )
       )}
