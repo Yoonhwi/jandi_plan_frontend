@@ -1,25 +1,40 @@
 import { Button, Editor, Input } from "@/components";
 import { BaseLayout } from "@/layouts";
-import Quill from "quill";
 import "quill/dist/quill.snow.css";
 
-import { useEffect, useState } from "react";
+import { useAxios } from "@/hooks";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./BoardWrite.module.css";
-
-const Delta = Quill.import("delta");
 
 const BoardWrite = () => {
   const [quill, setQuill] = useState(null);
 
-  const ops = [
-    {
-      attributes: { color: "#e60000", background: "#ffebcc" },
-      insert: "Hello",
+  const { fetchData: uploadImage } = useAxios();
+  const handleUploadImage = useCallback(
+    async (file) => {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      return await uploadImage({
+        url: "/images/upload/community",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer`,
+        },
+        data: formData,
+        params: {
+          targetId: 1,
+        },
+      })
+        .then((response) => {
+          return response;
+        })
+        .catch((error) => {
+          throw error;
+        });
     },
-    { insert: "\n" },
-    { attributes: { background: "#e60000" }, insert: "Wolrd" },
-    { insert: "\n\n" },
-  ];
+    [uploadImage]
+  );
 
   useEffect(() => {
     if (!quill) return;
@@ -34,6 +49,7 @@ const BoardWrite = () => {
             e.preventDefault();
             e.stopImmediatePropagation();
             const file = item.getAsFile();
+            console.log("file", file);
             handleImage(file);
             break;
           }
@@ -48,31 +64,32 @@ const BoardWrite = () => {
         for (let i = 0; i < dt.files.length; i++) {
           const file = dt.files[i];
           if (file.type.indexOf("image") !== -1) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
             handleImage(file);
-            break;
+            return;
           }
         }
       }
     });
 
-    function handleImage(file) {
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        const range = quill.getSelection();
-        console.log("hit cumstom image handler", range, evt);
-        quill.insertEmbed(range.index, "image", evt.target.result, "user");
-        quill.setSelection(range.index + 1);
-      };
-      reader.readAsDataURL(file);
+    async function handleImage(file) {
+      const range = quill.getSelection();
+
+      try {
+        const {
+          data: { imageUrl },
+        } = await handleUploadImage(file);
+        quill.insertEmbed(range?.index ?? 0, "image", imageUrl, "user");
+      } catch (error) {
+        console.error("error", error);
+      }
+
+      quill.setSelection((range?.index ?? 0) + 1);
     }
-  }, [quill]);
+  }, [handleUploadImage, quill]);
 
   return (
     <BaseLayout>
       <div className={styles.container}>
-        <div></div>
         <Input
           placeholder="제목을 입력해주세요"
           style={{
@@ -82,14 +99,18 @@ const BoardWrite = () => {
           size="lg"
         />
         <div className={styles.editor}>
-          <Editor defaultValue={new Delta(ops)} onLoaded={setQuill} />
+          <Editor onLoaded={setQuill} />
         </div>
         <Button
           onClick={() => {
             if (!quill) return;
-
-            console.log("delta", quill.getContents());
-            console.log("html", quill.root.innerHTML);
+            const delta = quill.getContents();
+            const stringfy = JSON.stringify(delta);
+            console.log("type", typeof stringfy);
+            const parsed = JSON.parse(stringfy);
+            console.log("delta", delta);
+            console.log("stringfy", stringfy);
+            console.log("parsed", parsed);
           }}
           variant="solid"
           size="md"

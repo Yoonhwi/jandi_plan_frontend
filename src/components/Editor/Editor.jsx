@@ -2,6 +2,8 @@ import Quill from "quill";
 import { useEffect, useRef } from "react";
 import BlotFormatter from "@enzedonline/quill-blot-formatter2";
 
+const Uploader = Quill.import("modules/uploader");
+
 const toolbarOptions = {
   container: [
     [{ header: [1, 2, 3, false] }],
@@ -12,19 +14,19 @@ const toolbarOptions = {
     ["image", "link"],
     ["clean"],
   ],
-  // handlers: {
-  //   image: function () {
-  //     console.log("hit image toolbar");
-  //   },
-  // },
+
+  handlers: {
+    image: function () {
+      console.log("hit image toolbar");
+    },
+  },
 };
 
-class NoOpClipboard {
-  /* eslint-disable no-unused-vars */
-  constructor(quill, options) {}
+class CustomUploader extends Uploader {
+  upload() {}
 }
 
-Quill.register("modules/clipboard", NoOpClipboard, true);
+Quill.register("modules/uploader", CustomUploader, true);
 Quill.register("modules/blotFormmater", BlotFormatter);
 
 const modules = {
