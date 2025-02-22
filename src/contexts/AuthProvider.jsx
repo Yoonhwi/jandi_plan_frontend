@@ -33,47 +33,42 @@ const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    let accessToken = localStorage.getItem("access-token");
-    const refreshToken = localStorage.getItem("refresh-token");
-    
-    if (!accessToken && !refreshToken) return;
-
-    (async () => {
+    const refreshTokenRequest = async () => {
+      let accessToken = localStorage.getItem("access-token");
+      const refreshToken = localStorage.getItem("refresh-token");
+  
+      if (!accessToken && !refreshToken) return; 
+  
       if (!accessToken && refreshToken) {
-
-          fetchData({
+        try {
+          const res = await fetchData({
             method: "POST",
             url: `${APIEndPoints.REFRESH}`,
-            data: {
-              refreshToken: refreshToken,
-            },
-          }).then((res) => {
+            data: { refreshToken },
+          });
+  
+          if (res?.data.accessToken) {
+            console.log("로그인다시");
             localStorage.setItem("access-token", res.data.accessToken);
             localStorage.setItem("refresh-token", res.data.refreshToken);
             setIsLoggedIn(true);
-          }).catch((err) => {
-            console.error(err);
-            signOut();
-            setIsLoggedIn(false);
-          });
-
-          // if (response?.accessToken) {
-          //   localStorage.setItem("access-token", response.accessToken);
-          //   localStorage.setItem("refresh-token", response.refreshToken);
-          // } else {
-          //   signOut();
-          //   return;
-          // }
-        // }catch (error) {
-        //   console.error("토큰 갱신 실패:", error);
-        //   signOut();
-        // }
+          } else {
+            throw new Error("새로운 accessToken을 받지 못함");
+          }
+        } catch (error) {
+          console.error("토큰 갱신 실패:", error);
+          signOut();
+          setIsLoggedIn(false);
+        }
+      } else {
+        console.log("로그인되어있음");
+        setIsLoggedIn(true);
       }
-      // 로그인 성공
-      setIsLoggedIn(true);
-  })
-
-}, []);
+    };
+  
+    refreshTokenRequest();
+  }, []);
+  
 
   return (
     <AuthContext.Provider
