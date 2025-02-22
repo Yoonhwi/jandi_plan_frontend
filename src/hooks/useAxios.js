@@ -23,14 +23,20 @@ const useAxios = () => {
     setError(null);
 
     try {
-      const res = await axiosInstance(params);
+      const res = await axiosInstance.request({
+        headers: {
+          ...params.headers,
+        },
+        ...params,
+      });
+
       setResponse(res.data);
       setIsSuccess(true);
       return res;
     } catch (err) {
       setError(err.response.data);
       setResponse(null);
-      throw err;
+      throw err.response;
     } finally {
       setLoading(false);
     }

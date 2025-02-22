@@ -3,13 +3,19 @@ import styles from "./JoinForm.module.css";
 import { useNavigate } from "react-router-dom";
 import { PageEndPoints } from "@/constants";
 
-const JoinForm = ({ joinUseForm, onSubmit }) => {
+const JoinForm = ({
+  joinUseForm,
+  onSubmit,
+  handleDuplicateEmail,
+  handleDuplicateNickname,
+}) => {
   const navigate = useNavigate();
 
   const {
     register,
     formState: { errors },
     handleSubmit,
+    getValues,
   } = joinUseForm;
 
   return (
@@ -69,11 +75,7 @@ const JoinForm = ({ joinUseForm, onSubmit }) => {
             type="button"
             size="sm"
             style={{ width: "5.5rem" }}
-            onClick={() => {
-              if (errors.email) {
-                console.log("eamil error");
-              }
-            }}
+            onClick={() => handleDuplicateEmail(getValues("email"))}
           >
             중복확인
           </Button>
@@ -98,6 +100,7 @@ const JoinForm = ({ joinUseForm, onSubmit }) => {
             style={{
               width: "5.5rem",
             }}
+            onClick={() => handleDuplicateNickname(getValues("nickname"))}
           >
             중복확인
           </Button>
