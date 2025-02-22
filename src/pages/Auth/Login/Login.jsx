@@ -1,4 +1,5 @@
 import { Button,Input, Field } from "@/components";
+import { useEffect } from "react";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { PageEndPoints, APIEndPoints } from "@/constants";
@@ -18,7 +19,7 @@ const schema = z.object({
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { signIn } = useAuth(); //로그인 관리
+  const { isLoggedIn, signIn } = useAuth(); //로그인 관리
 
   const {
     register,
@@ -29,11 +30,14 @@ const LoginPage = () => {
   });
 
   const handleAdd = async (data) => {
-    if (data) {
-      console.log("여기");
       signIn(data);
-    }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(PageEndPoints.HOME);
+    }
+  }, [isLoggedIn]); 
 
   return (
     <div className={styles.container}>

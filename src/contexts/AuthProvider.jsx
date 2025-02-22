@@ -7,8 +7,7 @@ const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { loading, fetchData, response } = useAxios();
 
-  const signIn = async (data) => {
-    try{
+  const signIn = (data) => {
         fetchData({
         method: "POST",
         url: `${APIEndPoints.LOGIN}`,
@@ -16,18 +15,15 @@ const AuthProvider = ({ children }) => {
           email: data.id,
           password: data.password, 
         },
+      }).then((res)=>{
+        console.log(res);
+        localStorage.setItem("access-token", res.data.accessToken);
+        localStorage.setItem("refresh-token", res.data.refreshToken);
+        setIsLoggedIn(true);
+      }).catch((err) => {
+        console.error(err);
+        setIsLoggedIn(false);
       });
-
-      if (response?.accessToken) {
-        localStorage.setItem("access-token", response.accessToken);
-        localStorage.setItem("refresh-token", response.refreshToken);
-        setIsLoggedIn(true); // 로그인 성공 시 상태 변경
-      } else {
-        throw new Error("로그인 실패: 응답에 토큰이 없음");
-      }
-    }catch (error) {
-      console.error("로그인 오류:", error);
-    }
   }
 
   const signOut = () => {
@@ -44,26 +40,34 @@ const AuthProvider = ({ children }) => {
 
     (async () => {
       if (!accessToken && refreshToken) {
-        try{
+
           fetchData({
             method: "POST",
             url: `${APIEndPoints.REFRESH}`,
             data: {
               refreshToken: refreshToken,
             },
+          }).then((res) => {
+            localStorage.setItem("access-token", res.data.accessToken);
+            localStorage.setItem("refresh-token", res.data.refreshToken);
+            setIsLoggedIn(true);
+          }).catch((err) => {
+            console.error(err);
+            signOut();
+            setIsLoggedIn(false);
           });
 
-          if (response?.accessToken) {
-            localStorage.setItem("access-token", response.accessToken);
-            localStorage.setItem("refresh-token", response.refreshToken);
-          } else {
-            signOut();
-            return;
-          }
-        }catch (error) {
-          console.error("토큰 갱신 실패:", error);
-          signOut();
-        }
+          // if (response?.accessToken) {
+          //   localStorage.setItem("access-token", response.accessToken);
+          //   localStorage.setItem("refresh-token", response.refreshToken);
+          // } else {
+          //   signOut();
+          //   return;
+          // }
+        // }catch (error) {
+        //   console.error("토큰 갱신 실패:", error);
+        //   signOut();
+        // }
       }
       // 로그인 성공
       setIsLoggedIn(true);
