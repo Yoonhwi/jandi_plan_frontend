@@ -8,7 +8,7 @@ export const PageEndPoints = {
   PLAN_DETAIL: "/plan/:id",
   PLAN_LIST: "/plan/list",
   PLAN_CREATE: "/plan/create",
-  
+
   PREFERENCE: "/preference/*",
   PREF_CONT: "/preference/continent",
   PREF_DEST: "/preference/destination",
@@ -27,5 +27,19 @@ export const PageEndPoints = {
 };
 
 export const APIEndPoints = {
-  user: "/user",
+  LOGIN: "/users/login",
+  REFRESH: "/users/token/refresh",
+  USER: "/users",
+  NOTICEALL: "/notice/lists",
+  BANNER: "/banner/lists",
+
+  BOARD:"/community/posts",
+  COMMUNITY_COMMENTS: "/community/comments/:id",
+  COMMENTS_REPLIES: "/community/replies/:id",
+  USER_LOGIN: "/users/login",
+  USER_RESISTER: "/users/register",
+  USER_CHECK_EMAIL: "/users/register/checkEmail",
+  USER_CHECK_NICKNAME: "/users/register/checkName",
+  USER_VERIFY: "/users/verify",
+  IMAGE_UPLOAD: "/images/profiles/upload",
 };
