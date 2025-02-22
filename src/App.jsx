@@ -16,13 +16,14 @@ import {
   DestinationList,
 } from "@/pages";
 import { PageEndPoints } from "@/constants";
-import { DarkModeProvider, ToastProvider } from "@/contexts";
+import { DarkModeProvider, ToastProvider, AuthProvider } from "@/contexts";
 import { ToastList } from "./components";
 import PreferenceLayout from "./pages/Preference/PreferenceLayout";
 
 function App() {
   return (
     <DarkModeProvider>
+      <AuthProvider>
       <ToastProvider>
         <ToastList />
         <BrowserRouter>
@@ -56,6 +57,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </ToastProvider>
+      </AuthProvider>
     </DarkModeProvider>
   );
 }

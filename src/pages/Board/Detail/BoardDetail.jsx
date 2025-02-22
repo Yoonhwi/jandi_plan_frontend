@@ -2,70 +2,48 @@ import { BaseLayout } from "@/layouts";
 import { FaThumbsUp } from "react-icons/fa";
 import styles from "./BoardDetail.module.css";
 import Comment from "./Comment";
+import { APIEndPoints } from "@/constants";
+import { useParams } from "react-router-dom";
+import { useEffect,useState } from "react";
+import { Loading } from "@/components";
+import { useAxios } from "@/hooks";
+import { formatDistanceToNow } from "date-fns";
 
-const dummy = {
-  id: 10,
-  title: "후쿠오카 후기 ㅋ",
-  date: "12 .31",
-  recommended_count: 123456,
-  comment_count: 2,
-  isRecommended: true,
-  content: `<p>테스트 내용입니다.</p><img src="/fukuoka.jpg"/><p>테스트 내용입니다.</p><p>테스트 내용입니다.</p><p>테스트 내용입니다.</p><p>테스트 내용입니다.</p>`,
-  user: {
-    id: 1,
-    name: "민근123123",
-    profile_img: "/user1.png",
-  },
-  comment: [
-    {
-      id: 1,
-      content: "댓글입니다.",
-      date: "12.31",
-      recomment_count: 10,
-      user: {
-        id: 1,
-        name: "민근123123",
-        profile_img: "/user1.png",
-      },
-    },
-    {
-      id: 2,
-      recomment_count: 3,
-      content: "댓글입니다.",
-      date: "12.31",
-      user: {
-        id: 2,
-        name: "민근123123",
-        profile_img: "/user1.png",
-      },
-    },
-    {
-      id: 3,
-      recomment_count: 0,
-      content: "댓글입니다.",
-      date: "12.31",
-      user: {
-        id: 2,
-        name: "승휘",
-        profile_img: "/user2.jpg",
-      },
-    },
-  ],
-};
+const BoardDetail = () => {
+  const { id } = useParams();
+  const [item, setItem] = useState();
+  const { loading, fetchData, response } = useAxios();
 
-const BoardDetail = ({ item = dummy }) => {
+    useEffect(() => {
+      fetchData({
+        method: "GET",
+        url: `${APIEndPoints.BOARD}/${id}`,
+      }).then((res)=>{
+        console.log(res);
+        setItem(res.data.items);
+      }).catch((err) => {
+        console.error(err);
+      });
+    }, [fetchData]);
+
+    console.log(item);
+
   return (
     <BaseLayout>
+    {loading ? (
+        <Loading />
+      ) : (
+        item && (
       <div className={styles.container}>
         <p className={styles.title}>{item.title}</p>
         <div className={styles.header}>
           <div className={styles.user_info}>
-            <img src={item.user.profile_img} className={styles.user_img} />
-            <p className={styles.user_name}>{item.user.name}</p>
+            <img src={item.user.profileImageUrl} className={styles.user_img} />
+            <p className={styles.user_name}>{item.user.userName}</p>
             <p className={styles.recommend}>조회수 654818</p>
-            <p className={styles.recommend}>추천 {item.recommended_count}</p>
+            <p className={styles.recommend}>추천 {item.likeCount}</p>
           </div>
-          <p className={styles.date}>2 days ago</p>
+          <p className={styles.date}>{formatDistanceToNow(item.createdAt)}</p>
         </div>
 
         <div className={styles.divider} />
@@ -84,12 +62,14 @@ const BoardDetail = ({ item = dummy }) => {
                 : "var( --color-gray-300)"
             }
           />
-          <p className={styles.recommend_count}>{item.recommended_count}</p>
+          <p className={styles.recommend_count}>{item.likeCount}</p>
         </div>
         <div className={styles.divider} />
 
         <Comment item={item} />
       </div>
+        )
+      )}
     </BaseLayout>
   );
 };

@@ -27,8 +27,13 @@ export const PageEndPoints = {
 };
 
 export const APIEndPoints = {
+  LOGIN: "/users/login",
+  REFRESH: "/users/token/refresh",
   USER: "/users",
   NOTICEALL: "/notice/lists",
+  BANNER: "/banner/lists",
+
+  BOARD:"/community/posts",
   COMMUNITY_COMMENTS: "/community/comments/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
   USER_RESISTER: "/users/register",
