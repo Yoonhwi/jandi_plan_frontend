@@ -4,25 +4,27 @@ import styles from "./BoardDetail.module.css";
 import Comment from "./Comment";
 import { APIEndPoints } from "@/constants";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { Loading } from "@/components";
 import { useAxios } from "@/hooks";
 import {formatISO} from "@/utils";
 
 const BoardDetail = () => {
   const { id } = useParams();
+  const [item, setItem] = useState();
   const { loading, fetchData, response } = useAxios();
 
     useEffect(() => {
       fetchData({
         method: "GET",
         url: `${APIEndPoints.BOARD}/${id}`,
+      }).then((res)=>{
+        console.log(res);
+        setItem(res.data.items);
+      }).catch((err) => {
+        console.error(err);
       });
-
-
     }, [fetchData]);
-
-    const item = response?.items;
 
     console.log(item);
 
