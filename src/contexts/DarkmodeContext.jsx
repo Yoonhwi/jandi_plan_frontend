@@ -1,16 +1,16 @@
 import { createContext, useContext } from "react";
 
-export const DarkModeContext = createContext({
+export const DarkmodeContext = createContext({
   toggleDarkMode: () => {},
   isDarkMode: false,
 });
 
-export const useDarkModeContext = () => {
-  const context = useContext(DarkModeContext);
+export const useDarkmodeContext = () => {
+  const context = useContext(DarkmodeContext);
 
   if (!context) {
     throw new Error(
-      "useDarkModeContext 는 DarkModeProvider 내부에서 사용되어야 합니다."
+      "useDarkmodeContext 는 DarkmodeProvider 내부에서 사용되어야 합니다."
     );
   }
 
