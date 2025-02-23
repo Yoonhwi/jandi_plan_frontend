@@ -1,18 +1,87 @@
-import { Button } from "@/components";
+import { Button,Input, Field } from "@/components";
+import { useEffect } from "react";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
-import { PageEndPoints } from "@/constants";
+import { PageEndPoints, APIEndPoints } from "@/constants";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { useAuth } from "@/contexts";
+
+
+const schema = z.object({
+  id:z.string()
+    .email({ message: "유효한 이메일을 입력하세요."})
+    .nonempty({ message: "ID를 입력하세요." }),
+  password:z.string().nonempty({ message: "비밀번호를 입력하세요." }),
+
+})
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { isLoggedIn, signIn } = useAuth(); //로그인 관리
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
+
+  const handleAdd = async (data) => {
+      signIn(data);
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(PageEndPoints.HOME);
+    }
+  }, [isLoggedIn]); 
 
   return (
     <div className={styles.container}>
       <div className={styles.login_box}>
         <div className={styles.logo}>Just Plan It !</div>
+        <form className={styles.form_box} onSubmit={handleSubmit(handleAdd)}>
         <div className={styles.input_box}>
-          <input type="text" placeholder="이메일" />
-          <input type="password" placeholder="비밀번호" />
+          <Field
+            label="이메일"
+            error={errors.id}
+            isRequire
+          >
+            <Input 
+              type="text"
+              style={{
+                boxSizing: "border-box",
+                width: "100%",
+              }}
+              placeholder="아이디"
+              size="md"
+              register={register}
+              name={"id"}
+            />
+          </Field>
+          <Field
+            label="비밀번호"
+            error={errors.password}
+            isRequire
+          >
+            <Input 
+              type="password"
+              style={{
+                boxSizing: "border-box",
+                width: "100%",
+              }}
+              size="md"
+              placeholder="비밀번호"
+              register={register}
+              name={"password"}
+            />
+          </Field>
+          {/* <input type="text" placeholder="이메일" />
+          <input type="password" placeholder="비밀번호" /> */}
+          
         </div>
         <div className={styles.btn_box}>
           <p>Find ID / PW</p>
@@ -20,6 +89,7 @@ const LoginPage = () => {
             로그인
           </Button>
         </div>
+        </form>
         <div className={styles.divider} />
         <div className={styles.social_login_btns}>
           <img src="/naver_icon.png" className={styles.social_btn} />

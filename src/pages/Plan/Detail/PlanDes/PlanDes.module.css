@@ -46,3 +46,7 @@
 .focus {
   background-color: var(--color-indigo-200);
 }
+
+:root[theme="dark"] .focus {
+  background-color: var(--color-gray-500);
+}

@@ -3,9 +3,12 @@ import styles from "./NoticeItem.module.css";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
+import { format } from "date-fns";
+import { IoAlertCircleSharp } from "react-icons/io5";
 
 const NoticeItem = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const formmatDate = format(new Date(item.createdAt), "yy. MM. dd");
 
   return (
     <div className={styles.container}>
@@ -15,12 +18,12 @@ const NoticeItem = ({ item }) => {
       >
         <div className={styles.header}>
           <div className={styles.header_left}>
-            <p className={styles.index}>{item.index + 1}</p>
+            <IoAlertCircleSharp size={24} className={styles.icon} />
             <p className={styles.title}>{item.title}</p>
           </div>
 
           <div className={styles.header_right}>
-            <p className={styles.created_at}>{item.created_at}</p>
+            <p className={styles.created_at}>{formmatDate}</p>
             {isOpen ? (
               <IoMdArrowDropup size={24} />
             ) : (
@@ -41,7 +44,7 @@ const NoticeItem = ({ item }) => {
             transition={{ duration: 0.2 }}
             style={{ overflow: "hidden" }}
           >
-            <p>{item.content}</p>
+            <p>{item.contents}</p>
           </motion.div>
         )}
       </AnimatePresence>
