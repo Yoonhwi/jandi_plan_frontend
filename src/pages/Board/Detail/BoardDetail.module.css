@@ -59,6 +59,12 @@
   padding: 1rem 0;
 }
 
+.content blockquote {
+  padding: 1rem !important;
+  background-color: var(--color-editor-blockquote-bg);
+  border-left: 4px solid var(--color-editor-blockquote-border);
+}
+
 .recommend_box {
   padding-top: 4rem;
   align-self: center;
