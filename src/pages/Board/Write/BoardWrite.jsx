@@ -1,44 +1,57 @@
 import { Button, Editor, Input } from "@/components";
 import { BaseLayout } from "@/layouts";
-import "quill/dist/quill.snow.css";
-
 import { useAxios } from "@/hooks";
 import { useCallback, useEffect, useState } from "react";
 import styles from "./BoardWrite.module.css";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { boardWriteScheme } from "../constants";
+import { APIEndPoints } from "@/constants";
+import { uploadImageApi } from "../apis";
+import "quill/dist/quill.snow.css";
 
 const BoardWrite = () => {
   const [quill, setQuill] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    resolver: zodResolver(boardWriteScheme),
+  });
 
-  const { fetchData: uploadImage } = useAxios();
-  const handleUploadImage = useCallback(
-    async (file) => {
-      const formData = new FormData();
-      formData.append("file", file);
+  const accessToken = localStorage.getItem("access-token");
 
-      return await uploadImage({
-        url: "/images/upload/community",
+  const { fetchData: postBoard } = useAxios();
+
+  const onSubmit = useCallback(
+    async (data) => {
+      await postBoard({
+        url: APIEndPoints.BOARD,
         method: "POST",
         headers: {
-          Authorization: `Bearer`,
+          Authorization: `Bearer ${accessToken}`,
         },
-        data: formData,
-        params: {
-          targetId: 1,
-        },
+        data,
       })
         .then((response) => {
-          return response;
+          console.log("response", response);
         })
         .catch((error) => {
-          throw error;
+          console.error("error", error);
         });
     },
-    [uploadImage]
+    [accessToken, postBoard]
   );
 
+  /** Quill이 load되면 해당 Quill에 이벤트리스너를 달아줍니다 */
   useEffect(() => {
     if (!quill) return;
     const editorElement = quill.root;
+    quill.on("text-change", () => {
+      setValue("content", quill.getContents());
+    });
 
     editorElement.addEventListener("paste", (e) => {
       const clipboardData = e.clipboardData;
@@ -77,7 +90,7 @@ const BoardWrite = () => {
       try {
         const {
           data: { imageUrl },
-        } = await handleUploadImage(file);
+        } = await uploadImageApi(file);
         quill.insertEmbed(range?.index ?? 0, "image", imageUrl, "user");
       } catch (error) {
         console.error("error", error);
@@ -85,11 +98,11 @@ const BoardWrite = () => {
 
       quill.setSelection((range?.index ?? 0) + 1);
     }
-  }, [handleUploadImage, quill]);
+  }, [accessToken, quill, setValue]);
 
   return (
     <BaseLayout>
-      <div className={styles.container}>
+      <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
         <Input
           placeholder="제목을 입력해주세요"
           style={{
@@ -97,30 +110,29 @@ const BoardWrite = () => {
             width: "100%",
           }}
           size="lg"
+          register={register}
+          name="title"
         />
         <div className={styles.editor}>
           <Editor onLoaded={setQuill} />
         </div>
-        <Button
-          onClick={() => {
-            if (!quill) return;
-            const delta = quill.getContents();
-            const stringfy = JSON.stringify(delta);
-            console.log("type", typeof stringfy);
-            const parsed = JSON.parse(stringfy);
-            console.log("delta", delta);
-            console.log("stringfy", stringfy);
-            console.log("parsed", parsed);
-          }}
-          variant="solid"
-          size="md"
-          style={{
-            alignSelf: "end",
-          }}
-        >
-          포스팅 완료
-        </Button>
-      </div>
+
+        <div className={styles.submit}>
+          {(errors.content || errors.title) && (
+            <p style={{ color: "red" }}>제목 또는 내용을 입력해주세요.</p>
+          )}
+          <Button
+            type="submit"
+            variant="solid"
+            size="md"
+            style={{
+              marginLeft: "auto",
+            }}
+          >
+            포스팅 완료
+          </Button>
+        </div>
+      </form>
     </BaseLayout>
   );
 };

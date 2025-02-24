@@ -27,19 +27,20 @@ export const PageEndPoints = {
 };
 
 export const APIEndPoints = {
-  LOGIN: "/users/login",
-  REFRESH: "/users/token/refresh",
   USER: "/users",
+  LOGIN: "/users/login",
+  RESISTER: "/users/register",
+  REFRESH: "/users/token/refresh",
+  USER_VERIFY: "/users/verify",
+  USER_CHECK_EMAIL: "/users/register/checkEmail",
+  USER_CHECK_NICKNAME: "/users/register/checkName",
+
   NOTICEALL: "/notice/lists",
   BANNER: "/banner/lists",
 
-  BOARD:"/community/posts",
+  BOARD: "/community/posts",
   COMMUNITY_COMMENTS: "/community/comments/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
-  USER_LOGIN: "/users/login",
-  USER_RESISTER: "/users/register",
-  USER_CHECK_EMAIL: "/users/register/checkEmail",
-  USER_CHECK_NICKNAME: "/users/register/checkName",
-  USER_VERIFY: "/users/verify",
-  IMAGE_UPLOAD: "/images/profiles/upload",
+
+  IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
 };
