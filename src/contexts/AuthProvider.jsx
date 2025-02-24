@@ -5,6 +5,7 @@ import { useAxios } from "@/hooks";
 
 const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
   const { loading, fetchData, response } = useAxios();
 
   const signIn = (data) => {
@@ -20,6 +21,7 @@ const AuthProvider = ({ children }) => {
         localStorage.setItem("access-token", res.data.accessToken);
         localStorage.setItem("refresh-token", res.data.refreshToken);
         setIsLoggedIn(true);
+        userInfo(res.data.accessToken);
       }).catch((err) => {
         console.error(err);
         setIsLoggedIn(false);
@@ -31,6 +33,21 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("refresh-token");
     setIsLoggedIn(false);
     window.location.reload();
+  }
+
+  const userInfo = async (token) => {
+    fetchData({
+      method: "GET",
+      url: `${APIEndPoints.PROFILE}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res)=>{
+      console.log(res.data);
+      setUser(res.data);
+    }).catch((err) => {
+      console.error(err);
+    });
   }
 
   useEffect(() => {
@@ -53,6 +70,7 @@ const AuthProvider = ({ children }) => {
             localStorage.setItem("access-token", res.data.accessToken);
             localStorage.setItem("refresh-token", res.data.refreshToken);
             setIsLoggedIn(true);
+            userInfo(res.data.accessToken);
           } else {
             throw new Error("새로운 accessToken을 받지 못함");
           }
@@ -64,6 +82,7 @@ const AuthProvider = ({ children }) => {
       } else {
         console.log("로그인되어있음");
         setIsLoggedIn(true);
+        userInfo(accessToken);
       }
     };
   
@@ -73,7 +92,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{isLoggedIn, signIn, signOut}}
+      value={{isLoggedIn, signIn, signOut, user}}
     >
       {children}
     </AuthContext.Provider>
