@@ -7,10 +7,11 @@ import {routes} from "./routes/routes";
 function App() {
   return (
     <DarkModeProvider>
-      <AuthProvider>
+      
       <ToastProvider>
         <ToastList />
         <BrowserRouter>
+        <AuthProvider>
           <Routes>
           {routes.map((route) => {
               return (
@@ -26,9 +27,9 @@ function App() {
               );
             })}
           </Routes>
+          </AuthProvider>
         </BrowserRouter>
       </ToastProvider>
-      </AuthProvider>
     </DarkModeProvider>
   );
 }
