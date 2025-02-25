@@ -28,9 +28,12 @@ export const PageEndPoints = {
 
 export const APIEndPoints = {
   USER: "/users",
+  PROFILE: "/users/profile",
   LOGIN: "/users/login",
   RESISTER: "/users/register",
   REFRESH: "/users/token/refresh",
+
+  USER_CHANGE_PASSWORD: "/users/change-password",
   USER_VERIFY: "/users/verify",
   USER_CHECK_EMAIL: "/users/register/checkEmail",
   USER_CHECK_NICKNAME: "/users/register/checkName",
@@ -39,8 +42,11 @@ export const APIEndPoints = {
   BANNER: "/banner/lists",
 
   BOARD: "/community/posts",
+  BOARD_DETAIL: "/community/posts/:id",
   COMMUNITY_COMMENTS: "/community/comments/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
+
+  TRIP_MY: "/trip/my/allTrips",
 
   IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
 };
