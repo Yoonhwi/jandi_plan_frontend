@@ -62,7 +62,6 @@ const BoardWrite = () => {
             e.preventDefault();
             e.stopImmediatePropagation();
             const file = item.getAsFile();
-            console.log("file", file);
             handleImage(file);
             break;
           }

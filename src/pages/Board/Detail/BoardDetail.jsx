@@ -12,6 +12,7 @@ import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import "quill/dist/quill.snow.css";
 import "highlight.js/styles/github.css";
 import hljs from "highlight.js";
+import { buildPath } from "@/utils";
 
 const BoardDetail = () => {
   const { id } = useParams();
@@ -22,17 +23,31 @@ const BoardDetail = () => {
   useEffect(() => {
     fetchData({
       method: "GET",
-      url: `${APIEndPoints.BOARD}/${id}`,
+      url: buildPath(APIEndPoints.BOARD_DETAIL, { id }),
     })
       .then((res) => {
         const items = res.data.items;
         let content;
         try {
           const parsed = JSON.parse(items.content);
-          const converter = new QuillDeltaToHtmlConverter(
-            parsed?.ops ?? "",
-            {}
-          );
+          const converter = new QuillDeltaToHtmlConverter(parsed?.ops ?? "", {
+            customTagAttributes: (op) => {
+              if (op.insert?.type === "image" && op.attributes?.imageAlign) {
+                if (op.attributes.imageAlign.align === "center") {
+                  return {
+                    style: `display: block; margin: 0 auto; width: ${
+                      op.attributes.width || "auto"
+                    };`,
+                  };
+                } else
+                  return {
+                    style: `float: ${op.attributes.imageAlign?.align}; width: ${
+                      op.attributes.width || "auto"
+                    };`,
+                  };
+              }
+            },
+          });
           content = converter.convert();
           // eslint-disable-next-line no-unused-vars
         } catch (err) {
