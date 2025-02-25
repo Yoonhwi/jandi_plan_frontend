@@ -57,21 +57,3 @@
 .info_value {
   flex: 1;
 }
-
-.plan_columns {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.pw_info_box {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.input_name {
-  width: 10rem;
-  font-size: var(--text-base);
-  font-weight: var(--font-weight-semibold);
-}
