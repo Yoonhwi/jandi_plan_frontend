@@ -43,4 +43,6 @@ export const APIEndPoints = {
   USER_CHECK_NICKNAME: "/users/register/checkName",
   USER_VERIFY: "/users/verify",
   IMAGE_UPLOAD: "/images/profiles/upload",
+
+  DESTINATION: "/trip/cities",
 };
