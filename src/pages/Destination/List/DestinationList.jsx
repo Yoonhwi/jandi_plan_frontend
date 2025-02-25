@@ -1,35 +1,25 @@
 import styles from "./DestinationList.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BaseLayout } from "@/layouts";
 import DetailItem from "./components/DetailItem";
 import { Button, Input } from "@/components";
 import { FiSearch } from "react-icons/fi";
-
-const dummy = [
-    {
-        id: 1,
-        continent: "아시아",
-        country: "일본",
-        destination: "후쿠오카",
-        profile_url: "/fukuoka.jpg",
-    },
-    {
-      id: 1,
-      continent: "아시아",
-      country: "일본",
-      destination: "오사카",
-      profile_url: "/osaka.jpg",
-  },
-  {
-    id: 1,
-    continent: "아시아",
-    country: "일본",
-    destination: "도쿄",
-    profile_url: "/tokyo.jpg",
-},
-  ];
+import { PageEndPoints, APIEndPoints } from "@/constants";
+import { useAxios } from "@/hooks";
 
 const DestinationList = () => {
+  const { loading, fetchData, response } = useAxios();
+  const [filter, serFilter] = useState("");
+
+     useEffect(()=> {
+        fetchData({
+          method: "GET",
+          url: `${APIEndPoints.DESTINATION}`,
+          params: { filter },
+        });
+      },[fetchData]);
+
+      console.log(response);
 
     return (
         <BaseLayout>
@@ -58,17 +48,9 @@ const DestinationList = () => {
                     </form>
                 </div>
                 <div className={styles.plan_container}>
-                    {dummy.map((item) => (
-                    <DetailItem key={item.id} item={item} />
+                    {response?.map((item) => (
+                    <DetailItem key={item.destinationId} item={item} />
                     ))}
-                </div>
-
-                <div className={styles.footer}>
-                    <Button variant="ghost">이전</Button>
-                    <Button variant="ghost">1</Button>
-                    <Button variant="ghost">2</Button>
-                    <Button variant="ghost">3</Button>
-                    <Button variant="ghost">다음</Button>
                 </div>
             </div>
         </BaseLayout>

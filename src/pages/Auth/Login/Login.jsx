@@ -1,7 +1,7 @@
 import { Button,Input, Field } from "@/components";
 import { useEffect } from "react";
 import styles from "./Login.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { PageEndPoints, APIEndPoints } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -19,6 +19,7 @@ const schema = z.object({
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isLoggedIn, signIn } = useAuth(); //로그인 관리
 
   const {
@@ -35,7 +36,8 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate(PageEndPoints.HOME);
+      const redirectPath = location.state?.from || PageEndPoints.HOME;
+      navigate(redirectPath, { replace: true });
     }
   }, [isLoggedIn]); 
 
