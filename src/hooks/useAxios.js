@@ -42,7 +42,36 @@ const useAxios = () => {
     }
   }, []);
 
-  return { loading, response, error, isSuccess, fetchData };
+  const fetchDataLogin = useCallback(async (params) => {
+    setLoading(true);
+    setIsSuccess(false);
+    setError(null);
+
+    const accessToken = localStorage.getItem("access-token");
+    
+    try {
+      const res = await axiosInstance.request({
+        headers: {
+          Authorization: accessToken ? `Bearer ${accessToken}` : "",
+          ...params.headers,
+        },
+        ...params,
+      });
+
+      setResponse(res.data);
+      setIsSuccess(true);
+      return res;
+    } catch (err) {
+      setError(err.response.data);
+      setResponse(null);
+      throw err.response;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+
+  return { loading, response, error, isSuccess, fetchData, fetchDataLogin };
 };
 
 export default useAxios;
