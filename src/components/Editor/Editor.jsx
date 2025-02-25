@@ -1,10 +1,10 @@
 import Quill from "quill";
 import { useEffect, useRef } from "react";
 import BlotFormatter from "@enzedonline/quill-blot-formatter2";
-import { uploadImageApi } from "@/pages/Board/apis";
 import hljs from "highlight.js";
 import "quill/dist/quill.core.css";
 import "highlight.js/styles/github.css";
+import { uploadCommunityImage } from "@/apis/image";
 
 const Uploader = Quill.import("modules/uploader");
 
@@ -31,7 +31,7 @@ const toolbarOptions = {
         if (!file) return;
 
         const range = quill.getSelection();
-        const res = await uploadImageApi(file);
+        const res = await uploadCommunityImage(file);
 
         quill.insertEmbed(
           range?.index ?? 0,
@@ -74,7 +74,10 @@ const Editor = ({ defaultValue, onLoaded }) => {
       modules,
     });
 
-    quill.setContents(defaultValue);
+    if (defaultValue) {
+      quill.setContents(defaultValue);
+    }
+
     onLoaded(quill);
 
     return () => {

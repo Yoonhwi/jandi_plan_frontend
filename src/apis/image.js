@@ -1,7 +1,7 @@
-import { axiosInstance } from "@/apis";
 import { APIEndPoints } from "@/constants";
+import axiosInstance from "./axiosInstance";
 
-export const uploadImageApi = async (file, targetId = 1) => {
+export const uploadCommunityImage = async (file, targetId = 1) => {
   const accessToken = localStorage.getItem("access-token");
   const formData = new FormData();
   formData.append("file", file);
