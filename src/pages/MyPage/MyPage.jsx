@@ -9,37 +9,13 @@ import {
 } from "@/components";
 import { destinationItems, dummy } from "./constants";
 import { useAuth } from "@/contexts";
-import { useAxios } from "@/hooks";
-import { useCallback, useEffect } from "react";
-import { APIEndPoints } from "@/constants";
 import MyPlan from "./MyPlan/MyPlan";
 import MyInfo from "./MyInfo/MyInfo";
 
 const MyPage = () => {
   const { user } = useAuth();
-  const { fetchData: getMyPlan } = useAxios();
-
-  const accessToken = localStorage.getItem("access-token");
-
-  const getMyPlanList = useCallback(async () => {
-    await getMyPlan({
-      url: APIEndPoints.TRIP_MY,
-      method: "GET",
-      params: {
-        page: 0,
-        size: 10,
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-  }, [accessToken, getMyPlan]);
-
-  useEffect(() => {
-    getMyPlanList();
-  }, [getMyPlanList]);
-
   if (!user) return <p>로그인이 필요합니다.</p>;
+
   return (
     <BaseLayout>
       <div className={styles.container}>
