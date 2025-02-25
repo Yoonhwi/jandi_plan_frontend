@@ -44,16 +44,14 @@
 
 .basic_info {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.2rem;
 
   font-size: var(--text-base);
-  font-weight: var(--font-weight-semibold);
 }
 
 .info_name {
-  width: 6rem;
-}
-
-.info_value {
-  flex: 1;
+  opacity: 0.5;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
 }
