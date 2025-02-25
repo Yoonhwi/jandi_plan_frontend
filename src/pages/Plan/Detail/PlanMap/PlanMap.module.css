@@ -1,0 +1,7 @@
+.map_container {
+  height: 30rem;
+
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}

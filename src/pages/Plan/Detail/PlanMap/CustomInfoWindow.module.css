@@ -1,0 +1,12 @@
+.header {
+  font-family: "42dot Sans", serif;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: "42dot Sans", serif;
+}

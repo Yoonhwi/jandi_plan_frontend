@@ -1,0 +1,59 @@
+.container {
+  flex: 1;
+  width: 100%;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header_title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.content {
+  flex: 1;
+  width: 100%;
+}
+
+.content_header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-semibold);
+  background-color: var(--color-board-bg);
+  padding: 1rem 0;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+}
+
+.index,
+.writer,
+.date,
+.recommend {
+  width: 5rem;
+  text-align: center;
+}
+
+.content_list {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--text-sm);
+}
+
+.footer {
+  align-self: center;
+  display: flex;
+}

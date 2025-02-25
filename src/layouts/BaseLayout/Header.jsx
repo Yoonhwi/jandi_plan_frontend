@@ -1,7 +1,7 @@
 import { useDarkModeContext } from "@/contexts";
 import styles from "./Header.module.css";
 import { LuUserRound } from "react-icons/lu";
-import { LuLogIn } from "react-icons/lu";
+import { LuLogIn, LuLogOut  } from "react-icons/lu";
 import { LuMoonStar } from "react-icons/lu";
 import {
   Button,
@@ -12,49 +12,73 @@ import {
 } from "@/components";
 import { RiSearchLine } from "react-icons/ri";
 import { LuMenu } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
+import { PageEndPoints } from "@/constants";
+import { useAuth } from "@/contexts";
 
 const Header = () => {
   const { toggleDarkMode, isDarkMode } = useDarkModeContext();
+  const navigate = useNavigate();
+  const { isLoggedIn, signOut } = useAuth();
 
   const tooltips = [
     {
       text: "마이페이지",
-      icon: <LuUserRound size={20} />,
+      icon: <LuUserRound size={20} onClick={() => navigate(PageEndPoints.MYPAGE)}/>,
     },
-    {
-      text: "로그인",
-      icon: <LuLogIn size={20} />,
-    },
+    isLoggedIn
+    ? {
+        text: "로그아웃",
+        icon: <LuLogOut size={20} onClick={signOut} />, 
+      }
+    : {
+        text: "로그인",
+        icon: <LuLogIn size={20} onClick={() => navigate(PageEndPoints.LOGIN)} />, 
+      },
+    // {
+    //   text: "로그인",
+    //   icon: <LuLogIn size={20} onClick={() => navigate(PageEndPoints.LOGIN)} />,
+    // },
     {
       text: isDarkMode ? "밝게" : "어둡게",
       icon: <LuMoonStar size={20} onClick={toggleDarkMode} />,
     },
     {
       text: "검색",
-      icon: <RiSearchLine size={20} />,
+      icon: (
+        <RiSearchLine
+          size={20}
+          onClick={() => navigate(PageEndPoints.SEARCH)}
+        />
+      ),
     },
   ];
 
   const menus = [
     {
       text: "여행 계획",
+      onClick: () => navigate(PageEndPoints.PLAN_LIST),
     },
     {
       text: "게시판",
+      onClick: () => navigate(PageEndPoints.BOARD),
     },
     {
       text: "공지사항",
+      onClick: () => navigate(PageEndPoints.NOTICE),
     },
   ];
 
   return (
     <header className={styles.container}>
-      <p className={styles.title}>JUST PLAN IT !</p>
+      <p className={styles.title} onClick={() => navigate(PageEndPoints.HOME)}>
+        JUST PLAN IT !
+      </p>
 
       {/** web */}
       <nav className={styles.nav_container}>
         {menus.map((menu, index) => (
-          <p key={index} className={styles.nav_item}>
+          <p key={index} className={styles.nav_item} onClick={menu.onClick}>
             {menu.text}
           </p>
         ))}

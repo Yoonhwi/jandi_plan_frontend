@@ -1,0 +1,52 @@
+.container {
+  box-sizing: border-box;
+  padding: 2rem 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.title {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  gap: 1rem;
+}
+
+.icon_crown {
+  color: var(--color-yellow-500);
+  position: relative;
+  bottom: 2px;
+}
+
+.responsive_container {
+  height: 100%;
+  width: 100%;
+  max-width: 50rem;
+  aspect-ratio: 2/1;
+}
+
+.chart {
+  color: var(--color-chart-bar);
+}
+
+.bar {
+  fill: var(--color-chart-bar);
+}
+
+/* breakpoint-md */
+@media screen and (max-width: 720px) {
+  .responsive_container {
+    aspect-ratio: 1.5/1;
+  }
+}
+
+/* breakpoint-sm */
+@media screen and (max-width: 390px) {
+  .responsive_container {
+    aspect-ratio: 1/1;
+  }
+}

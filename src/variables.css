@@ -264,8 +264,10 @@
   --color-stone-900: oklch(0.216 0.006 56.043);
   --color-stone-950: oklch(0.147 0.004 49.25);
 
-  --color-white: oklch(0.985 0.001 106.423);
+  --color-white: oklch(1 0 0);
   --color-black: oklch(0 0 0);
+
+  --color-whitepure: oklch(100% 0 0);
 
   /* breakpoint  */
   --breakpoint-sm: 390px;
@@ -330,13 +332,25 @@
   --radius-button-md: var(--radius-md);
   --radius-button-lg: var(--radius-lg);
 
+  --radius-input: var(--radius-sm);
+
+  --radius-modal: var(--radius-md);
+  --radius-toast: var(--radius-md);
+
   --shadow-above: 0 0 4px rgb(var(--color-shadow));
 
   --font-family-logo: "Permanent Marker", serif;
+
+  --color-chart-bar: var(--color-amber-500);
+
+  --color-bg-toast-success: var(--color-green-600);
+  --color-bg-toast-error: var(--color-red-600);
 }
 
 :root[theme="light"] {
   --color-primary: var(--color-gray-500);
+  --color-secondary: var(--color-indigo-500);
+  --color-bg-primary: var(--color-white);
 
   --color-button-bg: var(--color-gray-500);
   --color-button-hover-bg: var(--color-gray-400); /* 버튼 hover */
@@ -346,16 +360,22 @@
   --color-subtext-primary: var(--color-gray-200); /* 설명란 같은 text */
   --color-button-text: var(--color-white);
 
-  --color-bg-primary: var(--color-white);
-
   --color-shadow: 0 0 0;
 
   --color-tooltip-bg: var(--color-gray-800);
   --color-tooltip-text: var(--color-white);
+
+  --color-notice-bg: var(--color-indigo-50);
+  --color-notice-border: var(--color-indigo-300);
+
+  --color-board-bg: var(--color-indigo-50);
+  --color-board-border: var(--color-gray-500);
 }
 
 :root[theme="dark"] {
   --color-primary: var(--color-gray-500);
+  --color-secondary: var(--color-gray-500);
+  --color-bg-primary: var(--color-gray-950);
 
   --color-button-bg: var(--color-white);
   --color-button-hover-bg: var(--color-gray-400);
@@ -365,10 +385,14 @@
   --color-subtext-primary: var(--color-gray-500);
   --color-button-text: var(--color-black);
 
-  --color-bg-primary: var(--color-gray-950);
-
   --color-shadow: 255 255 255;
 
   --color-tooltip-bg: var(--color-white);
   --color-tooltip-text: var(--color-gray-800);
+
+  --color-notice-bg: var(--color-gray-600);
+  --color-notice-border: var(--color-gray-500);
+
+  --color-board-bg: var(--color-gray-600);
+  --color-board-border: var(--color-gray-500);
 }
