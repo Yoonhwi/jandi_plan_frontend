@@ -1,10 +1,12 @@
 import styles from "./Find.module.css";
 import { Button,Input, Field } from "@/components";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { APIEndPoints } from "@/constants";
+import { APIEndPoints,PageEndPoints } from "@/constants";
 import { useAxios } from "@/hooks";
+import { useToast } from "@/contexts";
 
 
 const schema = z.object({
@@ -15,6 +17,9 @@ const schema = z.object({
 
 const FindPWPage = () => {
     const { loading, fetchData, response } = useAxios();
+    const navigate = useNavigate();
+
+     const { createToast } = useToast();
 
     const {
         register,
@@ -25,11 +30,16 @@ const FindPWPage = () => {
       });
     
       const handleAdd = (data) => {
-        console.log(data.email);
+        console.log(data);
         fetchData({
              method: "POST",
              url: APIEndPoints.FINDPW,
-             body: JSON.stringify({ email: data.email }),
+             data: {...data },
+           }).then((res) =>{
+            createToast({
+                type: "success",
+                text: "이메일을 보냈습니다. 이메일을 확인해 주세요.",
+              });
            })
       };
 
@@ -57,9 +67,7 @@ const FindPWPage = () => {
                     </Field>
                 </div>
                 <div className={styles.btn_box}>
-                    <Button size="md" variant="none">
-                        이전
-                    </Button>
+                    <p onClick={() => navigate(PageEndPoints.LOGIN)}>이전</p>
                     <Button size="md" variant="solid">
                         확인
                     </Button>
