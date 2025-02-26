@@ -12,14 +12,15 @@ const AuthProvider = ({ children }) => {
   const location = useLocation();
 
   const signIn = (data) => {
-        fetchData({
-        method: "POST",
-        url: `${APIEndPoints.LOGIN}`,
-        data: {
-          email: data.id,
-          password: data.password, 
-        },
-      }).then((res)=>{
+    fetchData({
+      method: "POST",
+      url: `${APIEndPoints.LOGIN}`,
+      data: {
+        email: data.id,
+        password: data.password,
+      },
+    })
+      .then((res) => {
         console.log(res);
         localStorage.setItem("access-token", res.data.accessToken);
         localStorage.setItem("refresh-token", res.data.refreshToken);
@@ -28,19 +29,19 @@ const AuthProvider = ({ children }) => {
 
         const redirectPath = location.state?.from || PageEndPoints.HOME;
         navigate(redirectPath, { replace: true });
-
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.error(err);
         setIsLoggedIn(false);
       });
-  }
+  };
 
   const signOut = () => {
     localStorage.removeItem("access-token");
     localStorage.removeItem("refresh-token");
     setIsLoggedIn(false);
     window.location.reload();
-  }
+  };
 
   const userInfo = async (token) => {
     fetchData({
@@ -49,21 +50,23 @@ const AuthProvider = ({ children }) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }).then((res)=>{
-      console.log(res.data);
-      setUser(res.data);
-    }).catch((err) => {
-      console.error(err);
-    });
-  }
+    })
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   useEffect(() => {
     const refreshTokenRequest = async () => {
       let accessToken = localStorage.getItem("access-token");
       const refreshToken = localStorage.getItem("refresh-token");
-  
-      if (!accessToken && !refreshToken) return; 
-  
+
+      if (!accessToken && !refreshToken) return;
+
       if (!accessToken && refreshToken) {
         try {
           const res = await fetchData({
@@ -71,7 +74,7 @@ const AuthProvider = ({ children }) => {
             url: `${APIEndPoints.REFRESH}`,
             data: { refreshToken },
           });
-  
+
           if (res?.data.accessToken) {
             console.log("로그인다시");
             localStorage.setItem("access-token", res.data.accessToken);
@@ -93,15 +96,12 @@ const AuthProvider = ({ children }) => {
         userInfo(accessToken);
       }
     };
-  
+
     refreshTokenRequest();
   }, []);
-  
 
   return (
-    <AuthContext.Provider
-      value={{isLoggedIn, signIn, signOut, user}}
-    >
+    <AuthContext.Provider value={{ isLoggedIn, signIn, signOut, user }}>
       {children}
     </AuthContext.Provider>
   );

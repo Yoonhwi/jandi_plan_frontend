@@ -1,14 +1,12 @@
 import { Button, Input, Loading } from "@/components";
 import styles from "./Comment.module.css";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useAxios } from "@/hooks";
 import CommentItem from "./CommentItem";
 import { buildPath } from "@/utils";
 import { APIEndPoints } from "@/constants";
 
-const Comment = () => {
-  const { id } = useParams();
+const Comment = ({ id }) => {
   const { loading, response, fetchData } = useAxios();
 
   useEffect(() => {
