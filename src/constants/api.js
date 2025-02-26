@@ -52,10 +52,14 @@ export const APIEndPoints = {
   TRIP_MY: "/trip/my/allTrips",
   TRIP_CREATE: "/trip/my/create",
   TRIP_ALL: "/trip/allTrips",
+  
   DESTINATION: "/trip/cities",
+  CONTINENT: "/trip/continents",
+  COUNTRY: "/trip/countries",
 
   PLAN_BEST: "/trip/top-likes",
 
   IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
   IMAGE_UPLOAD: "/images/profiles/upload",
+
 };
