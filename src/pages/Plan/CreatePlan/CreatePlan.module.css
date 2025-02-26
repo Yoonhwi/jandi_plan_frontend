@@ -35,7 +35,8 @@
 
 .plan_container {
   box-sizing: border-box;
-  border: 1px solid var(--color-text-dynamic);
+  border: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-lg);
   border-radius: var(--radius-xl);
   width: 50%;
   background-color: var(--color-bg-primary);

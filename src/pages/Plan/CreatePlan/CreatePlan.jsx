@@ -20,7 +20,6 @@ const CreatePlanPage = () => {
 
   const onSubmit = useCallback(
     async (data) => {
-      console.log("hit");
       await fetchData({
         url: APIEndPoints.TRIP_CREATE,
         method: "POST",
