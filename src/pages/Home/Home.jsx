@@ -76,7 +76,7 @@ const HomePage = () => {
                 <div
                   className={styles.img_container}
                   style={{
-                    backgroundImage: `url(${item.imageUrl})`,
+                    backgroundImage: `url(${item.cityImageUrl})`,
                   }}
                 />
                 <div className={styles.plan_container}>
