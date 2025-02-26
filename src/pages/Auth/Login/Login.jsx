@@ -73,7 +73,7 @@ const LoginPage = () => {
                 boxSizing: "border-box",
                 width: "100%",
               }}
-              placeholder="아이디"
+              placeholder="이메일"
               size="md"
               register={register}
               name={"id"}
@@ -99,7 +99,7 @@ const LoginPage = () => {
           
         </div>
         <div className={styles.btn_box}>
-          <p>Find ID / PW</p>
+          <p onClick={() => navigate(PageEndPoints.FINDPW)}>Find ID / PW</p>
           <Button size="md" variant="solid">
             로그인
           </Button>
