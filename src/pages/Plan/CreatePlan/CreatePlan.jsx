@@ -1,58 +1,68 @@
-import { BaseLayout } from "@/layouts";
 import {
+  Button,
   Field,
   Input,
-  Button,
   Modal,
   ModalContent,
   ModalTrigger,
 } from "@/components";
-import styles from "./CreatePlan.module.css";
-import { useState } from "react";
+import { BaseLayout } from "@/layouts";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import AddDestination from "./Constants/AddDestination";
 import AddUser from "./Constants/AddUser";
-import { useNavigate } from "react-router-dom";
-import { PageEndPoints } from "@/constants";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-
-const schema = z.object({
-  destination: z.string().nonempty({ message: "여행지를 입력하세요." }),
-  planName: z.string().nonempty({ message: "제목을 입력하세요." }),
-  arrivalDate: z.string().nonempty({ message: "출발일을 입력하세요." }),
-  departureDate: z.string().nonempty({ message: "도착일을 입력하세요." }),
-  budget: z.string().nonempty({ message: "예산안을 입력하세요." }),
-});
+import { createPlanSchema } from "./Constants/constants";
+import styles from "./CreatePlan.module.css";
+import { useAxios } from "@/hooks";
+import { APIEndPoints } from "@/constants";
 
 const CreatePlanPage = () => {
-  const [destination, setDestination] = useState(null);
   const [withUser, setWithUser] = useState(null);
-  const [selectedImg, setSelectedImg] = useState(null);
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createPlanSchema),
   });
 
+  const { fetchData } = useAxios();
+
+  const selectedImg = watch("image");
+
   const handleConfirmDestination = (subtitle, destination, selectedImg) => {
-    setDestination(`${subtitle} / ${destination}`);
-    setSelectedImg(selectedImg);
+    setValue("title", `${subtitle} / ${destination}`);
+    setValue("image", selectedImg);
   };
 
   const handleConfirmUsers = (users) => {
     setWithUser(users.join(", "));
   };
 
-  const handleAdd = (data) => {
-    if (data) {
-      navigate(PageEndPoints.HOME);
-    }
-  };
+  const accessToken = localStorage.getItem("access-token");
+
+  const onSubmit = useCallback(
+    async (data) => {
+      await fetchData({
+        url: APIEndPoints.TRIP_CREATE,
+        method: "POST",
+        data: {
+          ...data,
+          private: "no",
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    },
+    [accessToken, fetchData]
+  );
 
   return (
     <BaseLayout>
@@ -74,17 +84,16 @@ const CreatePlanPage = () => {
         <div className={styles.plan_container}>
           <p className={styles.title}>어디로 놀러가시나요?</p>
 
-          <form className={styles.plan_box} onSubmit={handleSubmit(handleAdd)}>
+          <form className={styles.plan_box} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.plan_columns}>
-              <Field label="여행지" isRequire>
+              <Field label="여행지">
                 <div className={styles.place}>
                   <Input
                     style={{
-                      boxSizing: "border-box",
                       flex: 1,
                     }}
                     size="sm"
-                    value={destination || ""}
+                    value={watch("title") || ""}
                     readOnly
                   />
                   <Modal>
@@ -96,18 +105,15 @@ const CreatePlanPage = () => {
                     </ModalContent>
                   </Modal>
                 </div>
-                {errors.destination && (
-                  <p className={styles.error}>{errors.destination.message}</p>
+
+                {errors.title && (
+                  <p className={styles.error}>{errors.title.message}</p>
                 )}
               </Field>
             </div>
 
             <div className={styles.plan_columns}>
-              <Field
-                label="플랜 제목"
-                helperText="ex)오사카 가족여행"
-                isRequire
-              >
+              <Field label="플랜 제목" helperText="ex)오사카 가족여행">
                 <Input
                   type="text"
                   style={{
@@ -115,10 +121,11 @@ const CreatePlanPage = () => {
                     width: "100%",
                   }}
                   size="sm"
-                  {...register("planName")}
+                  register={register}
+                  name="description"
                 />
-                {errors.planName && (
-                  <p className={styles.error}>{errors.planName.message}</p>
+                {errors.description && (
+                  <p className={styles.error}>{errors.description.message}</p>
                 )}
               </Field>
             </div>
@@ -129,10 +136,11 @@ const CreatePlanPage = () => {
                   type="date"
                   style={{ width: "100%" }}
                   size="sm"
-                  {...register("arrivalDate")}
+                  register={register}
+                  name="startDate"
                 />
-                {errors.arrivalDate && (
-                  <p className={styles.error}>{errors.arrivalDate.message}</p>
+                {errors.startData && (
+                  <p className={styles.error}>{errors.startData.message}</p>
                 )}
               </Field>
             </div>
@@ -143,10 +151,11 @@ const CreatePlanPage = () => {
                   type="date"
                   style={{ width: "100%" }}
                   size="sm"
-                  {...register("departureDate")}
+                  register={register}
+                  name="endDate"
                 />
-                {errors.departureDate && (
-                  <p className={styles.error}>{errors.departureDate.message}</p>
+                {errors.endDate && (
+                  <p className={styles.error}>{errors.endDate.message}</p>
                 )}
               </Field>
             </div>
@@ -157,7 +166,8 @@ const CreatePlanPage = () => {
                   type="number"
                   size="sm"
                   style={{ width: "100%" }}
-                  {...register("budget")}
+                  register={register}
+                  name="budget"
                 />
                 {errors.budget && (
                   <p className={styles.error}>{errors.budget.message}</p>

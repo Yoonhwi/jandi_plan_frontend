@@ -19,6 +19,7 @@ export const PageEndPoints = {
   BOARD: "/board",
   BOARD_DETAIL: "/board/:id",
   BOARD_WRITE: "/board/write",
+  BOARD_MODIFY: "/board/modify/:id",
 
   MYPAGE: "/mypage",
 
@@ -47,6 +48,8 @@ export const APIEndPoints = {
   COMMENTS_REPLIES: "/community/replies/:id",
 
   TRIP_MY: "/trip/my/allTrips",
+  TRIP_CREATE: "/trip/my/create",
+  TRIP_ALL: "/trip/allTrips",
 
   IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
 };
