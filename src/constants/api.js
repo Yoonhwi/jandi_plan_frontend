@@ -4,6 +4,7 @@ export const PageEndPoints = {
   AUTH: "/auth/*",
   LOGIN: "/auth/login",
   JOIN: "/auth/join",
+  FINDPW: "/auth/findPW",
 
   PLAN_DETAIL: "/plan/:id",
   PLAN_LIST: "/plan/list",
@@ -28,6 +29,7 @@ export const PageEndPoints = {
 
 export const APIEndPoints = {
   LOGIN: "/users/login",
+  FINDPW: "users/forgot",
   PROFILE: "/users/profile",
   REFRESH: "/users/token/refresh",
   USER: "/users",
