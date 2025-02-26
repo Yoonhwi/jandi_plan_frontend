@@ -27,7 +27,8 @@ const AuthProvider = ({ children }) => {
       navigate(redirectPath, { replace: true });
     } catch (err) {
       setIsLoggedIn(false);
-      console.log(err.message);
+      console.log(err);
+      throw err;
     }
   }
 
