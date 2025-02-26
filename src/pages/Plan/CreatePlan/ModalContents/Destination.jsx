@@ -1,14 +1,25 @@
 import { useAxios } from "@/hooks";
 import styles from "./Destination.module.css";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { APIEndPoints } from "@/constants";
+import { Button, CityCard } from "@/components";
+import { useModal } from "@/components/Modal/ModalContext";
 
-const Destination = () => {
-  const hash = useMemo(() => {
+const Destination = ({ setSelectedCity }) => {
+  const [selectedContinent, setSelectedContinent] = useState("");
+
+  const { closeModal } = useModal();
+
+  const cityHash = useMemo(() => {
     return {};
   }, []);
+  const idHash = useMemo(() => new Set(), []);
 
   const { fetchData } = useAxios();
+
+  const renderItem = useMemo(() => {
+    return cityHash[selectedContinent];
+  }, [cityHash, selectedContinent]);
 
   useEffect(() => {
     fetchData({
@@ -26,20 +37,25 @@ const Destination = () => {
         const continentName = continent.name;
         const countryName = item.country.name;
 
-        if (!hash[continentName]) {
-          hash[continentName] = {};
+        if (idHash.has(item.cityId)) {
+          return;
         }
 
-        if (!hash[continentName][countryName]) {
-          hash[continentName][countryName] = [];
+        if (!cityHash[continentName]) {
+          cityHash[continentName] = {};
         }
 
-        hash[continentName][countryName].push(item);
+        if (!cityHash[continentName][countryName]) {
+          cityHash[continentName][countryName] = [];
+        }
+
+        cityHash[continentName][countryName].push(item);
+        idHash.add(item.cityId);
       });
-    });
-  }, [fetchData, hash]);
 
-  console.log(hash);
+      setSelectedContinent(Object.keys(cityHash)[0]);
+    });
+  }, [fetchData, cityHash, idHash]);
 
   return (
     <div className={styles.container}>
@@ -51,39 +67,47 @@ const Destination = () => {
 
       <div className={styles.flex_column}>
         <p className={styles.sub_title}>전체 여행지</p>
-        {!Object.keys(hash).length ? (
-          <div>로딩중...</div>
-        ) : (
-          Object.keys(hash).map((continent) => {
-            console.log("continent", continent);
+        <div className={styles.filter_btns}>
+          {Object.keys(cityHash).map((continent) => {
             return (
-              <div key={continent}>
-                <p className={styles.continent}>{continent}</p>
-
-                {Object.keys(hash[continent]).map((country) => {
-                  console.log("country", hash[continent][country]);
-                  console.log("country", country);
-                  return (
-                    <div key={country}>
-                      <p className={styles.sub_title_destination}>{country}</p>
-
-                      <div className={styles.flex_row}>
-                        {hash[continent][country].map((city) => {
-                          console.log("city", city);
-                          return (
-                            <div key={city.cityId} className={styles.city}>
-                              {city.name}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+              <Button
+                key={continent}
+                variant={selectedContinent === continent ? "solid" : "ghost"}
+                onClick={() => setSelectedContinent(continent)}
+              >
+                {continent}
+              </Button>
             );
-          })
-        )}
+          })}
+        </div>
+
+        <div className={styles.country_container}>
+          {renderItem &&
+            Object.keys(renderItem).map((country) => {
+              return (
+                <div key={country} className={styles.flex_column}>
+                  <p className={styles.country_title}>{country}</p>
+
+                  <div className={styles.grid_container}>
+                    {renderItem[country].map((city) => {
+                      return (
+                        <div
+                          key={city.cityId}
+                          onClick={() => {
+                            setSelectedCity(city);
+                            closeModal();
+                          }}
+                          className={styles.wrapper_city_card}
+                        >
+                          <CityCard item={city} />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+        </div>
       </div>
     </div>
   );

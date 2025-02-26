@@ -10,7 +10,6 @@ import { useToast } from "@/contexts";
 
 const PasswordForm = () => {
   const { fetchData } = useAxios();
-  const accessToken = localStorage.getItem("access-token");
   const { createToast } = useToast();
 
   const {

@@ -14,3 +14,19 @@
   font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
 }
+
+.flex_column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.grid_container {
+  display: grid;
+  gap: 1rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
