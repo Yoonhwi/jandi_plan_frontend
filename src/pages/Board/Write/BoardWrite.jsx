@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { boardWriteScheme } from "../constants";
 import { APIEndPoints } from "@/constants";
 import "quill/dist/quill.snow.css";
-import useQuillEvents from "@/hooks/useQuillEvents";
+import { useQuillEvents } from "@/hooks";
 
 const BoardWrite = () => {
   const [quill, setQuill] = useState(null);

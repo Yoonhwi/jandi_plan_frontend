@@ -1,7 +1,7 @@
 import { Button, Loading, Pagination } from "@/components";
 import { APIEndPoints, PageEndPoints } from "@/constants";
 import { useAxios } from "@/hooks";
-import { usePagination } from "@/hooks/usePagination";
+import { usePagination } from "@/hooks";
 import { BaseLayout } from "@/layouts";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
