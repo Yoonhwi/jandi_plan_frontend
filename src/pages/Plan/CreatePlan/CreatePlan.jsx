@@ -17,6 +17,7 @@ import { createPlanSchema } from "./Constants/constants";
 import styles from "./CreatePlan.module.css";
 import { useAxios } from "@/hooks";
 import { APIEndPoints } from "@/constants";
+import Destination from "./ModalContents/Destination";
 
 const CreatePlanPage = () => {
   const [withUser, setWithUser] = useState(null);
@@ -45,8 +46,6 @@ const CreatePlanPage = () => {
     setWithUser(users.join(", "));
   };
 
-  const accessToken = localStorage.getItem("access-token");
-
   const onSubmit = useCallback(
     async (data) => {
       await fetchData({
@@ -56,12 +55,9 @@ const CreatePlanPage = () => {
           ...data,
           private: "no",
         },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
       });
     },
-    [accessToken, fetchData]
+    [fetchData]
   );
 
   return (
@@ -101,7 +97,7 @@ const CreatePlanPage = () => {
                       <Button type="button">선택</Button>
                     </ModalTrigger>
                     <ModalContent>
-                      <AddDestination onConfirm={handleConfirmDestination} />
+                      <Destination />
                     </ModalContent>
                   </Modal>
                 </div>

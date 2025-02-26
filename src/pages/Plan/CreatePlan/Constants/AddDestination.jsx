@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./AddDestination.module.css";
-import { Input, Button } from "@/components";
+import { Button } from "@/components";
 import { useModal } from "@/components/Modal/ModalContext";
 import { destinationItems } from "./constants";
 import { BiSolidPlaneAlt } from "react-icons/bi";
+import { useAxios } from "@/hooks";
+import { APIEndPoints } from "@/constants";
 
 const AddDestination = ({ onConfirm }) => {
   const [selectedSubTitle, setSelectedSubTitle] = useState("");
@@ -21,6 +23,43 @@ const AddDestination = ({ onConfirm }) => {
     setSelectedDestination(destinationName);
     setSelectedImg(imgSrc);
   };
+
+  const hash = useMemo(() => {
+    return {};
+  }, []);
+
+  const { fetchData } = useAxios();
+  useEffect(() => {
+    fetchData({
+      url: APIEndPoints.DESTINATION,
+      method: "GET",
+      params: {
+        filter: "",
+      },
+    }).then((res) => {
+      const { data } = res;
+      data.forEach((item) => {
+        const {
+          country: { continent },
+        } = item;
+        const continentName = continent.name;
+        const countryName = item.country.name;
+        const cityName = item.name;
+
+        if (!hash[continentName]) {
+          hash[continentName] = {};
+        }
+
+        if (!hash[continentName][countryName]) {
+          hash[continentName][countryName] = [];
+        }
+
+        hash[continentName][countryName].push(cityName);
+      });
+    });
+  }, [fetchData, hash]);
+
+  console.log(hash);
 
   return (
     <div className={styles.container}>

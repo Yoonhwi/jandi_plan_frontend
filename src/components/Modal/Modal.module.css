@@ -18,7 +18,6 @@
   transform: translate(-50%, -50%);
   background: var(--color-white);
   color: var(--color-black);
-  padding: 2rem;
   min-width: 20vw;
   border-radius: var(--radius-modal);
   z-index: 1000;

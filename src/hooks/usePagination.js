@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 
-export const usePagination = () => {
+const usePagination = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [totalPage, setTotalPage] = useState(1);
@@ -20,3 +20,5 @@ export const usePagination = () => {
     handlePageChange,
   };
 };
+
+export default usePagination;

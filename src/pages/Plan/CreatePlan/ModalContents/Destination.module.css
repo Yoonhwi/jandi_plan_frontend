@@ -1,0 +1,34 @@
+.container {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  min-width: 60vw;
+  max-height: 80vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.flex_column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.title {
+  color: var(--color-black);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.sub_title {
+  color: var(--color-black);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.continent {
+  font-size: var(--text-lg);
+}

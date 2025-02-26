@@ -1,20 +1,40 @@
 import axios from "axios";
 import AuthService from "./auth";
+import { APIEndPoints } from "@/constants";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const {refreshAccessToken} = AuthService;
+const { refreshAccessToken } = AuthService;
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
 });
 
+const protectedEndpoints = new Set([
+  `GET:${APIEndPoints.PROFILE}`,
+  `PUT:${APIEndPoints.USER_CHANGE_PASSWORD}`,
+
+  `POST:${APIEndPoints.BOARD}`,
+  `PATCH:${APIEndPoints.BOARD}`,
+  `DELETE:${APIEndPoints.BOARD}`,
+
+  `PATCH:${APIEndPoints.BOARD_DETAIL}`,
+  `DELETE:${APIEndPoints.BOARD_DETAIL}`,
+
+  `POST:${APIEndPoints.TRIP_CREATE}`,
+  `GET:${APIEndPoints.TRIP_MY}`,
+
+  `POST:${APIEndPoints.IMAGE_UPLOAD_COMMUNITY}`,
+  `POST:${APIEndPoints.IMAGE_UPLOAD}`,
+]);
+
 axiosInstance.interceptors.request.use((config) => {
-  console.log(config);
-  const isRequiredAuth = config.url?.includes("/my") || config.url?.includes("/upload");
+  const requestKey = `${config.method.toUpperCase()}:${config.url}`;
+  const normalizedUrl = requestKey.replace(/\/\d+$/, "/:id");
+
+  const isRequiredAuth = protectedEndpoints.has(normalizedUrl);
 
   if (isRequiredAuth) {
-    console.log("여기");
     const accessToken = localStorage.getItem("access-token");
     config.headers["Authorization"] = `Bearer ${accessToken}`;
   }
@@ -26,9 +46,10 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response.status === 403) { //응답에 인증 필요할 때 403 에러러
+    if (error.response.status === 403) {
+      //응답에 인증 필요할 때 403 에러러
       const refreshToken = localStorage.getItem("refresh-token");
-      
+
       if (refreshToken) {
         const { data } = await refreshAccessToken(refreshToken);
 
@@ -41,7 +62,7 @@ axiosInstance.interceptors.response.use(
 
         localStorage.setItem("access-token", data.accessToken);
         localStorage.setItem("refresh-token", data.refreshToken);
-        
+
         error.config.headers["Authorization"] = `Bearer ${data.accessToken}`;
 
         return axios.request(error.config);

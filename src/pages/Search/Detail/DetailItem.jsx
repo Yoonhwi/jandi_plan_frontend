@@ -9,7 +9,7 @@ const DetailItem = ({ item }) => {
       <div
         className={styles.img_container}
         style={{
-          backgroundImage: `url(${item.imageUrl})`,
+          backgroundImage: `url(${item.cityImageUrl})`,
         }}
       />
       <div className={styles.content_container}>
@@ -39,7 +39,9 @@ const DetailItem = ({ item }) => {
         <div className={styles.plan_container}>
           <div className={styles.plan_title}>
             <p className={styles.title}>{item.title}</p>
-            <p className={styles.description}>{item.description}</p>
+            {item.description && (
+              <p className={styles.description}>{item.description}</p>
+            )}
           </div>
         </div>
       </div>

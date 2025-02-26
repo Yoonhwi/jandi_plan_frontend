@@ -8,7 +8,6 @@ import DetailItem from "./DetailItem";
 const MyPlan = () => {
   const [data, setData] = useState([]);
   const { fetchData } = useAxios();
-  const accessToken = localStorage.getItem("access-token");
 
   const hash = useMemo(() => new Set(), []);
 
@@ -19,9 +18,6 @@ const MyPlan = () => {
       params: {
         page: 0,
         size: 10,
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
       },
     }).then((res) => {
       const itesm = res.data.items;
@@ -35,7 +31,7 @@ const MyPlan = () => {
         return [...prev, ...filtered];
       });
     });
-  }, [accessToken, fetchData, hash]);
+  }, [fetchData, hash]);
 
   useEffect(() => {
     getMyPlanList();
