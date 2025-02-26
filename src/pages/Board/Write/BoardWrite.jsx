@@ -21,8 +21,6 @@ const BoardWrite = () => {
     resolver: zodResolver(boardWriteScheme),
   });
 
-  const accessToken = localStorage.getItem("access-token");
-
   const { fetchData: postBoard } = useAxios();
 
   const onSubmit = useCallback(
@@ -30,9 +28,6 @@ const BoardWrite = () => {
       await postBoard({
         url: APIEndPoints.BOARD,
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
         data,
       })
         .then((response) => {
@@ -42,7 +37,7 @@ const BoardWrite = () => {
           console.error("error", error);
         });
     },
-    [accessToken, postBoard]
+    [postBoard]
   );
 
   useQuillEvents(quill, setValue);

@@ -26,9 +26,6 @@ const PasswordForm = () => {
       await fetchData({
         url: APIEndPoints.USER_CHANGE_PASSWORD,
         method: "PUT",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
         data: {
           currentPassword: data.currentPassword,
           newPassword: data.newPassword,
@@ -48,7 +45,7 @@ const PasswordForm = () => {
           });
         });
     },
-    [accessToken, createToast, fetchData]
+    [createToast, fetchData]
   );
 
   return (

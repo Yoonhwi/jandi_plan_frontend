@@ -46,8 +46,6 @@ const CreatePlanPage = () => {
     setWithUser(users.join(", "));
   };
 
-  const accessToken = localStorage.getItem("access-token");
-
   const onSubmit = useCallback(
     async (data) => {
       await fetchData({
@@ -57,12 +55,9 @@ const CreatePlanPage = () => {
           ...data,
           private: "no",
         },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
       });
     },
-    [accessToken, fetchData]
+    [fetchData]
   );
 
   return (
