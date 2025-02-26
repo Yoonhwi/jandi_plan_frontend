@@ -8,7 +8,11 @@ const usePagination = (name = "page") => {
 
   const handlePageChange = useCallback(
     (page) => {
-      setSearchParams({ [name]: page });
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.set(name, page);
+        return newParams;
+      });
     },
     [name, setSearchParams]
   );
