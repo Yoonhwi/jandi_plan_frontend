@@ -25,8 +25,6 @@ const Banner = () => {
       },
     };
   }, []);
-  
-  console.log(response)
 
   return (
     <div>
