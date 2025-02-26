@@ -45,4 +45,6 @@ export const APIEndPoints = {
   IMAGE_UPLOAD: "/images/profiles/upload",
 
   DESTINATION: "/trip/cities",
+
+  PLAN_BEST: "/trip/top-likes",
 };
