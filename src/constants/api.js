@@ -4,6 +4,7 @@ export const PageEndPoints = {
   AUTH: "/auth/*",
   LOGIN: "/auth/login",
   JOIN: "/auth/join",
+  FINDPW: "/auth/findPW",
 
   PLAN_DETAIL: "/plan/:id",
   PLAN_LIST: "/plan/list",
@@ -29,6 +30,7 @@ export const PageEndPoints = {
 
 export const APIEndPoints = {
   LOGIN: "/users/login",
+  FINDPW: "users/forgot",
   PROFILE: "/users/profile",
   REFRESH: "/users/token/refresh",
   USER: "/users",
@@ -51,6 +53,8 @@ export const APIEndPoints = {
   TRIP_CREATE: "/trip/my/create",
   TRIP_ALL: "/trip/allTrips",
   DESTINATION: "/trip/cities",
+
+  PLAN_BEST: "/trip/top-likes",
 
   IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
   IMAGE_UPLOAD: "/images/profiles/upload",
