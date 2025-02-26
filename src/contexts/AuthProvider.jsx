@@ -19,10 +19,9 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem("refresh-token", tokens.refreshToken);
   
       setIsLoggedIn(true);
-      const userInfo = getUserInfo(tokens.accessToken);
+      const userInfo = await getUserInfo(tokens.accessToken);
       setUser(userInfo);
   
-      // 로그인 후 리디렉션 처리
       const redirectPath = location.state?.from || PageEndPoints.HOME;
       navigate(redirectPath, { replace: true });
     } catch (err) {
@@ -36,6 +35,7 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("access-token");
     localStorage.removeItem("refresh-token");
     setIsLoggedIn(false);
+    setUser(null);
     window.location.reload();
   };
 
@@ -58,14 +58,14 @@ const AuthProvider = ({ children }) => {
             localStorage.setItem("access-token", token.accessToken);
             localStorage.setItem("refresh-token", token.refreshToken);
             setIsLoggedIn(true);
-            const userInfo = getUserInfo(token.accessToken);
+            const userInfo = await getUserInfo(token.accessToken);
             setUser(userInfo);
           }else {
             throw new Error("새로운 accessToken을 받지 못함");
           }
       
           // 로그인 후 리디렉션 처리
-          const redirectPath = location.state?.from || PageEndPoints.HOME;
+          const redirectPath = location.state?.from;
           navigate(redirectPath, { replace: true });
         } catch (err) {
           setIsLoggedIn(false);
@@ -77,7 +77,7 @@ const AuthProvider = ({ children }) => {
       } else {
         console.log("로그인되어있음");
         setIsLoggedIn(true);
-        const userInfo = getUserInfo(accessToken);
+        const userInfo = await getUserInfo(accessToken);
         setUser(userInfo);
       }
     };
