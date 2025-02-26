@@ -37,15 +37,15 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("refresh-token");
     setIsLoggedIn(false);
     window.location.reload();
-  }
+  };
 
   useEffect(() => {
     const refreshTokenRequest = async () => {
       let accessToken = localStorage.getItem("access-token");
       const refreshToken = localStorage.getItem("refresh-token");
-  
-      if (!accessToken && !refreshToken) return; 
-  
+
+      if (!accessToken && !refreshToken) return;
+
       if (!accessToken && refreshToken) {
         try {
           const token = await refreshAccessToken(refreshToken); 
@@ -53,6 +53,7 @@ const AuthProvider = ({ children }) => {
           console.log(token);
         
           if (token?.accessToken){
+
             console.log("로그인다시");
             localStorage.setItem("access-token", token.accessToken);
             localStorage.setItem("refresh-token", token.refreshToken);
@@ -80,15 +81,12 @@ const AuthProvider = ({ children }) => {
         setUser(userInfo);
       }
     };
-  
+
     refreshTokenRequest();
   }, []);
-  
 
   return (
-    <AuthContext.Provider
-      value={{isLoggedIn, signIn, signOut, user}}
-    >
+    <AuthContext.Provider value={{ isLoggedIn, signIn, signOut, user }}>
       {children}
     </AuthContext.Provider>
   );

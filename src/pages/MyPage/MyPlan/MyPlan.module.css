@@ -1,0 +1,16 @@
+.myplan_box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.title_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+}

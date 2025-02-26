@@ -53,7 +53,8 @@
   font-size: var(--text-sm);
 }
 
-.footer {
-  align-self: center;
+.center {
+  margin-top: 1.5rem;
   display: flex;
+  justify-content: center;
 }

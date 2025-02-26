@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export const destinationItems = [
   {
     title: "아시아",
@@ -159,3 +161,17 @@ export const destinationItems = [
     ],
   },
 ];
+
+export const createPlanSchema = z.object({
+  image: z.string().nonempty("이미지를 선택해주세요"),
+  title: z.string().nonempty("여행지를 선택해주세요"),
+  description: z.string().nonempty("플랜 제목을 입력해주세요"),
+  startDate: z.string().nonempty("시작일을 선택해주세요"),
+  endDate: z.string().nonempty("종료일을 선택해주세요"),
+  budget: z.coerce
+    .number()
+    .min(1, "예산을 입력해주세요")
+    .refine((value) => !isNaN(value), {
+      message: "숫자만 입력해주세요",
+    }),
+});
