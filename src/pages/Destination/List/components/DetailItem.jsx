@@ -6,14 +6,14 @@ const DetailItem = ({ item }) => {
       <div
         className={styles.img_container}
         style={{
-          backgroundImage: `url(${item.profile_url})`,
+          backgroundImage: `url(${item.imageUrl})`,
         }}
       />
       <div className={styles.content_container}>
         <div className={styles.plan_container}>
           <div className={styles.plan_title}>
-            <p className={styles.destination}>{item.destination}</p>
-            <p className={styles.title}>{item.continent}/{item.country}</p>
+            <p className={styles.destination}>{item.name}</p>
+            <p className={styles.title}>{item.country.continent.name}/{item.country.name}</p>
           </div>
         </div>
       </div>

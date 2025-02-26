@@ -28,12 +28,12 @@ export const PageEndPoints = {
 };
 
 export const APIEndPoints = {
-  USER: "/users",
-  PROFILE: "/users/profile",
   LOGIN: "/users/login",
-  RESISTER: "/users/register",
+  PROFILE: "/users/profile",
   REFRESH: "/users/token/refresh",
+  USER: "/users",
 
+  RESISTER: "/users/register",
   USER_CHANGE_PASSWORD: "/users/change-password",
   USER_VERIFY: "/users/verify",
   USER_CHECK_EMAIL: "/users/register/checkEmail",
@@ -50,6 +50,8 @@ export const APIEndPoints = {
   TRIP_MY: "/trip/my/allTrips",
   TRIP_CREATE: "/trip/my/create",
   TRIP_ALL: "/trip/allTrips",
+  DESTINATION: "/trip/cities",
 
   IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
+  IMAGE_UPLOAD: "/images/profiles/upload",
 };
