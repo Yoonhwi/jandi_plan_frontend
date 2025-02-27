@@ -5,7 +5,7 @@
   min-width: 40vw;
   display: flex;
   flex-direction: column;
-  padding: 0 1rem;
+  padding: 2rem 3rem;
 }
 
 .title {
@@ -15,17 +15,17 @@
   margin-bottom: 1rem;
 }
 
-.input_box{
+.input_box {
   display: flex;
 }
-.user_name_box{
+.user_name_box {
   display: flex;
   flex-wrap: wrap;
   margin-top: 1rem;
   width: 100%;
 }
 
-.user_name{
+.user_name {
   display: flex;
   justify-content: center;
   margin: 0.5rem;
@@ -34,13 +34,13 @@
   background-color: var(--color-indigo-200);
 }
 
-.name{
+.name {
   font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
   margin-right: 0.25rem;
 }
 
-.add_button_box{
+.add_button_box {
   margin-top: 1rem;
   display: flex;
   justify-content: center;

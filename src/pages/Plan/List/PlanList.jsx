@@ -1,21 +1,25 @@
 import styles from "./PlanList.module.css";
 import { useEffect } from "react";
 import { BaseLayout } from "@/layouts";
-import DetailItem from "@/pages/Search/Detail/DetailItem";
-import { Button, Input, Loading } from "@/components";
+import { Input, Loading, Pagination, PlanCard } from "@/components";
 import { FiSearch } from "react-icons/fi";
-import { useAxios } from "@/hooks";
+import { useAxios, usePagination } from "@/hooks";
 import { APIEndPoints } from "@/constants";
 
 const PlanList = () => {
   const { response, fetchData, loading } = useAxios();
+  const { currentPage, totalPage, setTotalPage, handlePageChange } =
+    usePagination();
 
   useEffect(() => {
     fetchData({
       url: APIEndPoints.TRIP_ALL,
       method: "GET",
+      params: { page: currentPage - 1 },
+    }).then((res) => {
+      setTotalPage(res.data.pageInfo?.totalPages || 0);
     });
-  }, [fetchData]);
+  }, [currentPage, fetchData, setTotalPage]);
 
   return (
     <BaseLayout>
@@ -50,17 +54,17 @@ const PlanList = () => {
           {response && (
             <div className={styles.plan_container}>
               {response.items.map((item) => (
-                <DetailItem key={item.tripId} item={item} />
+                <PlanCard key={item.tripId} item={item} />
               ))}
             </div>
           )}
 
           <div className={styles.footer}>
-            <Button variant="ghost">이전</Button>
-            <Button variant="ghost">1</Button>
-            <Button variant="ghost">2</Button>
-            <Button variant="ghost">3</Button>
-            <Button variant="ghost">다음</Button>
+            <Pagination
+              currentPage={currentPage}
+              totalPage={totalPage}
+              callback={handlePageChange}
+            />
           </div>
         </div>
       )}

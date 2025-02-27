@@ -1,9 +1,9 @@
+import styles from "./PlanCard.module.css";
 import { FaUserCircle } from "react-icons/fa";
 import { MdDateRange } from "react-icons/md";
 import { TiHeartFullOutline } from "react-icons/ti";
-import styles from "./DetailItem.module.css";
 
-const DetailItem = ({ item }) => {
+const PlanCard = ({ item }) => {
   return (
     <div className={styles.container}>
       <div
@@ -23,7 +23,7 @@ const DetailItem = ({ item }) => {
               </div>
               <div className={styles.create_at}>
                 <MdDateRange size={20} />
-                <p>{item.startDate}</p>
+                <p>{item.startDate} ~ </p>
               </div>
             </div>
           </div>
@@ -49,4 +49,4 @@ const DetailItem = ({ item }) => {
   );
 };
 
-export default DetailItem;
+export default PlanCard;

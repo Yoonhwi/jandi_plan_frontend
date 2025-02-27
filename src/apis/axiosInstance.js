@@ -51,19 +51,21 @@ axiosInstance.interceptors.response.use(
       const refreshToken = localStorage.getItem("refresh-token");
 
       if (refreshToken) {
-        const { data } = await refreshAccessToken(refreshToken);
+        const response = await refreshAccessToken(refreshToken);
 
-        if (!data.accessToken) {
+        if (!response.accessToken) {
           return Promise.reject(
             "리프레쉬 토큰으로 액세스토큰 재발행 실패",
             error
           );
         }
 
-        localStorage.setItem("access-token", data.accessToken);
-        localStorage.setItem("refresh-token", data.refreshToken);
+        localStorage.setItem("access-token", response.accessToken);
+        localStorage.setItem("refresh-token", response.refreshToken);
 
-        error.config.headers["Authorization"] = `Bearer ${data.accessToken}`;
+        error.config.headers[
+          "Authorization"
+        ] = `Bearer ${response.accessToken}`;
 
         return axios.request(error.config);
       }
