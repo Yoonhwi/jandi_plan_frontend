@@ -1,96 +1,82 @@
 import { Button, Field, Input } from "@/components";
-import { useMemo, useState } from "react";
 import styles from "./CreateReservation.module.css";
 import { useForm } from "react-hook-form";
 import { usePlanDetail } from "../PlanDetailContext";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createReservationSchema } from "../../constants";
 
 const CreateReservation = () => {
-  const [category, setCategory] = useState("transportation");
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(createReservationSchema),
+  });
   const { addReservation } = usePlanDetail();
 
-  const onSubmit = (e) => {
-    addReservation({
-      ...e,
-      category,
-    });
+  const onSubmit = (data) => {
+    addReservation(data);
   };
-
-  const publicFormField = useMemo(() => {
-    return (
-      <div className={styles.public_container}>
-        <Field
-          label="제목"
-          helperText="ex)출국 비행기, OO호텔, 보험료"
-          isRequire
-        >
-          <Input
-            type="text"
-            style={{ width: "100%" }}
-            register={register}
-            name="title"
-          />
-        </Field>
-
-        <Field
-          label="비용"
-          helperText="현지 통화로 입력시 자동 환율 계산(당일기준)"
-          isRequire
-        >
-          <Input
-            type="text"
-            style={{ width: "100%" }}
-            register={register}
-            name="cost"
-          />
-        </Field>
-      </div>
-    );
-  }, []);
-
-  const renderItem = useMemo(() => {
-    if (category === "accommodation") {
-      return (
-        <div className={styles.public_container}>
-          {publicFormField}
-          <Field label="주소" isRequire>
-            <Input
-              type="text"
-              style={{ width: "100%" }}
-              register={register}
-              name="place"
-            />
-          </Field>
-        </div>
-      );
-    } else {
-      return publicFormField;
-    }
-  }, [category, publicFormField, register]);
 
   return (
     <div className={styles.container}>
       <p className={styles.title}>예약항목을 추가하세요!</p>
-      <Field label="카테고리" isRequire helperText="카테고리를 선택해주세요">
+      <Field
+        label="카테고리"
+        isRequire
+        helperText="카테고리를 선택해주세요"
+        error={errors.category}
+      >
         <select
           className={styles.select_container}
-          onChange={(e) => setCategory(e.target.value)}
+          {...register("category")}
+          value={watch("category")}
         >
-          <option value="transportation">교통편</option>
-          <option value="accommodation">숙박</option>
-          <option value="etc">기타</option>
+          <option value="교통편">교통편</option>
+          <option value="숙박">숙박</option>
+          <option value="기타">기타</option>
         </select>
       </Field>
 
-      <form className={styles.form_container}>
-        {renderItem}
+      <form className={styles.form_container} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.public_container}>
+          <Field
+            label="제목"
+            helperText="ex)출국 비행기, OO호텔, 보험료"
+            isRequire
+            error={errors.title}
+          >
+            <Input
+              type="text"
+              style={{ width: "100%" }}
+              register={register}
+              name="title"
+            />
+          </Field>
+
+          <Field
+            label="비용"
+            helperText="현지 통화로 입력시 자동 환율 계산(당일기준)"
+            isRequire
+            error={errors.cost}
+          >
+            <Input
+              type="text"
+              style={{ width: "100%" }}
+              register={register}
+              name="cost"
+            />
+          </Field>
+        </div>
 
         <Button
           variant="ghost"
           style={{
             alignSelf: "end",
           }}
-          onClick={handleSubmit(onSubmit)}
+          type="submit"
         >
           추가하기
         </Button>

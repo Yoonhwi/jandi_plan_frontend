@@ -1,9 +1,13 @@
 import { Button, Field, Input } from "@/components";
 import styles from "./CreateSchedule.module.css";
+import { usePlanDetail } from "../PlanDetailContext";
 
 const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
   const { formState, register, watch } = formController;
+  const { tripDetail } = usePlanDetail();
   const { errors } = formState;
+
+  if (!tripDetail) return <p>상세일정을 가지고 올 수 없습니다.</p>;
 
   return (
     <div className={styles.container}>
@@ -15,6 +19,8 @@ const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
             style={{ width: "100%" }}
             register={register}
             name={"date"}
+            min={tripDetail.startDate}
+            max={tripDetail.endDate}
           />
         </Field>
 

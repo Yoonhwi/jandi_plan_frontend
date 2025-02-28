@@ -2,11 +2,11 @@ import { formatPrice } from "@/utils";
 import styles from "./PlanBudget.module.css";
 import { usePlanDetail } from "../PlanDetailContext";
 
-const keys = ["transportation", "accommodation", "etc"];
+const keys = ["TRANSPORTATION", "ACCOMMODATION", "ETC"];
 const map = {
-  transportation: "교통비",
-  accommodation: "숙박비",
-  etc: "기타",
+  TRANSPORTATION: "교통비",
+  ACCOMMODATION: "숙박비",
+  ETC: "기타",
 };
 
 const PlanBudget = () => {

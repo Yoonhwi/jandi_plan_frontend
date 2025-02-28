@@ -1,16 +1,21 @@
-import { useState } from "react";
 import styles from "./DayDetail.module.css";
 import { MdRunCircle } from "react-icons/md";
 import { formatPrice } from "@/utils";
 import { TiDelete } from "react-icons/ti";
 import { LuClipboardPen } from "react-icons/lu";
 import { Tooltip } from "@/components";
+import { usePlanDetail } from "../PlanDetailContext";
+import { useMemo } from "react";
 
-const DayDetail = ({ data, focus }) => {
-  const [dummy, setDummy] = useState(data);
+const DayDetail = ({ focus }) => {
+  const { tripItinerary } = usePlanDetail();
 
-  const s = dummy.find((v) => v.date === focus);
-  const { contentData } = s;
+  const contentData = useMemo(() => {
+    if (!tripItinerary) return null;
+    return tripItinerary.filter((v) => v.day === focus);
+  }, [focus, tripItinerary]);
+
+  if (!contentData) return null;
 
   return (
     <div className={styles.container}>
