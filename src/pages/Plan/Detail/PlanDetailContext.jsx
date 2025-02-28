@@ -1,13 +1,13 @@
 import { createContext, useContext } from "react";
 
 export const PlanDetailContext = createContext({
-  plan: {},
+  tripDetail: null,
+  focusDay: null,
+  tripItinerary: null,
+  tripReservation: null,
+  setFocusDay: () => {},
   addReservation: () => {},
   addSchedule: () => {},
-  updatePlan: () => {},
-  deletePlan: () => {},
-  focustDay: null,
-  setFocusDay: () => {},
 });
 
 export const usePlanDetail = () => {
