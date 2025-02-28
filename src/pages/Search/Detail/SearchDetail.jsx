@@ -1,124 +1,6 @@
-import { Button } from "@/components";
+import { Button, PlanCard } from "@/components";
 import styles from "./SearhDetail.module.css";
 import { useEffect } from "react";
-import DetailItem from "./DetailItem";
-
-const dummy = [
-  {
-    user: {
-      id: 1,
-      userId: "ush0105",
-      profile_url: "/user2.jpg",
-      nickname: "민근",
-    },
-
-    plan: {
-      id: 1,
-      title: "오사카 가즈아",
-      profile_url: "/fukuoka.jpg",
-      like: 10,
-      comment: 2,
-      isLike: false,
-      create_at: "2021. 10. 10",
-      destination: "오사카",
-    },
-  },
-
-  {
-    user: {
-      id: 1,
-      userId: "ush0105",
-      profile_url: "/user1.png",
-      nickname: "승휘",
-    },
-    plan: {
-      id: 2,
-      title: "도쿄 놀러갑니다",
-      profile_url: "/osaka.jpg",
-      like: 999,
-      comment: 0,
-      isLike: false,
-      create_at: "2021. 10. 10",
-      destination: "도쿄",
-    },
-  },
-
-  {
-    user: {
-      id: 1,
-      userId: "ush0105",
-      profile_url: "/user1.png",
-      nickname: "승휘",
-    },
-    plan: {
-      id: 3,
-      title: "후쿠오카 1박2일 가즈아",
-      profile_url: "/tokyo.jpg",
-      like: 50,
-      comment: 20,
-      isLike: false,
-      create_at: "2021. 10. 10",
-      destination: "후쿠오카",
-    },
-  },
-  {
-    user: {
-      id: 1,
-      userId: "ush0105",
-      profile_url: "/user1.png",
-      nickname: "승휘",
-    },
-
-    plan: {
-      id: 4,
-      title: "오사카 가즈아",
-      profile_url: "/fukuoka.jpg",
-      like: 10,
-      comment: 2,
-      isLike: false,
-      create_at: "2021. 10. 10",
-      destination: "오사카",
-    },
-  },
-
-  {
-    user: {
-      id: 1,
-      userId: "ush0105",
-      profile_url: "/user2.jpg",
-      nickname: "민근",
-    },
-    plan: {
-      id: 5,
-      title: "도쿄 놀러갑니다",
-      profile_url: "/osaka.jpg",
-      like: 999,
-      comment: 0,
-      isLike: false,
-      create_at: "2021. 10. 10",
-      destination: "도쿄",
-    },
-  },
-
-  {
-    user: {
-      id: 1,
-      userId: "ush0105",
-      profile_url: "/user2.jpg",
-      nickname: "민근",
-    },
-    plan: {
-      id: 6,
-      title: "후쿠오카 1박2일 가즈아",
-      profile_url: "/tokyo.jpg",
-      like: 50,
-      comment: 20,
-      isLike: false,
-      create_at: "2021. 10. 10",
-      destination: "후쿠오카",
-    },
-  },
-];
 
 const SearchDetail = ({ keyword }) => {
   useEffect(() => {
@@ -138,11 +20,11 @@ const SearchDetail = ({ keyword }) => {
         </Button>
       </div>
 
-      <div className={styles.data_container}>
+      {/* <div className={styles.data_container}>
         {dummy.map((item) => (
-          <DetailItem key={item.plan.id} item={item} />
+          <PlanCard key={item.plan.id} item={item} />
         ))}
-      </div>
+      </div> */}
 
       {/** UI확인 용 임시 페이지네이션 */}
       <div className={styles.footer}>

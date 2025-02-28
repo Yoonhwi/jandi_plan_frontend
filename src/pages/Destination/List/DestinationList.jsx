@@ -1,8 +1,7 @@
 import styles from "./DestinationList.module.css";
 import { useState, useEffect } from "react";
 import { BaseLayout } from "@/layouts";
-import DetailItem from "./components/DetailItem";
-import { Button, Input } from "@/components";
+import { CityCard, Input } from "@/components";
 import { FiSearch } from "react-icons/fi";
 import { PageEndPoints, APIEndPoints } from "@/constants";
 import { useAxios } from "@/hooks";

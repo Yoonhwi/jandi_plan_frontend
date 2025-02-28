@@ -11,9 +11,28 @@ import { destinationItems, dummy } from "./constants";
 import { useAuth } from "@/contexts";
 import MyPlan from "./MyPlan/MyPlan";
 import MyInfo from "./MyInfo/MyInfo";
+import { useCallback, useEffect, useState } from "react";
 
 const MyPage = () => {
+  const [size, setSize] = useState(4);
   const { user } = useAuth();
+
+  const getSizeByViewport = useCallback((width) => {
+    if (width <= 400) return 1;
+    if (width <= 768) return 2;
+    if (width <= 1024) return 3;
+    return 4;
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize(getSizeByViewport(window.innerWidth));
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [getSizeByViewport]);
+
   if (!user) return <p>로그인이 필요합니다.</p>;
 
   return (
@@ -33,7 +52,7 @@ const MyPage = () => {
           </Modal>
         </div>
 
-        <MyPlan />
+        <MyPlan size={size} />
 
         <div className={styles.interest_container}>
           <div className={styles.title_box}>

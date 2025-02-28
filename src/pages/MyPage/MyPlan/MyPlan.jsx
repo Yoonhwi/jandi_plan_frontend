@@ -1,45 +1,32 @@
-import { Slider } from "@/components";
-import styles from "./MyPlan.module.css";
-import { useAxios } from "@/hooks";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Pagination, PlanCard } from "@/components";
 import { APIEndPoints } from "@/constants";
-import DetailItem from "./DetailItem";
+import { useAxios, usePagination } from "@/hooks";
+import { useEffect } from "react";
+import styles from "./MyPlan.module.css";
+import { useSearchParams } from "react-router-dom";
 
-const MyPlan = () => {
-  const [data, setData] = useState([]);
-  const { fetchData } = useAxios();
-  const accessToken = localStorage.getItem("access-token");
+const MyPlan = ({ size }) => {
+  // eslint-disable-next-line no-unused-vars
+  const [_, setSearchParams] = useSearchParams();
+  const { fetchData, response } = useAxios();
+  const { currentPage, totalPage, setTotalPage, handlePageChange } =
+    usePagination("myPlan");
 
-  const hash = useMemo(() => new Set(), []);
-
-  const getMyPlanList = useCallback(async () => {
-    await fetchData({
-      url: APIEndPoints.TRIP_MY,
-      method: "GET",
-      params: {
-        page: 0,
-        size: 10,
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }).then((res) => {
-      const itesm = res.data.items;
-      const filtered = itesm.filter((item) => {
-        if (hash.has(item.tripId)) return false;
-        hash.add(item.tripId);
-        return true;
-      });
-
-      setData((prev) => {
-        return [...prev, ...filtered];
-      });
-    });
-  }, [accessToken, fetchData, hash]);
+  // size가 변경될때, 변경된 totalPages보다 높은 페이지를 보고 있을 수도 있기에, 페이지를 1로 초기화
+  useEffect(() => {
+    setSearchParams({ myPlan: 1 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size]);
 
   useEffect(() => {
-    getMyPlanList();
-  }, [getMyPlanList]);
+    fetchData({
+      method: "GET",
+      url: APIEndPoints.TRIP_MY,
+      params: { page: currentPage - 1, size },
+    }).then((res) => {
+      setTotalPage(res.data.pageInfo?.totalPages || 0);
+    });
+  }, [currentPage, fetchData, setTotalPage, size]);
 
   return (
     <div className={styles.myplan_box}>
@@ -47,10 +34,25 @@ const MyPlan = () => {
         <p className={styles.title}>여행 계획</p>
       </div>
 
-      {data.length > 0 ? (
-        <Slider items={data} size="md">
-          {(item) => <DetailItem key={item.tripId} item={item} />}
-        </Slider>
+      {response?.items?.length > 0 ? (
+        <div className={styles.flex_column}>
+          <div
+            className={styles.grid_container}
+            style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
+          >
+            {response.items.map((item) => {
+              return <PlanCard key={item.tripId} item={item} />;
+            })}
+          </div>
+
+          <div className={styles.pagination}>
+            <Pagination
+              callback={handlePageChange}
+              currentPage={currentPage}
+              totalPage={totalPage}
+            />
+          </div>
+        </div>
       ) : (
         <p>여행 계획이 없습니다.</p>
       )}
