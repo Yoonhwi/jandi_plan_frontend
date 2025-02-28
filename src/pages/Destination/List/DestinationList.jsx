@@ -1,18 +1,16 @@
 import styles from "./DestinationList.module.css";
 import { useState, useEffect } from "react";
 import { BaseLayout } from "@/layouts";
-import { CityCard, Input } from "@/components";
-import { FiSearch } from "react-icons/fi";
+import { Button, CityCard } from "@/components";
 import { PageEndPoints, APIEndPoints } from "@/constants";
 import { useAxios } from "@/hooks";
-
 const DestinationList = () => {
   const { loading, fetchData, response } = useAxios();
   const [continents, setContinents] = useState([]);
   const [countries, setCountries] = useState([]);
   const [destinations, setDestinations] = useState([]); 
 
-  const [selectedContinent, setSelectedContinent] = useState(""); // 선택한 대륙
+  const [selectedContinent, setSelectedContinent] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
 
 
@@ -35,11 +33,13 @@ const DestinationList = () => {
     fetchData({
       method: "GET",
       url: `${APIEndPoints.COUNTRY}`,
-      params: {filter: selectedContinent},
+      params: {
+        category: "CONTINENT",
+        filter: selectedContinent
+      },
     }).then((res) => {
-      console.log(res.data);
-      setCountries(res || []);
-      setSelectedCountry(""); // 대륙 변경 시 국가 선택 초기화
+      setCountries(res.data || []);
+      setSelectedCountry("");
     });
   }, [selectedContinent]);
 
@@ -47,21 +47,21 @@ const DestinationList = () => {
   useEffect(() => {
     const params = new URLSearchParams();
 
-  if (selectedContinent) {
+    if (selectedCountry) {
+      params.append("category", "COUNTRY");
+      params.append("filter", selectedCountry);
+    } else if (selectedContinent && !selectedCountry) {
+    params.append("category", "CONTINENT");
     params.append("filter", selectedContinent);
-  }
-  if (selectedCountry) {
-    params.append("filter", selectedCountry);
-  }
-
-  if (!selectedContinent && !selectedCountry) {
+  } else if (!selectedContinent && !selectedCountry) {
     params.append("filter", "");
+    params.append("category", "ALL");
   }
 
     fetchData({
       method: "GET",
       url: `${APIEndPoints.DESTINATION}`,
-      params: { filter: "" },///여기에 들어가는거 수정 그냥 params만 들어가면 될듯듯
+      params,///여기에 들어가는거 수정 그냥 params만 들어가면 될듯듯
     }).then((res) => {
       console.log(res.data);
       setDestinations(res.data);
@@ -93,7 +93,7 @@ const DestinationList = () => {
                     <Button
                       key={country.id}
                       onClick={() => setSelectedCountry(country.name)}
-                      variant={selectedCountry === country.name ? "solid" : "outline"}
+                      variant={selectedCountry === country.name ? "solid" : "ghost"}
                     >
                       {country.name}
                     </Button>
@@ -103,7 +103,7 @@ const DestinationList = () => {
             </div>
             <div className={styles.plan_container}>
                 {destinations.map((item) => (
-                <DetailItem key={item.cityId} item={item} />
+                <CityCard key={item.cityId} item={item} />
                 ))}
             </div>
         </div>
