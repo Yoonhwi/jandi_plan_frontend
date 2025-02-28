@@ -1,4 +1,4 @@
-import { APIEndPoints } from "@/constants";
+import { APIEndPoints, PageEndPoints } from "@/constants";
 import { useAxios } from "@/hooks";
 import { BaseLayout } from "@/layouts";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +7,9 @@ import { useForm } from "react-hook-form";
 import styles from "./CreatePlan.module.css";
 import FormCreatePlan from "./FormCreatePlan";
 import { createPlanSchema } from "../constants";
+import { useToast } from "@/contexts";
+import { useNavigate } from "react-router-dom";
+import { buildPath } from "@/utils";
 
 const CreatePlanPage = () => {
   const [selectedCity, setSelectedCity] = useState(null);
@@ -17,16 +20,29 @@ const CreatePlanPage = () => {
 
   const { handleSubmit, setValue } = planUseForm;
   const { fetchData } = useAxios();
+  const { createToast } = useToast();
+  const navigate = useNavigate();
 
   const onSubmit = useCallback(
     async (data) => {
       await fetchData({
         url: APIEndPoints.TRIP_CREATE,
         method: "POST",
-        params: data,
+        data,
+      }).then((res) => {
+        createToast({
+          type: "success",
+          text: "여행 계획이 성공적으로 등록되었습니다.",
+        });
+
+        const path = buildPath(PageEndPoints.PLAN_DETAIL, {
+          id: res.data.tripId,
+        });
+
+        navigate(path);
       });
     },
-    [fetchData]
+    [createToast, fetchData, navigate]
   );
 
   useEffect(() => {
