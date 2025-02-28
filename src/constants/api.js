@@ -58,6 +58,7 @@ export const APIEndPoints = {
   COUNTRY: "/trip/countries",
 
   PLAN_BEST: "/trip/top-likes",
+  DESTINATION_BEST: "/trip/rank",
 
   IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
   IMAGE_UPLOAD: "/images/profiles/upload",
