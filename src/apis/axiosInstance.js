@@ -29,6 +29,8 @@ const protectedEndpoints = new Set([
   `POST:${APIEndPoints.TRIP_RESERVATION}`,
   `POST:${APIEndPoints.TRIP_ITINERARY}`,
 
+  `POST:${APIEndPoints.PLACE}`,
+
   `POST:${APIEndPoints.IMAGE_UPLOAD_COMMUNITY}`,
   `POST:${APIEndPoints.IMAGE_UPLOAD}`,
 ]);

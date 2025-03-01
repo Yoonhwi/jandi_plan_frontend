@@ -49,13 +49,14 @@ export const APIEndPoints = {
   COMMUNITY_COMMENTS: "/community/comments/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
 
+  PLACE: "/place",
+
   TRIP_MY: "/trip/my/allTrips",
   TRIP_CREATE: "/trip/my/create",
   TRIP_ALL: "/trip/allTrips",
   TRIP_DETAIL: "/trip/:id",
   TRIP_ITINERARY: "/trip/itinerary/:id",
   TRIP_RESERVATION: "/trip/reservation/:id",
-  TRIP_PLACE: "/trip/place/:id",
   DESTINATION: "/trip/cities",
   PLAN_BEST: "/trip/top-likes",
 

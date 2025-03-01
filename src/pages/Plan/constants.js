@@ -43,8 +43,13 @@ export const createReservationSchema = z.object({
 
 export const createScheduleSchema = z.object({
   date: z.string().nonempty({ message: "날짜를 입력하세요." }),
-  time: z.string().nonempty({ message: "시간을 입력하세요." }),
+  startTime: z.string().nonempty({ message: "시간을 입력하세요." }),
   title: z.string().nonempty({ message: "제목을 입력하세요." }),
   placeId: z.number().positive({ message: "장소를 선택하세요." }),
-  cost: z.string().nonempty({ message: "비용을 입력하세요." }),
+  cost: z.coerce
+    .number()
+    .positive("비용을 입력해주세요")
+    .refine((value) => !isNaN(value), {
+      message: "숫자만 입력해주세요",
+    }),
 });
