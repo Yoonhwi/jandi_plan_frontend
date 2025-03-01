@@ -27,6 +27,9 @@
   gap: 1.5rem;
 }
 
+.comment_user_name{
+  font-size: var(--text-sm);
+}
 .comment_date,
 .recomment,
 .report {
