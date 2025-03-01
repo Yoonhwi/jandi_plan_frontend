@@ -1,4 +1,4 @@
-export * from "./DarkModeContext";
+export * from "./DarkmodeContext";
 export { default as DarkModeProvider } from "./DarkmodeProvider";
 
 export * from "./ToastContext";
