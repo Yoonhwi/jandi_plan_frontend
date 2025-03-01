@@ -15,8 +15,9 @@ const Comment = ({ id }) => {
   usePagination(); 
   const { user } = useAuth();
   const [commentText, setCommentText] = useState("");
-
   const { createToast } = useToast();
+
+  console.log(user);
 
   useEffect(() => {
     fetchComments();
@@ -28,9 +29,14 @@ const Comment = ({ id }) => {
         url: buildPath(APIEndPoints.COMMUNITY_COMMENTS, { id }),
         method: "GET",
       }).then((res)=>{
-        const items = res.data.items;      
+        const itemsWithMine = res.data.items.map((comment) => ({
+          ...comment,
+          mine: comment.user.userId === user?.userId,
+        }));
+
+        console.log(itemsWithMine); 
         setTotalPage(res.data.pageInfo?.totalPages || 0);
-        setItems(items);
+        setItems(itemsWithMine);
         setTotalSize(res.data.pageInfo?.totalSize);
       });
     })();
@@ -64,6 +70,20 @@ const Comment = ({ id }) => {
     }
   }
 
+  const deleteComment = (id) => {
+    fetchData({
+      method: "DELETE",
+      url: buildPath(APIEndPoints.COMMUNITY_COMMENTS, {id}),
+    }).then((res) => {
+      fetchComments();
+    }).catch((err) => {
+      createToast({
+        type: "error",
+        text: "댓글 삭제에 실패하였습니다",
+      });
+    })
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -93,7 +113,7 @@ const Comment = ({ id }) => {
 
       <div className={styles.comment_container}>
         {items?.map((comment) => {
-          return <CommentItem key={comment.commentId} comment={comment} />;
+          return <CommentItem key={comment.commentId} comment={comment} deleteComment={deleteComment}/>;
         })}
       </div>
     </div>

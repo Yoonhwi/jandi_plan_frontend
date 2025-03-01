@@ -26,7 +26,6 @@ const BoardDetail = () => {
 
   const { createToast } = useToast();
 
-  console.log(user);
   useEffect(() => {
     fetchData({
       method: "GET",
@@ -34,7 +33,6 @@ const BoardDetail = () => {
     })
       .then((res) => {
         const items = res.data.items;
-        console.log(items);
         let content;
         try {
           const parsed = JSON.parse(items.content);

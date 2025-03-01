@@ -4,7 +4,7 @@ import { RiArrowDownWideLine, RiArrowUpWideLine } from "react-icons/ri";
 import { formatDistanceToNow } from "date-fns";
 import ReplyComment from "./ReplyComment";
 
-const CommentItem = ({ comment }) => {
+const CommentItem = ({ comment,deleteComment }) => {
   console.log(comment);
   const [isOpen, setIsOpen] = useState(false);
   const formmatDate = formatDistanceToNow(new Date(comment.createdAt));
@@ -19,7 +19,7 @@ const CommentItem = ({ comment }) => {
             <p className={styles.comment_date}>{formmatDate}</p>
             <p className={styles.recomment}>답글</p>
             <p className={styles.report}>신고</p>
-            <p className={styles.report}>삭제</p>
+            {comment.mine && <p className={styles.report} onClick={()=> deleteComment(comment.commentId)}>삭제</p>}
           </div>
           <p className={styles.comment_text}>{comment.contents}</p>
         </div>
