@@ -8,7 +8,7 @@ import { createScheduleSchema } from "../../constants";
 
 const CreateSchedule = () => {
   const [isAddressStep, setIsAddressStep] = useState(false);
-  const { addSchedule } = usePlanDetail();
+  const { addItinerary } = usePlanDetail();
 
   const formController = useForm({
     resolver: zodResolver(createScheduleSchema),
@@ -18,9 +18,11 @@ const CreateSchedule = () => {
 
   const onSubmit = useCallback(
     (data) => {
-      addSchedule(data);
+      addItinerary(data);
+      //form초기화
+      formController.reset();
     },
-    [addSchedule]
+    [addItinerary, formController]
   );
 
   const handleAddressStep = useCallback(() => {

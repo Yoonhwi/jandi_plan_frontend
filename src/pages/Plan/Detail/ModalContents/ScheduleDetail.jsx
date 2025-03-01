@@ -29,7 +29,7 @@ const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
             type="time"
             style={{ width: "100%" }}
             register={register}
-            name={"time"}
+            name={"startTime"}
           />
         </Field>
 
@@ -47,7 +47,7 @@ const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
             <Input
               type="text"
               style={{ flex: 1 }}
-              value={watch("place")?.name || ""}
+              value={watch("placeName") || ""}
               readOnly
             />
             <Button type="button" onClick={handleAddressStep}>
@@ -75,6 +75,7 @@ const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
           style={{
             alignSelf: "end",
           }}
+          type="submit"
         >
           추가하기
         </Button>

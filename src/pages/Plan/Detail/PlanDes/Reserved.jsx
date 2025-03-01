@@ -4,6 +4,7 @@ import styles from "./Reserved.module.css";
 const Reserved = ({ reserved }) => {
   const { data } = reserved;
   const order = ["TRANSPORTATION", "ACCOMMODATION", "ETC"];
+
   return (
     <div className={styles.container}>
       {Object.keys(data)
@@ -12,12 +13,14 @@ const Reserved = ({ reserved }) => {
           return (
             <div key={key} className={styles.des_item}>
               <p className={styles.des_title}>{key}</p>
-              {data[key].map((item) => (
-                <div key={item.id} className={styles.des_item_row}>
-                  <p>{item.title}</p>
-                  <p>{formatPrice(item.cost)}원</p>
-                </div>
-              ))}
+              {data[key].map((item) => {
+                return (
+                  <div key={item.reservationId} className={styles.des_item_row}>
+                    <p>{item.title}</p>
+                    <p>{formatPrice(item.cost)}원</p>
+                  </div>
+                );
+              })}
             </div>
           );
         })}

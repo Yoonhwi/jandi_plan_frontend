@@ -10,6 +10,8 @@ import {
   useAdvancedMarkerRef,
 } from "@vis.gl/react-google-maps";
 import { Button, Input } from "@/components";
+import { useAxios } from "@/hooks";
+import { APIEndPoints } from "@/constants";
 
 const MapHandler = ({ place, marker }) => {
   const map = useMap();
@@ -66,6 +68,8 @@ const SchedulePlace = ({ handleScheduleStep, formController }) => {
   const [markerRef, marker] = useAdvancedMarkerRef();
   const { setValue } = formController;
 
+  const { fetchData } = useAxios();
+
   useEffect(() => {
     if (!selectedPlace) return;
 
@@ -83,12 +87,19 @@ const SchedulePlace = ({ handleScheduleStep, formController }) => {
     const flattenPlace = {
       name,
       address: formatted_address,
-      lat: location.lat(),
-      lng: location.lng(),
+      latitude: location.lat(),
+      longitude: location.lng(),
     };
-    console.log("flattenPlace", flattenPlace);
-    setValue("place", flattenPlace);
-  }, [selectedPlace, setValue]);
+
+    fetchData({
+      url: APIEndPoints.PLACE,
+      method: "POST",
+      data: flattenPlace,
+    }).then((res) => {
+      setValue("placeId", res.data.placeId);
+      setValue("placeName", res.data.name);
+    });
+  }, [fetchData, selectedPlace, setValue]);
 
   return (
     <div className={styles.container}>

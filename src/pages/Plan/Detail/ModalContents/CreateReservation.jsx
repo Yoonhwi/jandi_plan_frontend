@@ -6,18 +6,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createReservationSchema } from "../../constants";
 
 const CreateReservation = () => {
+  const formController = useForm({
+    resolver: zodResolver(createReservationSchema),
+  });
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(createReservationSchema),
-  });
+  } = formController;
   const { addReservation } = usePlanDetail();
 
   const onSubmit = (data) => {
     addReservation(data);
+    formController.reset();
   };
 
   return (
@@ -34,7 +37,9 @@ const CreateReservation = () => {
           {...register("category")}
           value={watch("category")}
         >
-          <option value="교통편">교통편</option>
+          <option value="교통편" defaultChecked>
+            교통편
+          </option>
           <option value="숙박">숙박</option>
           <option value="기타">기타</option>
         </select>

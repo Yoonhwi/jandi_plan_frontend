@@ -7,12 +7,21 @@ import { Tooltip } from "@/components";
 import { usePlanDetail } from "../PlanDetailContext";
 import { useMemo } from "react";
 
+const timeToSeconds = (time) => {
+  const [hh, mm, ss] = time.split(":").map(Number);
+  return hh * 3600 + mm * 60 + ss;
+};
+
 const DayDetail = ({ focus }) => {
   const { tripItinerary } = usePlanDetail();
 
   const contentData = useMemo(() => {
     if (!tripItinerary) return null;
-    return tripItinerary.filter((v) => v.day === focus);
+    return tripItinerary
+      .filter((v) => v.date === focus)
+      .sort((a, b) => {
+        return timeToSeconds(a.startTime) - timeToSeconds(b.startTime);
+      });
   }, [focus, tripItinerary]);
 
   if (!contentData) return null;
@@ -28,7 +37,7 @@ const DayDetail = ({ focus }) => {
         <div className={styles.container_right}>
           {contentData.map((v) => {
             return (
-              <div key={v.id} className={styles.content_wrapper}>
+              <div key={v.itineraryId} className={styles.content_wrapper}>
                 <div className={styles.dashed} />
                 <div className={styles.content_item}>
                   <div className={styles.content_item_des}>
