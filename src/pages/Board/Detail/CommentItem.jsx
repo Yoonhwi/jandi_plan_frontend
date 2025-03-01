@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaThumbsUp } from "react-icons/fa";
 import styles from "./CommentItem.module.css";
 import { RiArrowDownWideLine, RiArrowUpWideLine } from "react-icons/ri";
 import { formatDistanceToNow } from "date-fns";
@@ -19,7 +20,15 @@ const CommentItem = ({ comment,deleteComment }) => {
             <p className={styles.comment_date}>{formmatDate}</p>
             <p className={styles.recomment}>답글</p>
             <p className={styles.report}>신고</p>
-            {comment.mine && <p className={styles.report} onClick={()=> deleteComment(comment.commentId)}>삭제</p>}
+            {/* <FaThumbsUp
+            size={16}
+            color={
+              comment.isRecommended
+                ? "var(--color-amber-400)"
+                : "var( --color-gray-300)"
+            }
+          /> */}
+            {comment.mine ? <p className={styles.report} onClick={()=> deleteComment(comment.commentId)}>삭제</p> : <FaThumbsUp size={12} color={comment.isRecommended? "var(--color-amber-400)": "var( --color-gray-300)"}/>}
           </div>
           <p className={styles.comment_text}>{comment.contents}</p>
         </div>
