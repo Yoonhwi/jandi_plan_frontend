@@ -5,19 +5,21 @@ import { formatDistanceToNow } from "date-fns";
 import ReplyComment from "./ReplyComment";
 
 const CommentItem = ({ comment }) => {
+  console.log(comment);
   const [isOpen, setIsOpen] = useState(false);
   const formmatDate = formatDistanceToNow(new Date(comment.createdAt));
 
   return (
     <div className={styles.comment_item}>
       <div className={styles.comment}>
-        <img src={"/user1.png"} className={styles.comment_user_img} />
+        <img src={comment.user.profileImageUrl} className={styles.comment_user_img} />
         <div className={styles.flex_column}>
           <div className={styles.comment_info}>
-            <p className={styles.comment_user_name}>유저네임</p>
+            <p className={styles.comment_user_name}>{comment.user.username}</p>
             <p className={styles.comment_date}>{formmatDate}</p>
             <p className={styles.recomment}>답글</p>
             <p className={styles.report}>신고</p>
+            <p className={styles.report}>삭제</p>
           </div>
           <p className={styles.comment_text}>{comment.contents}</p>
         </div>
