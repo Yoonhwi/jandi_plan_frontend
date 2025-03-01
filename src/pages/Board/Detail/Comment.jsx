@@ -5,9 +5,11 @@ import { useAxios } from "@/hooks";
 import CommentItem from "./CommentItem";
 import { buildPath } from "@/utils";
 import { APIEndPoints } from "@/constants";
+import { useAuth } from "@/contexts";
 
 const Comment = ({ id }) => {
   const { loading, response, fetchData } = useAxios();
+  const { user } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -28,7 +30,7 @@ const Comment = ({ id }) => {
         </p>
         <div className={styles.form_box}>
           <img
-            src={response?.user?.profileImageUrl ?? "/user1.png"}
+            src={user?.profileImageUrl}
             className={styles.current_user_img}
           />
           <Input
