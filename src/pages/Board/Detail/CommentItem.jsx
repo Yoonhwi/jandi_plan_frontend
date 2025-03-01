@@ -15,7 +15,7 @@ const CommentItem = ({ comment }) => {
         <img src={comment.user.profileImageUrl} className={styles.comment_user_img} />
         <div className={styles.flex_column}>
           <div className={styles.comment_info}>
-            <p className={styles.comment_user_name}>{comment.user.username}</p>
+            <p className={styles.comment_user_name}>{comment.user.userName}</p>
             <p className={styles.comment_date}>{formmatDate}</p>
             <p className={styles.recomment}>답글</p>
             <p className={styles.report}>신고</p>
