@@ -7,6 +7,7 @@
 
   box-shadow: var(--shadow-md);
   min-height: 20rem;
+  cursor: pointer;
 }
 
 .img_container {
@@ -127,7 +128,7 @@
   gap: 0.5rem;
 }
 
-.destination {
+.title {
   font-weight: var(--font-weight-extrabold);
   font-size: var(--text-2xl);
 
@@ -138,7 +139,7 @@
   text-overflow: ellipsis;
 }
 
-.title {
+.description {
   font-weight: var(--font-weight-semibold);
   font-size: var(--text-sm);
   color: var(--color-gray-600);

@@ -4,6 +4,7 @@ export const PageEndPoints = {
   AUTH: "/auth/*",
   LOGIN: "/auth/login",
   JOIN: "/auth/join",
+  FINDPW: "/auth/findPW",
 
   PLAN_DETAIL: "/plan/:id",
   PLAN_LIST: "/plan/list",
@@ -19,6 +20,7 @@ export const PageEndPoints = {
   BOARD: "/board",
   BOARD_DETAIL: "/board/:id",
   BOARD_WRITE: "/board/write",
+  BOARD_MODIFY: "/board/modify/:id",
 
   MYPAGE: "/mypage",
 
@@ -28,18 +30,42 @@ export const PageEndPoints = {
 
 export const APIEndPoints = {
   LOGIN: "/users/login",
+  FINDPW: "users/forgot",
+  PROFILE: "/users/profile",
   REFRESH: "/users/token/refresh",
   USER: "/users",
+
+  RESISTER: "/users/register",
+  USER_CHANGE_PASSWORD: "/users/change-password",
+  USER_VERIFY: "/users/verify",
+  USER_CHECK_EMAIL: "/users/register/checkEmail",
+  USER_CHECK_NICKNAME: "/users/register/checkName",
+
   NOTICEALL: "/notice/lists",
   BANNER: "/banner/lists",
 
-  BOARD:"/community/posts",
+  BOARD: "/community/posts",
+  BOARD_DETAIL: "/community/posts/:id",
+  BOARD_LIKE: "community/posts/likes/:id",
   COMMUNITY_COMMENTS: "/community/comments/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
-  USER_LOGIN: "/users/login",
-  USER_RESISTER: "/users/register",
-  USER_CHECK_EMAIL: "/users/register/checkEmail",
-  USER_CHECK_NICKNAME: "/users/register/checkName",
-  USER_VERIFY: "/users/verify",
+
+  PLACE: "/place",
+
+  TRIP_MY: "/trip/my/allTrips",
+  TRIP_CREATE: "/trip/my/create",
+  TRIP_ALL: "/trip/allTrips",
+  TRIP_DETAIL: "/trip/:id",
+  TRIP_ITINERARY: "/trip/itinerary/:id",
+  TRIP_RESERVATION: "/trip/reservation/:id",
+
+  DESTINATION: "/trip/cities",
+  CONTINENT: "/trip/continents",
+  COUNTRY: "/trip/countries",
+
+  PLAN_BEST: "/trip/top-likes",
+  DESTINATION_BEST: "/trip/rank",
+
+  IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
   IMAGE_UPLOAD: "/images/profiles/upload",
 };

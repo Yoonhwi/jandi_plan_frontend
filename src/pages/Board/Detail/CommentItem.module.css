@@ -27,11 +27,18 @@
   gap: 1.5rem;
 }
 
+.comment_user_name{
+  font-size: var(--text-sm);
+}
 .comment_date,
 .recomment,
 .report {
   font-size: var(--text-sm);
   color: var(--color-gray-400);
+}
+
+.report {
+  cursor: pointer;
 }
 
 .recomment_container {

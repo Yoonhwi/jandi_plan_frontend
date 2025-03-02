@@ -12,13 +12,14 @@ import {
 } from "@/components";
 import { RiSearchLine } from "react-icons/ri";
 import { LuMenu } from "react-icons/lu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { PageEndPoints } from "@/constants";
 import { useAuth } from "@/contexts";
 
 const Header = () => {
   const { toggleDarkMode, isDarkMode } = useDarkModeContext();
   const navigate = useNavigate();
+  const location = useLocation();
   const { isLoggedIn, signOut } = useAuth();
 
   const tooltips = [
@@ -33,7 +34,7 @@ const Header = () => {
       }
     : {
         text: "로그인",
-        icon: <LuLogIn size={20} onClick={() => navigate(PageEndPoints.LOGIN)} />, 
+        icon: <LuLogIn size={20} onClick={() => navigate(PageEndPoints.LOGIN, { state: { from: location.pathname } })} />, 
       },
     // {
     //   text: "로그인",
@@ -55,6 +56,10 @@ const Header = () => {
   ];
 
   const menus = [
+    {
+      text: "여행지",
+      onClick: () => navigate(PageEndPoints.DESTINATION_LIST),
+    },
     {
       text: "여행 계획",
       onClick: () => navigate(PageEndPoints.PLAN_LIST),

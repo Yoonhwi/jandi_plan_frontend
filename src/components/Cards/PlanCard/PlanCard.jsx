@@ -1,29 +1,38 @@
-import { FaCommentAlt, FaUserCircle } from "react-icons/fa";
+import { buildPath } from "@/utils";
+import styles from "./PlanCard.module.css";
+import { FaUserCircle } from "react-icons/fa";
 import { MdDateRange } from "react-icons/md";
 import { TiHeartFullOutline } from "react-icons/ti";
-import styles from "./DetailItem.module.css";
+import { useNavigate } from "react-router-dom";
+import { PageEndPoints } from "@/constants";
 
-const DetailItem = ({ item }) => {
+const PlanCard = ({ item }) => {
+  const navigate = useNavigate();
+  const path = buildPath(PageEndPoints.PLAN_DETAIL, { id: item.tripId });
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={() => navigate(path)}>
       <div
         className={styles.img_container}
         style={{
-          backgroundImage: `url(${item.plan.profile_url})`,
+          backgroundImage: `url(${item.cityImageUrl})`,
         }}
       />
       <div className={styles.content_container}>
         <div className={styles.content_header}>
           <div className={styles.header_title}>
-            <img src={item.user.profile_url} className={styles.user_img} />
+            <img
+              src={item.user.profile_url ?? "/user2.jpg"}
+              className={styles.user_img}
+            />
             <div className={styles.user_info}>
               <div className={styles.user_name}>
                 <FaUserCircle size={20} />
-                <p>{item.user.nickname}</p>
+                <p>{item.user.userName}</p>
               </div>
               <div className={styles.create_at}>
                 <MdDateRange size={20} />
-                <p>{item.plan.create_at}</p>
+                <p>{item.startDate} ~ </p>
               </div>
             </div>
           </div>
@@ -31,20 +40,17 @@ const DetailItem = ({ item }) => {
           <div className={styles.header_stats}>
             <div className={styles.header_like}>
               <TiHeartFullOutline size={20} color="var(--color-red-500)" />
-              <p>{item.plan.like}</p>
-            </div>
-
-            <div className={styles.header_comment}>
-              <FaCommentAlt size={15} color="var(--color-indigo-500)" />
-              <p>{item.plan.comment}</p>
+              <p>{item.likeCount}</p>
             </div>
           </div>
         </div>
 
         <div className={styles.plan_container}>
           <div className={styles.plan_title}>
-            <p className={styles.destination}>{item.plan.destination}</p>
-            <p className={styles.title}>{item.plan.title}</p>
+            <p className={styles.title}>{item.title}</p>
+            {item.description && (
+              <p className={styles.description}>{item.description}</p>
+            )}
           </div>
         </div>
       </div>
@@ -52,4 +58,4 @@ const DetailItem = ({ item }) => {
   );
 };
 
-export default DetailItem;
+export default PlanCard;

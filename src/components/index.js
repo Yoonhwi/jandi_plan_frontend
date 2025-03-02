@@ -6,5 +6,7 @@ export { default as Editor } from "./Editor/Editor.jsx";
 export { default as Field } from "./Field/Field.jsx";
 export { default as Loading } from "./Loading/Loading.jsx";
 export { default as Slider } from "./Slider/Sliders.jsx";
+export { default as Pagination } from "./Pagination/Pagination.jsx";
 export * from "./Drawer/Drawer.jsx";
 export * from "./Modal/Modal.jsx";
+export * from "./Cards/index.js";

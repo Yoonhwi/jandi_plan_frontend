@@ -15,10 +15,10 @@ const CustomMarker = ({
 
   return (
     <AdvancedMarker
-      key={schedule.id}
+      key={schedule.itineraryId}
       position={{
-        lat: place.lat,
-        lng: place.lng,
+        lat: place.latitude,
+        lng: place.longitude,
       }}
       ref={markerRef}
       onClick={() => {
@@ -30,13 +30,19 @@ const CustomMarker = ({
     >
       <Pin
         background={
-          selectedSchedule?.id === schedule.id ? "var(--color-amber-200)" : null
+          selectedSchedule?.itineraryId === schedule.itineraryId
+            ? "var(--color-amber-200)"
+            : null
         }
         borderColor={
-          selectedSchedule?.id === schedule.id ? "var(--color-amber-400)" : null
+          selectedSchedule?.itineraryId === schedule.itineraryId
+            ? "var(--color-amber-400)"
+            : null
         }
         glyphColor={
-          selectedSchedule?.id === schedule.id ? "var(--color-amber-400)" : null
+          selectedSchedule?.itineraryId === schedule.itineraryId
+            ? "var(--color-amber-400)"
+            : null
         }
       />
     </AdvancedMarker>

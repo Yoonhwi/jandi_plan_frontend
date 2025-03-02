@@ -1,12 +1,12 @@
 import { Button,Input, Field } from "@/components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Login.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { PageEndPoints, APIEndPoints } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { useAuth } from "@/contexts";
+import { useAuth, useToast } from "@/contexts";
 
 
 const schema = z.object({
@@ -19,7 +19,11 @@ const schema = z.object({
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isLoggedIn, signIn } = useAuth(); //로그인 관리
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const { createToast } = useToast();
 
   const {
     register,
@@ -30,14 +34,27 @@ const LoginPage = () => {
   });
 
   const handleAdd = async (data) => {
-      signIn(data);
+    setErrorMessage("");
+    try{
+      await signIn(data);
+    }catch(error){
+      setErrorMessage(error.message);
+      console.log(error.message);
+      createToast({
+        type: "error",
+        text: error.message,
+      });
+    }
   };
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate(PageEndPoints.HOME);
+      const redirectPath = location.state?.from || PageEndPoints.HOME;
+      navigate(redirectPath, { replace: true });
     }
-  }, [isLoggedIn]); 
+  }, [isLoggedIn]);
+
+
 
   return (
     <div className={styles.container}>
@@ -56,7 +73,7 @@ const LoginPage = () => {
                 boxSizing: "border-box",
                 width: "100%",
               }}
-              placeholder="아이디"
+              placeholder="이메일"
               size="md"
               register={register}
               name={"id"}
@@ -79,12 +96,10 @@ const LoginPage = () => {
               name={"password"}
             />
           </Field>
-          {/* <input type="text" placeholder="이메일" />
-          <input type="password" placeholder="비밀번호" /> */}
           
         </div>
         <div className={styles.btn_box}>
-          <p>Find ID / PW</p>
+          <p onClick={() => navigate(PageEndPoints.FINDPW)}>Find ID / PW</p>
           <Button size="md" variant="solid">
             로그인
           </Button>
