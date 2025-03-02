@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { PlanDetailContext } from "./PlanDetailContext";
-import { useAxios, usePlanReservation } from "@/hooks";
+import { useAxios, usePlanReservation, usePlanItinerary } from "@/hooks";
 import { useParams } from "react-router-dom";
 import { buildPath } from "@/utils";
 import { APIEndPoints } from "@/constants";
-import { usePlanItinerary } from "@/hooks";
 
 const PlanDetailProvider = ({ children }) => {
   const [flattendItinerary, setFlattendItinerary] = useState([]);
@@ -13,19 +12,11 @@ const PlanDetailProvider = ({ children }) => {
 
   const { response: tripDetail, fetchData: tripFetch } = useAxios();
 
-  const {
-    reservations,
-    addReservation,
-    updatePlanReservation,
-    deletePlanReservation,
-  } = usePlanReservation(id);
+  const { reservations, addReservation, updateReservation, deleteReservation } =
+    usePlanReservation(id);
 
-  const {
-    itineraries,
-    addItinerary,
-    updatePlanItinerary,
-    deletePlanItinerary,
-  } = usePlanItinerary(id);
+  const { itineraries, addItinerary, updateItinerary, deleteItinerary } =
+    usePlanItinerary(id);
 
   // 여행 계획의 기본 정보를 가져오는 함수
   const fetchPlanDetail = useCallback(async () => {
@@ -74,12 +65,12 @@ const PlanDetailProvider = ({ children }) => {
         reservations,
 
         addReservation,
-        updatePlanReservation,
-        deletePlanReservation,
+        updateReservation,
+        deleteReservation,
 
         addItinerary,
-        updatePlanItinerary,
-        deletePlanItinerary,
+        updateItinerary,
+        deleteItinerary,
 
         flattendItinerary,
       }}

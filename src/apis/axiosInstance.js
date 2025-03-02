@@ -24,10 +24,16 @@ const protectedEndpoints = new Set([
   `POST:${APIEndPoints.TRIP_CREATE}`,
   `GET:${APIEndPoints.TRIP_MY}`,
   `GET:${APIEndPoints.TRIP_DETAIL}`,
+
   `GET:${APIEndPoints.TRIP_ITINERARY}`,
+  `POST:${APIEndPoints.TRIP_ITINERARY}`,
+  `PATCH:${APIEndPoints.TRIP_ITINERARY}`,
+  `DELETE:${APIEndPoints.TRIP_ITINERARY}`,
+
   `GET:${APIEndPoints.TRIP_RESERVATION}`,
   `POST:${APIEndPoints.TRIP_RESERVATION}`,
-  `POST:${APIEndPoints.TRIP_ITINERARY}`,
+  `PATCH:${APIEndPoints.TRIP_RESERVATION}`,
+  `DELETE:${APIEndPoints.TRIP_RESERVATION}`,
 
   `POST:${APIEndPoints.PLACE}`,
 

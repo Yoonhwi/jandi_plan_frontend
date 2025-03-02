@@ -13,7 +13,8 @@ const timeToSeconds = (time) => {
 };
 
 const DayDetail = ({ focus }) => {
-  const { itineraries } = usePlanDetail();
+  const { itineraries, deleteItinerary } = usePlanDetail();
+  console.log("deleteItinerary", deleteItinerary);
 
   const contentData = useMemo(() => {
     if (!itineraries) return null;
@@ -36,6 +37,7 @@ const DayDetail = ({ focus }) => {
 
         <div className={styles.container_right}>
           {contentData.map((v) => {
+            console.log("v", v);
             return (
               <div key={v.itineraryId} className={styles.content_wrapper}>
                 <div className={styles.dashed} />
@@ -61,7 +63,10 @@ const DayDetail = ({ focus }) => {
                       </Tooltip>
 
                       <Tooltip text={"삭제"}>
-                        <div className={styles.icon_box}>
+                        <div
+                          className={styles.icon_box}
+                          onClick={() => deleteItinerary(v.itineraryId)}
+                        >
                           <TiDelete size={24} color="var(--color-red-500)" />
                         </div>
                       </Tooltip>

@@ -86,8 +86,6 @@ const PlanMap = () => {
     }
   }, [defaultPosition, focusSchedule, map]);
 
-  console.log(selectedSchedule?.itineraryId);
-
   return (
     <div className={styles.map_container}>
       <Map
