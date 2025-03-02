@@ -9,12 +9,12 @@ const map = {
 };
 
 const PlanBudget = () => {
-  const { tripDetail, itineraries, tripReservation, flattendItinerary } =
+  const { tripDetail, itineraries, reservations, flattendItinerary } =
     usePlanDetail();
-  if (!tripDetail || !itineraries || !tripReservation || !flattendItinerary)
+  if (!tripDetail || !itineraries || !reservations || !flattendItinerary)
     return null;
 
-  const { cost } = tripReservation;
+  const { cost } = reservations;
 
   const itineraryTotal = flattendItinerary.reduce((acc, cur) => {
     return acc + cur.cost;
@@ -44,7 +44,7 @@ const PlanBudget = () => {
               return (
                 <div key={key} className={styles.flex_column}>
                   <p className={styles.budget_title}>{key}</p>
-                  <p>{cost[item]}원</p>
+                  <p>{formatPrice(cost[item])}원</p>
                 </div>
               );
             })}
