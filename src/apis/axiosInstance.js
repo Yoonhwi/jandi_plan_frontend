@@ -21,6 +21,8 @@ const protectedEndpoints = new Set([
   `PATCH:${APIEndPoints.BOARD_DETAIL}`,
   `DELETE:${APIEndPoints.BOARD_DETAIL}`,
 
+  `POST:${APIEndPoints.BOARD_REPORTS}`,  
+
   `POST:${APIEndPoints.COMMUNITY_COMMENTS}`,
   `DELETE:${APIEndPoints.COMMUNITY_COMMENTS}`,
 

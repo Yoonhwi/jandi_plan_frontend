@@ -6,7 +6,7 @@ import Comment from "./Comment";
 import { APIEndPoints } from "@/constants";
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { Loading, DropDown, DropDownContent, DropDownTrigger, Modal, ModalContent, ModalTrigger } from "@/components";
+import { Loading,  Modal, ModalContent, ModalTrigger} from "@/components";
 import { useAxios } from "@/hooks";
 import { formatDistanceToNow } from "date-fns";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
@@ -15,6 +15,7 @@ import "highlight.js/styles/github.css";
 import hljs from "highlight.js";
 import { buildPath } from "@/utils";
 import { useAuth, useToast } from "@/contexts";
+import ReportModal from "./components/ReportModal";
 
 const BoardDetail = () => {
   const { id } = useParams();
@@ -122,11 +123,6 @@ const BoardDetail = () => {
               <p className={styles.date}>
                 {formatDistanceToNow(item.createdAt)}
               </p>
-              <DropDown>
-                <DropDownTrigger>
-                  <CiMenuKebab />
-                </DropDownTrigger>
-                <DropDownContent>
                   {item.user.userId==user.userId ? (
                     <>
                       <div className={styles.dropdown_menu}>수정</div>
@@ -134,11 +130,16 @@ const BoardDetail = () => {
                     </>
                   ):(
                     <>
+                    <Modal>
+                      <ModalTrigger>
                       <div className={styles.dropdown_menu}>신고</div>
+                      </ModalTrigger>
+                      <ModalContent>
+                        <ReportModal id={item.postId}/>
+                      </ModalContent>
+                    </Modal>
                     </>
                   )}                 
-                </DropDownContent>
-              </DropDown>
               </div>
             </div>
 

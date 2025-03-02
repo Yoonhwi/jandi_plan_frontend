@@ -1,0 +1,26 @@
+.container{
+    flex: 1;
+    width: 100%;
+    min-width: 30rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  
+    box-sizing: border-box;
+    padding: 2rem;
+}
+
+.title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+  }
+
+  .content {
+    padding: 1rem;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    font-size: var(--text-md);
+    resize: none;
+    outline: none;
+  }
