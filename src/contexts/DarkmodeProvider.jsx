@@ -1,5 +1,5 @@
 import { useDarkMode } from "@/hooks";
-import { DarkModeContext } from "./DarkModeContext";
+import { DarkModeContext } from "./DarkmodeContext";
 
 const DarkModeProvider = ({ children }) => {
   const { toggleDarkMode, isDarkMode } = useDarkMode();
