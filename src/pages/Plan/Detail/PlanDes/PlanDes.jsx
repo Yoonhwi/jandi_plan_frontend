@@ -1,25 +1,45 @@
 import { Button, Modal, ModalContent, ModalTrigger } from "@/components";
-import { useMemo } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import CreateReservation from "../ModalContents/CreateReservation";
 import CreateSchedule from "../ModalContents/CreateSchedule";
-import { usePlanDetail } from "../PlanDetailContext";
-import DayDetail from "./DayDetail";
 import styles from "./PlanDes.module.css";
-import Reserved from "./Reserved";
 import "swiper/css";
+import { usePlanDetail } from "../PlanDetailContext";
+import Reserved from "./Reserved";
+import DayDetail from "./DayDetail";
+import { useEffect, useMemo, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const PlanDes = () => {
-  const { plan, focusDay, setFocusDay } = usePlanDetail();
-  const { reserved, data } = plan;
+  const [data, setData] = useState([]);
+  const { focusDay, reservations, tripDetail, setFocusDay } = usePlanDetail();
 
   const renderItem = useMemo(() => {
-    if (focusDay === null) {
-      return <Reserved reserved={reserved} />;
-    } else {
-      return <DayDetail data={data} focus={focusDay} />;
+    if (focusDay === null && reservations) {
+      return <Reserved reserved={reservations} />;
     }
-  }, [data, focusDay, reserved]);
+
+    if (focusDay) {
+      return <DayDetail focus={focusDay} />;
+    }
+  }, [focusDay, reservations]);
+
+  useEffect(() => {
+    if (!tripDetail) return;
+
+    const { startDate, endDate } = tripDetail;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    let temp = [];
+    while (start <= end) {
+      const date = start.toISOString().split("T")[0];
+      const day =
+        Math.floor((start - new Date(startDate)) / (1000 * 60 * 60 * 24)) + 1;
+      temp.push({ date, day });
+      start.setDate(start.getDate() + 1);
+    }
+
+    setData(temp);
+  }, [tripDetail]);
 
   return (
     <div className={styles.container}>

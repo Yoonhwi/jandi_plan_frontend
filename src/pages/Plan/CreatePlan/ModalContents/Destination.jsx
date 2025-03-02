@@ -26,7 +26,7 @@ const Destination = ({ setSelectedCity }) => {
       url: APIEndPoints.DESTINATION,
       method: "GET",
       params: {
-        filter: "",
+        category: "ALL",
       },
     }).then((res) => {
       const { data } = res;

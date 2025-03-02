@@ -50,10 +50,15 @@ export const APIEndPoints = {
   COMMUNITY_COMMENTS: "/community/comments/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
 
+  PLACE: "/place",
+
   TRIP_MY: "/trip/my/allTrips",
   TRIP_CREATE: "/trip/my/create",
   TRIP_ALL: "/trip/allTrips",
-  
+  TRIP_DETAIL: "/trip/:id",
+  TRIP_ITINERARY: "/trip/itinerary/:id",
+  TRIP_RESERVATION: "/trip/reservation/:id",
+
   DESTINATION: "/trip/cities",
   CONTINENT: "/trip/continents",
   COUNTRY: "/trip/countries",
@@ -63,5 +68,4 @@ export const APIEndPoints = {
 
   IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
   IMAGE_UPLOAD: "/images/profiles/upload",
-
 };

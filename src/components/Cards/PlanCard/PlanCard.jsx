@@ -1,11 +1,17 @@
+import { buildPath } from "@/utils";
 import styles from "./PlanCard.module.css";
 import { FaUserCircle } from "react-icons/fa";
 import { MdDateRange } from "react-icons/md";
 import { TiHeartFullOutline } from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
+import { PageEndPoints } from "@/constants";
 
 const PlanCard = ({ item }) => {
+  const navigate = useNavigate();
+  const path = buildPath(PageEndPoints.PLAN_DETAIL, { id: item.tripId });
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={() => navigate(path)}>
       <div
         className={styles.img_container}
         style={{
@@ -15,7 +21,10 @@ const PlanCard = ({ item }) => {
       <div className={styles.content_container}>
         <div className={styles.content_header}>
           <div className={styles.header_title}>
-            <img src={item.user.profile_url} className={styles.user_img} />
+            <img
+              src={item.user.profile_url ?? "/user2.jpg"}
+              className={styles.user_img}
+            />
             <div className={styles.user_info}>
               <div className={styles.user_name}>
                 <FaUserCircle size={20} />

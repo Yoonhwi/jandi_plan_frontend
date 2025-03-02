@@ -3,6 +3,8 @@ import styles from "./CustomInfoWindow.module.css";
 import { formatPrice } from "@/utils";
 
 const CustomInfoWindow = ({ selectedSchedule, selectedMarker, onClose }) => {
+  if (!selectedSchedule || !selectedMarker) return null;
+
   return (
     <InfoWindow
       anchor={selectedMarker}

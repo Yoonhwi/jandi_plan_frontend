@@ -118,7 +118,7 @@ const FormCreatePlan = ({
             <div className={styles.radio_box}>
               <Input
                 type="radio"
-                name="private"
+                name="privatePlan"
                 value="no"
                 register={register}
                 defaultChecked

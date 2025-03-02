@@ -1,9 +1,13 @@
 import { Button, Field, Input } from "@/components";
 import styles from "./CreateSchedule.module.css";
+import { usePlanDetail } from "../PlanDetailContext";
 
 const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
   const { formState, register, watch } = formController;
+  const { tripDetail } = usePlanDetail();
   const { errors } = formState;
+
+  if (!tripDetail) return <p>상세일정을 가지고 올 수 없습니다.</p>;
 
   return (
     <div className={styles.container}>
@@ -15,6 +19,8 @@ const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
             style={{ width: "100%" }}
             register={register}
             name={"date"}
+            min={tripDetail.startDate}
+            max={tripDetail.endDate}
           />
         </Field>
 
@@ -23,7 +29,7 @@ const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
             type="time"
             style={{ width: "100%" }}
             register={register}
-            name={"time"}
+            name={"startTime"}
           />
         </Field>
 
@@ -41,7 +47,7 @@ const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
             <Input
               type="text"
               style={{ flex: 1 }}
-              value={watch("place")?.name || ""}
+              value={watch("placeName") || ""}
               readOnly
             />
             <Button type="button" onClick={handleAddressStep}>
@@ -69,6 +75,7 @@ const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
           style={{
             alignSelf: "end",
           }}
+          type="submit"
         >
           추가하기
         </Button>
