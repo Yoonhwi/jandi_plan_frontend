@@ -1,7 +1,7 @@
 import { Button } from "@/components";
 import { formatDate } from "date-fns";
 import styles from "./MyInfo.module.css";
-import PasswordForm from "./passwordForm";
+import PasswordForm from "./PasswordForm";
 import { useCallback } from "react";
 
 const MyInfo = ({ user }) => {
