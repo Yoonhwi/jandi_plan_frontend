@@ -57,6 +57,10 @@ const Header = () => {
 
   const menus = [
     {
+      text: "여행지",
+      onClick: () => navigate(PageEndPoints.DESTINATION_LIST),
+    },
+    {
       text: "여행 계획",
       onClick: () => navigate(PageEndPoints.PLAN_LIST),
     },

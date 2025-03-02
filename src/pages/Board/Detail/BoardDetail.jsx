@@ -13,12 +13,18 @@ import "quill/dist/quill.snow.css";
 import "highlight.js/styles/github.css";
 import hljs from "highlight.js";
 import { buildPath } from "@/utils";
+import { useAuth, useToast } from "@/contexts";
 
 const BoardDetail = () => {
   const { id } = useParams();
   const [item, setItem] = useState();
+  const [likes, setLikes] = useState();
   const contentRef = useRef(null);
   const { loading, fetchData } = useAxios();
+  const { user } = useAuth();
+
+
+  const { createToast } = useToast();
 
   useEffect(() => {
     fetchData({
@@ -60,6 +66,8 @@ const BoardDetail = () => {
             content,
           };
         });
+
+        setLikes(items.likeCount);
       })
       .catch((err) => {
         console.error(err);
@@ -75,6 +83,21 @@ const BoardDetail = () => {
       });
     }
   }, [item]);
+
+  const handleLike = () =>{
+    fetchData({
+      method: "POST",
+      url: buildPath(APIEndPoints.BOARD_LIKE, { id }),
+    }).then(() => {
+      setLikes(likes+1);
+    }).catch((err) => {
+      console.log(err);
+      createToast({
+        type: "error",
+        text: err.data.message,
+      });
+    })
+  }
 
   return (
     <BaseLayout>
@@ -92,7 +115,7 @@ const BoardDetail = () => {
                 />
                 <p className={styles.user_name}>{item.user.userName}</p>
                 <p className={styles.recommend}>조회수 654818</p>
-                <p className={styles.recommend}>추천 {item.likeCount}</p>
+                <p className={styles.recommend}>추천 {likes}</p>
               </div>
               <p className={styles.date}>
                 {formatDistanceToNow(item.createdAt)}
@@ -115,8 +138,9 @@ const BoardDetail = () => {
                     ? "var(--color-amber-400)"
                     : "var( --color-gray-300)"
                 }
+                onClick={()=>{handleLike()}}
               />
-              <p className={styles.recommend_count}>{item.likeCount}</p>
+              <p className={styles.recommend_count}>{likes}</p>
             </div>
             <div className={styles.divider} />
 

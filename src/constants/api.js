@@ -46,16 +46,22 @@ export const APIEndPoints = {
 
   BOARD: "/community/posts",
   BOARD_DETAIL: "/community/posts/:id",
+  BOARD_LIKE: "community/posts/likes/:id",
   COMMUNITY_COMMENTS: "/community/comments/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
 
   TRIP_MY: "/trip/my/allTrips",
   TRIP_CREATE: "/trip/my/create",
   TRIP_ALL: "/trip/allTrips",
+  
   DESTINATION: "/trip/cities",
+  CONTINENT: "/trip/continents",
+  COUNTRY: "/trip/countries",
 
   PLAN_BEST: "/trip/top-likes",
+  DESTINATION_BEST: "/trip/rank",
 
   IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
   IMAGE_UPLOAD: "/images/profiles/upload",
+
 };

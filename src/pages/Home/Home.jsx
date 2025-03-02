@@ -15,7 +15,7 @@ const HomePage = () => {
   useEffect(()=> {
     fetchData({
       method: "GET",
-      url: `${APIEndPoints.DESTINATION}`,
+      url: `${APIEndPoints.DESTINATION_BEST}`,
       params: { filter },
     }).then((res)=>{
       setDestinations(res.data);
