@@ -11,22 +11,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 const PlanDes = () => {
   const [data, setData] = useState([]);
-  const { focusDay, tripReservation, tripDetail, setFocusDay } =
-    usePlanDetail();
+  const { focusDay, reservations, tripDetail, setFocusDay } = usePlanDetail();
 
   const renderItem = useMemo(() => {
-    if (focusDay === null && tripReservation) {
-      return <Reserved reserved={tripReservation} />;
+    if (focusDay === null && reservations) {
+      return <Reserved reserved={reservations} />;
     }
 
     if (focusDay) {
       return <DayDetail focus={focusDay} />;
     }
-  }, [focusDay, tripReservation]);
+  }, [focusDay, reservations]);
 
   useEffect(() => {
     if (!tripDetail) return;
-    console.log("tripDetail", tripDetail);
+
     const { startDate, endDate } = tripDetail;
     const start = new Date(startDate);
     const end = new Date(endDate);

@@ -13,16 +13,16 @@ const timeToSeconds = (time) => {
 };
 
 const DayDetail = ({ focus }) => {
-  const { tripItinerary } = usePlanDetail();
+  const { itineraries } = usePlanDetail();
 
   const contentData = useMemo(() => {
-    if (!tripItinerary) return null;
-    return tripItinerary
+    if (!itineraries) return null;
+    return itineraries
       .filter((v) => v.date === focus)
       .sort((a, b) => {
         return timeToSeconds(a.startTime) - timeToSeconds(b.startTime);
       });
-  }, [focus, tripItinerary]);
+  }, [focus, itineraries]);
 
   if (!contentData) return null;
 

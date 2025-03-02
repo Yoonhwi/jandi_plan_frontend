@@ -16,7 +16,7 @@ const PlanMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [infoWindowShown, setInfoWindowShown] = useState(false);
 
-  const { tripItinerary, focusDay, flattendItinerary } = usePlanDetail();
+  const { itineraries, focusDay, flattendItinerary } = usePlanDetail();
 
   const onMouseEnter = useCallback((id) => {
     setHoverId(id);
@@ -60,11 +60,11 @@ const PlanMap = () => {
   }, []);
 
   const renderSchedule = useMemo(() => {
-    if (!focusDay) return tripItinerary ?? [];
+    if (!focusDay) return itineraries ?? [];
     const find = flattendItinerary.find((v) => v.date === focusDay);
 
     return find.data ?? [];
-  }, [flattendItinerary, focusDay, tripItinerary]);
+  }, [flattendItinerary, focusDay, itineraries]);
 
   const flightPlanCoordinates = renderSchedule.map((v) => {
     const { place } = v;

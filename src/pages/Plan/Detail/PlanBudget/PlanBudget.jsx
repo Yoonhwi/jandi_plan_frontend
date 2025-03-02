@@ -9,9 +9,9 @@ const map = {
 };
 
 const PlanBudget = () => {
-  const { tripDetail, tripItinerary, tripReservation, flattendItinerary } =
+  const { tripDetail, itineraries, tripReservation, flattendItinerary } =
     usePlanDetail();
-  if (!tripDetail || !tripItinerary || !tripReservation || !flattendItinerary)
+  if (!tripDetail || !itineraries || !tripReservation || !flattendItinerary)
     return null;
 
   const { cost } = tripReservation;
