@@ -1,11 +1,12 @@
 import { BaseLayout } from "@/layouts";
 import { FaThumbsUp } from "react-icons/fa";
+import { CiMenuKebab } from "react-icons/ci";
 import styles from "./BoardDetail.module.css";
 import Comment from "./Comment";
 import { APIEndPoints } from "@/constants";
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { Loading } from "@/components";
+import { Loading, DropDown, DropDownContent, DropDownTrigger, Modal, ModalContent, ModalTrigger } from "@/components";
 import { useAxios } from "@/hooks";
 import { formatDistanceToNow } from "date-fns";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
@@ -117,9 +118,28 @@ const BoardDetail = () => {
                 <p className={styles.recommend}>조회수 654818</p>
                 <p className={styles.recommend}>추천 {likes}</p>
               </div>
+              <div className={styles.header_right_box}>
               <p className={styles.date}>
                 {formatDistanceToNow(item.createdAt)}
               </p>
+              <DropDown>
+                <DropDownTrigger>
+                  <CiMenuKebab />
+                </DropDownTrigger>
+                <DropDownContent>
+                  {item.user.userId==user.userId ? (
+                    <>
+                      <div className={styles.dropdown_menu}>수정</div>
+                      <div className={styles.dropdown_menu}>삭제</div>
+                    </>
+                  ):(
+                    <>
+                      <div className={styles.dropdown_menu}>신고</div>
+                    </>
+                  )}                 
+                </DropDownContent>
+              </DropDown>
+              </div>
             </div>
 
             <div className={styles.divider} />
