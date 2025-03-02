@@ -1,15 +1,17 @@
 import styles from "./PlanList.module.css";
 import { useEffect } from "react";
 import { BaseLayout } from "@/layouts";
-import { Input, Loading, Pagination, PlanCard } from "@/components";
-import { FiSearch } from "react-icons/fi";
+import { Button, Loading, Pagination, PlanCard } from "@/components";
 import { useAxios, usePagination } from "@/hooks";
-import { APIEndPoints } from "@/constants";
+import { APIEndPoints, PageEndPoints } from "@/constants";
+import { useNavigate } from "react-router-dom";
 
 const PlanList = () => {
   const { response, fetchData, loading } = useAxios();
   const { currentPage, totalPage, setTotalPage, handlePageChange } =
     usePagination();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData({
@@ -29,26 +31,12 @@ const PlanList = () => {
         <div className={styles.container}>
           <div className={styles.title_box}>
             <p className={styles.title}>이런 여행 일정은 어때요?</p>
-            <form className={styles.search_input}>
-              <Input
-                size="md"
-                placeholder="Search Plans ..."
-                style={{
-                  width: "100%",
-                  borderRadius: "28px",
-                  boxSizing: "border-box",
-                  padding: "0.5rem 3rem 0.5rem 1.5rem",
-                }}
-              />
-
-              <div className={styles.icon_search_box}>
-                <FiSearch
-                  size={24}
-                  className={styles.icon_search}
-                  type="submit"
-                />
-              </div>
-            </form>
+            <Button
+              variant={"ghost"}
+              onClick={() => navigate(PageEndPoints.PLAN_CREATE)}
+            >
+              계획 만들기
+            </Button>
           </div>
 
           {response && (
