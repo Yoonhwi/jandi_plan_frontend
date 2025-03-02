@@ -1,23 +1,34 @@
 import { useState } from "react";
+import { FaThumbsUp } from "react-icons/fa";
 import styles from "./CommentItem.module.css";
 import { RiArrowDownWideLine, RiArrowUpWideLine } from "react-icons/ri";
 import { formatDistanceToNow } from "date-fns";
 import ReplyComment from "./ReplyComment";
 
-const CommentItem = ({ comment }) => {
+const CommentItem = ({ comment,deleteComment }) => {
+  console.log(comment);
   const [isOpen, setIsOpen] = useState(false);
   const formmatDate = formatDistanceToNow(new Date(comment.createdAt));
 
   return (
     <div className={styles.comment_item}>
       <div className={styles.comment}>
-        <img src={"/user1.png"} className={styles.comment_user_img} />
+        <img src={comment.user.profileImageUrl} className={styles.comment_user_img} />
         <div className={styles.flex_column}>
           <div className={styles.comment_info}>
-            <p className={styles.comment_user_name}>유저네임</p>
+            <p className={styles.comment_user_name}>{comment.user.userName}</p>
             <p className={styles.comment_date}>{formmatDate}</p>
             <p className={styles.recomment}>답글</p>
             <p className={styles.report}>신고</p>
+            {/* <FaThumbsUp
+            size={16}
+            color={
+              comment.isRecommended
+                ? "var(--color-amber-400)"
+                : "var( --color-gray-300)"
+            }
+          /> */}
+            {comment.mine ? <p className={styles.report} onClick={()=> deleteComment(comment.commentId)}>삭제</p> : <FaThumbsUp size={12} color={comment.isRecommended? "var(--color-amber-400)": "var( --color-gray-300)"}/>}
           </div>
           <p className={styles.comment_text}>{comment.contents}</p>
         </div>
