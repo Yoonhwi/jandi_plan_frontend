@@ -6,10 +6,10 @@ import { Button } from "@/components";
 import { PageEndPoints } from "@/constants";
 
 const PrivateRoute = ({ children, requireAuth }) => {
-    const navigate = useNavigate();
-    const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-  if (requireAuth && !isLoggedIn) {
+  if (requireAuth && !user) {
     return (
       <BaseLayout>
         <div className={styles.container}>
@@ -17,7 +17,11 @@ const PrivateRoute = ({ children, requireAuth }) => {
           <span className={styles.text}>
             해당 서비스를 이용 하시려면 로그인을 해주세요.
           </span>
-          <Button variant="outline" size="lg" onClick={() => navigate(PageEndPoints.HOME)}>
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => navigate(PageEndPoints.HOME)}
+          >
             홈으로 돌아가기
           </Button>
         </div>
