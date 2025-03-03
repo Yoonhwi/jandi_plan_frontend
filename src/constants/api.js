@@ -68,4 +68,6 @@ export const APIEndPoints = {
 
   IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
   IMAGE_UPLOAD: "/images/profiles/upload",
+
+  TEMP: "/temp",
 };

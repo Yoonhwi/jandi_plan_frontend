@@ -44,6 +44,8 @@ const protectedEndpoints = new Set([
 
   `POST:${APIEndPoints.IMAGE_UPLOAD_COMMUNITY}`,
   `POST:${APIEndPoints.IMAGE_UPLOAD}`,
+
+  `POST:${APIEndPoints.TEMP}`,
 ]);
 
 axiosInstance.interceptors.request.use((config) => {
