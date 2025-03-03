@@ -15,7 +15,7 @@ const PlanInfo = () => {
         <div className={styles.flex_row}>
           <IoLocationSharp size={20} />
           <p>
-            {"나라"}, {"목적지"}
+            {tripDetail.countryName}, {tripDetail.cityName}
           </p>
         </div>
         <div className={styles.flex_row}>
