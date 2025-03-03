@@ -20,7 +20,7 @@ const BoardPage = () => {
       url: `${APIEndPoints.BOARD}`,
       params: { page: currentPage - 1 },
     }).then((res) => {
-      setTotalPage(res.data.pageInfo?.totalPages || 0);
+      setTotalPage(res.data.pageInfo.totalPages || 0);
     });
   }, [currentPage, fetchData, setTotalPage]);
 

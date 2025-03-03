@@ -1,19 +1,17 @@
 import { BaseLayout } from "@/layouts";
 import { FaThumbsUp } from "react-icons/fa";
-import { CiMenuKebab } from "react-icons/ci";
 import styles from "./BoardDetail.module.css";
 import Comment from "./Comment";
 import { APIEndPoints } from "@/constants";
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { Loading,  Modal, ModalContent, ModalTrigger} from "@/components";
+import { Loading, Modal, ModalContent, ModalTrigger } from "@/components";
 import { useAxios } from "@/hooks";
 import { formatDistanceToNow } from "date-fns";
-import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import "quill/dist/quill.snow.css";
 import "highlight.js/styles/github.css";
 import hljs from "highlight.js";
-import { buildPath } from "@/utils";
+import { buildPath, parseContent } from "@/utils";
 import { useAuth, useToast } from "@/contexts";
 import ReportModal from "./components/ReportModal";
 
@@ -22,9 +20,9 @@ const BoardDetail = () => {
   const [item, setItem] = useState();
   const [likes, setLikes] = useState();
   const contentRef = useRef(null);
-  const { loading, fetchData } = useAxios();
+  const { loading, fetchData, response } = useAxios();
+  const { fetchData: likeFetch } = useAxios();
   const { user } = useAuth();
-
 
   const { createToast } = useToast();
 
@@ -35,32 +33,7 @@ const BoardDetail = () => {
     })
       .then((res) => {
         const items = res.data.items;
-        let content;
-        try {
-          const parsed = JSON.parse(items.content);
-          const converter = new QuillDeltaToHtmlConverter(parsed?.ops ?? "", {
-            customTagAttributes: (op) => {
-              if (op.insert?.type === "image" && op.attributes?.imageAlign) {
-                if (op.attributes.imageAlign.align === "center") {
-                  return {
-                    style: `display: block; margin: 0 auto; width: ${
-                      op.attributes.width || "auto"
-                    };`,
-                  };
-                } else
-                  return {
-                    style: `float: ${op.attributes.imageAlign?.align}; width: ${
-                      op.attributes.width || "auto"
-                    };`,
-                  };
-              }
-            },
-          });
-          content = converter.convert();
-          // eslint-disable-next-line no-unused-vars
-        } catch (err) {
-          content = items.content;
-        }
+        const content = parseContent(items.content);
 
         setItem(() => {
           return {
@@ -68,8 +41,6 @@ const BoardDetail = () => {
             content,
           };
         });
-
-        setLikes(items.likeCount);
       })
       .catch((err) => {
         console.error(err);
@@ -86,20 +57,33 @@ const BoardDetail = () => {
     }
   }, [item]);
 
-  const handleLike = () =>{
-    fetchData({
+  // response가 변경될때, 좋아요 갯수를 업데이트
+  // 추후 isLiked가 추가되면, 좋아요 또는 좋아요취소 시, 게시글 fetch를 다시한다면, 자동적으로 업데이트 가능
+  useEffect(() => {
+    if (!response) return;
+
+    const likeCount = response.items.likeCount || 0;
+    setLikes(likeCount);
+  }, [response]);
+
+  // 추후 좋아요 또는 좋아요 취소 시 게시글 fetch를 다시합니다.
+  // 그렇다면, likes state또한 제거 가능합니다.
+  const handleLike = () => {
+    likeFetch({
       method: "POST",
       url: buildPath(APIEndPoints.BOARD_LIKE, { id }),
-    }).then(() => {
-      setLikes(likes+1);
-    }).catch((err) => {
-      console.log(err);
-      createToast({
-        type: "error",
-        text: err.data.message,
-      });
     })
-  }
+      .then(() => {
+        setLikes(likes + 1);
+      })
+      .catch((err) => {
+        console.log(err);
+        createToast({
+          type: "error",
+          text: err.data.message,
+        });
+      });
+  };
 
   return (
     <BaseLayout>
@@ -120,26 +104,26 @@ const BoardDetail = () => {
                 <p className={styles.recommend}>추천 {likes}</p>
               </div>
               <div className={styles.header_right_box}>
-              <p className={styles.date}>
-                {formatDistanceToNow(item.createdAt)}
-              </p>
-                  {item.user.userId==user.userId ? (
-                    <>
-                      <div className={styles.dropdown_menu}>수정</div>
-                      <div className={styles.dropdown_menu}>삭제</div>
-                    </>
-                  ):(
-                    <>
+                <p className={styles.date}>
+                  {formatDistanceToNow(item.createdAt)}
+                </p>
+                {item.user.userId == user.userId ? (
+                  <>
+                    <div className={styles.dropdown_menu}>수정</div>
+                    <div className={styles.dropdown_menu}>삭제</div>
+                  </>
+                ) : (
+                  <>
                     <Modal>
                       <ModalTrigger>
-                      <div className={styles.dropdown_menu}>신고</div>
+                        <div className={styles.dropdown_menu}>신고</div>
                       </ModalTrigger>
                       <ModalContent>
-                        <ReportModal id={item.postId}/>
+                        <ReportModal id={item.postId} />
                       </ModalContent>
                     </Modal>
-                    </>
-                  )}                 
+                  </>
+                )}
               </div>
             </div>
 
@@ -159,7 +143,7 @@ const BoardDetail = () => {
                     ? "var(--color-amber-400)"
                     : "var( --color-gray-300)"
                 }
-                onClick={()=>{handleLike()}}
+                onClick={() => handleLike()}
               />
               <p className={styles.recommend_count}>{likes}</p>
             </div>
