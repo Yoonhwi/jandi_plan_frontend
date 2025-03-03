@@ -44,19 +44,13 @@ const CommentItem = ({ comment,deleteComment }) => {
             <p className={styles.comment_user_name}>{comment.user.userName}</p>
             <p className={styles.comment_date}>{formmatDate}</p>
             <p className={styles.recomment}>답글</p>
-            <p className={styles.report}>신고</p>
-            {/* <FaThumbsUp
-            size={16}
-            color={
-              comment.isRecommended
-                ? "var(--color-amber-400)"
-                : "var( --color-gray-300)"
-            }
-          /> */}
             {comment.mine ? 
-              <p className={styles.report} onClick={()=> deleteComment(comment.commentId)}>삭제</p> 
+              <>
+                <p className={styles.report} onClick={()=> deleteComment(comment.commentId)}>삭제</p> 
+              </>
             : 
               <>
+                <p className={styles.report}>신고</p>
                 <FaThumbsUp size={12} color={comment.isRecommended? "var(--color-amber-400)": "var( --color-gray-300)"} onClick={()=>{handleLike()}} />
                 <p className={styles.likeCount}> {likes}</p>
               </>}

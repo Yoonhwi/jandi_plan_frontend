@@ -30,9 +30,10 @@
 .comment_user_name{
   font-size: var(--text-sm);
 }
+
 .comment_date,
 .recomment,
-.comment,
+.likeCount,
 .report {
   font-size: var(--text-sm);
   color: var(--color-gray-400);

@@ -27,6 +27,8 @@ const protectedEndpoints = new Set([
   `DELETE:${APIEndPoints.COMMUNITY_COMMENTS}`,
 
   `POST:${APIEndPoints.BOARD_LIKE}`,
+  `POST:${APIEndPoints.COMMENTS_LIKE}`,
+  
 
   `POST:${APIEndPoints.TRIP_CREATE}`,
   `GET:${APIEndPoints.TRIP_MY}`,
