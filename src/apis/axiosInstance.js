@@ -71,7 +71,7 @@ axiosInstance.interceptors.response.use(
       if (refreshToken) {
         const response = await refreshAccessToken(refreshToken);
 
-        if (!response.accessToken) {
+        if (!response.accessToken || !response.refreshToken) {
           return Promise.reject(
             "리프레쉬 토큰으로 액세스토큰 재발행 실패",
             error
