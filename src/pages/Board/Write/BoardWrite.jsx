@@ -1,7 +1,7 @@
 import { Button, Editor, Input } from "@/components";
 import { BaseLayout } from "@/layouts";
 import { useAxios } from "@/hooks";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./BoardWrite.module.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +9,7 @@ import { boardWriteScheme } from "../constants";
 import { APIEndPoints } from "@/constants";
 import "quill/dist/quill.snow.css";
 import { useQuillEvents } from "@/hooks";
+import { useSearchParams } from "react-router-dom";
 
 const BoardWrite = () => {
   const [quill, setQuill] = useState(null);
@@ -21,6 +22,9 @@ const BoardWrite = () => {
     resolver: zodResolver(boardWriteScheme),
   });
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const { fetchData: getTempId } = useAxios();
   const { fetchData: postBoard } = useAxios();
 
   const onSubmit = useCallback(
@@ -41,6 +45,16 @@ const BoardWrite = () => {
   );
 
   useQuillEvents(quill, setValue);
+
+  useEffect(() => {
+    getTempId({
+      url: APIEndPoints.TEMP,
+      method: "POST",
+    }).then((res) => {
+      const tempPostId = res.data.tempPostId;
+      setSearchParams({ tempId: tempPostId });
+    });
+  }, []);
 
   return (
     <BaseLayout>

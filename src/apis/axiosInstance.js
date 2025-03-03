@@ -51,6 +51,8 @@ const protectedEndpoints = new Set([
 
   `POST:${APIEndPoints.IMAGE_UPLOAD_COMMUNITY}`,
   `POST:${APIEndPoints.IMAGE_UPLOAD}`,
+
+  `POST:${APIEndPoints.TEMP}`,
 ]);
 
 axiosInstance.interceptors.request.use((config) => {
@@ -78,7 +80,7 @@ axiosInstance.interceptors.response.use(
       if (refreshToken) {
         const response = await refreshAccessToken(refreshToken);
 
-        if (!response.accessToken) {
+        if (!response.accessToken || !response.refreshToken) {
           return Promise.reject(
             "리프레쉬 토큰으로 액세스토큰 재발행 실패",
             error

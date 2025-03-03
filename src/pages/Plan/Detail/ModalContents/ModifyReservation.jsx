@@ -4,10 +4,20 @@ import { useForm } from "react-hook-form";
 import { usePlanDetail } from "../PlanDetailContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createReservationSchema } from "../../constants";
+import { useModal } from "@/components/Modal/ModalContext";
 
-const CreateReservation = () => {
+const map = {
+  TRANSPORTATION: "교통편",
+  ACCOMMODATION: "숙박",
+  ETC: "기타",
+};
+const ModifyReservation = ({ reservation }) => {
   const formController = useForm({
     resolver: zodResolver(createReservationSchema),
+    defaultValues: {
+      ...reservation,
+      category: map[reservation.category],
+    },
   });
 
   const {
@@ -16,16 +26,19 @@ const CreateReservation = () => {
     watch,
     formState: { errors },
   } = formController;
-  const { addReservation } = usePlanDetail();
+
+  const { updateReservation } = usePlanDetail();
+
+  const { closeModal } = useModal();
 
   const onSubmit = (data) => {
-    addReservation(data);
-    formController.reset();
+    updateReservation(reservation.reservationId, data);
+    closeModal();
   };
 
   return (
     <div className={styles.container}>
-      <p className={styles.title}>예약항목을 추가하세요!</p>
+      <p className={styles.title}>예약항목을 수정하세요!</p>
       <Field
         label="카테고리"
         isRequire
@@ -81,11 +94,11 @@ const CreateReservation = () => {
           }}
           type="submit"
         >
-          추가하기
+          수정하기
         </Button>
       </form>
     </div>
   );
 };
 
-export default CreateReservation;
+export default ModifyReservation;

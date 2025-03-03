@@ -16,7 +16,8 @@ const PlanMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [infoWindowShown, setInfoWindowShown] = useState(false);
 
-  const { itineraries, focusDay, flattendItinerary } = usePlanDetail();
+  const { itineraries, focusDay, flattendItinerary, tripDetail } =
+    usePlanDetail();
 
   const onMouseEnter = useCallback((id) => {
     setHoverId(id);
@@ -56,8 +57,11 @@ const PlanMap = () => {
   const focusSchedule = flattendItinerary.find((v) => v.date === focusDay);
 
   const defaultPosition = useMemo(() => {
-    return { lat: 35, lng: 139 };
-  }, []);
+    return {
+      lat: tripDetail?.latitude ?? 35,
+      lng: tripDetail?.longitude ?? 129,
+    };
+  }, [tripDetail?.latitude, tripDetail?.longitude]);
 
   const renderSchedule = useMemo(() => {
     if (!focusDay) return itineraries ?? [];
