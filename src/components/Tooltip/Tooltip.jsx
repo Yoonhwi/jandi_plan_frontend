@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./Tooltip.module.css";
 
-const Tooltip = ({ children, text }) => {
+const Tooltip = ({ children, text, ...props }) => {
   const [visible, setVisible] = useState(false);
 
   const handleMouseEnter = useCallback(() => {
@@ -25,6 +25,7 @@ const Tooltip = ({ children, text }) => {
       className={styles.tooltip}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      {...props}
     >
       {children}
       <AnimatePresence>
