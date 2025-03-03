@@ -32,10 +32,17 @@
 }
 .comment_date,
 .recomment,
+.comment,
 .report {
   font-size: var(--text-sm);
   color: var(--color-gray-400);
 }
+
+.comment_text{
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+}
+
 
 .report {
   cursor: pointer;

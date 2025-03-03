@@ -48,6 +48,7 @@ export const APIEndPoints = {
   BOARD_DETAIL: "/community/posts/:id",
   BOARD_LIKE: "community/posts/likes/:id",
   COMMUNITY_COMMENTS: "/community/comments/:id",
+  COMMENTS_LIKE: "/community/comments/likes/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
   BOARD_REPORTS: "/community/posts/reports/:id",
 
