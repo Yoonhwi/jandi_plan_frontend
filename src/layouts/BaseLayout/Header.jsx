@@ -1,7 +1,7 @@
 import { useDarkModeContext } from "@/contexts";
 import styles from "./Header.module.css";
 import { LuUserRound } from "react-icons/lu";
-import { LuLogIn, LuLogOut  } from "react-icons/lu";
+import { LuLogIn, LuLogOut } from "react-icons/lu";
 import { LuMoonStar } from "react-icons/lu";
 import {
   Button,
@@ -20,22 +20,33 @@ const Header = () => {
   const { toggleDarkMode, isDarkMode } = useDarkModeContext();
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoggedIn, signOut } = useAuth();
+  const { user, signOut } = useAuth();
 
   const tooltips = [
     {
       text: "마이페이지",
-      icon: <LuUserRound size={20} onClick={() => navigate(PageEndPoints.MYPAGE)}/>,
+      icon: (
+        <LuUserRound size={20} onClick={() => navigate(PageEndPoints.MYPAGE)} />
+      ),
     },
-    isLoggedIn
-    ? {
-        text: "로그아웃",
-        icon: <LuLogOut size={20} onClick={signOut} />, 
-      }
-    : {
-        text: "로그인",
-        icon: <LuLogIn size={20} onClick={() => navigate(PageEndPoints.LOGIN, { state: { from: location.pathname } })} />, 
-      },
+    user
+      ? {
+          text: "로그아웃",
+          icon: <LuLogOut size={20} onClick={signOut} />,
+        }
+      : {
+          text: "로그인",
+          icon: (
+            <LuLogIn
+              size={20}
+              onClick={() =>
+                navigate(PageEndPoints.LOGIN, {
+                  state: { from: location.pathname },
+                })
+              }
+            />
+          ),
+        },
     // {
     //   text: "로그인",
     //   icon: <LuLogIn size={20} onClick={() => navigate(PageEndPoints.LOGIN)} />,
