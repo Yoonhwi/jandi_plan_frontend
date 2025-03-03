@@ -7,10 +7,9 @@ import { APIEndPoints } from "@/constants";
 import { useAuth, useToast} from "@/contexts";
 import { FaThumbsUp } from "react-icons/fa";
 
-const ReplyComment = ({ commentId }) => {
+const ReplyComment = ({ commentId, user }) => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
-  const { user } = useAuth();
   const { response, fetchData } = useAxios();
   const { createToast } = useToast();
 

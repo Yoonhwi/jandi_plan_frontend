@@ -26,6 +26,9 @@ const protectedEndpoints = new Set([
   `POST:${APIEndPoints.COMMUNITY_COMMENTS}`,
   `DELETE:${APIEndPoints.COMMUNITY_COMMENTS}`,
 
+  `POST:${APIEndPoints.COMMENTS_REPLIES}`,
+  `DELETE:${APIEndPoints.COMMENTS_REPLIES}`,
+
   `POST:${APIEndPoints.BOARD_LIKE}`,
   `POST:${APIEndPoints.COMMENTS_LIKE}`,
   

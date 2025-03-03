@@ -49,6 +49,20 @@
   cursor: pointer;
 }
 
+.form_box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-sizing: border-box;
+  margin-left: 4rem;
+}
+
+.current_user_img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+}
+
 .recomment_container {
   box-sizing: border-box;
   padding-left: 3.5rem;
