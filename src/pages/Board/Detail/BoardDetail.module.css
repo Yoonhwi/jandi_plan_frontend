@@ -21,7 +21,16 @@
   font-size: var(--text-sm);
   color: var(--color-gray-400);
 }
-
+.header_right_box{
+  display: flex;
+  gap: 1rem;
+}
+.dropdown_menu{
+  width: 2rem;
+  font-size: var(--text-sm);
+  background-color: var( --color-bg-primary);
+  cursor: pointer;
+}
 .user_info {
   display: flex;
   align-items: center;

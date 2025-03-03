@@ -17,8 +17,6 @@ const Comment = ({ id }) => {
   const [commentText, setCommentText] = useState("");
   const { createToast } = useToast();
 
-  console.log(user);
-
   useEffect(() => {
     fetchComments();
   }, [id]);
@@ -113,7 +111,7 @@ const Comment = ({ id }) => {
 
       <div className={styles.comment_container}>
         {items?.map((comment) => {
-          return <CommentItem key={comment.commentId} comment={comment} deleteComment={deleteComment}/>;
+          return <CommentItem key={comment.commentId} comment={comment} deleteComment={deleteComment} user={user} fetchComments={fetchComments}/>;
         })}
       </div>
     </div>

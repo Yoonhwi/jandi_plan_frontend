@@ -1,11 +1,12 @@
 import { BaseLayout } from "@/layouts";
 import { FaThumbsUp } from "react-icons/fa";
+import { CiMenuKebab } from "react-icons/ci";
 import styles from "./BoardDetail.module.css";
 import Comment from "./Comment";
 import { APIEndPoints } from "@/constants";
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { Loading } from "@/components";
+import { Loading,  Modal, ModalContent, ModalTrigger} from "@/components";
 import { useAxios } from "@/hooks";
 import { formatDistanceToNow } from "date-fns";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
@@ -14,6 +15,7 @@ import "highlight.js/styles/github.css";
 import hljs from "highlight.js";
 import { buildPath } from "@/utils";
 import { useAuth, useToast } from "@/contexts";
+import ReportModal from "./components/ReportModal";
 
 const BoardDetail = () => {
   const { id } = useParams();
@@ -117,9 +119,28 @@ const BoardDetail = () => {
                 <p className={styles.recommend}>조회수 654818</p>
                 <p className={styles.recommend}>추천 {likes}</p>
               </div>
+              <div className={styles.header_right_box}>
               <p className={styles.date}>
                 {formatDistanceToNow(item.createdAt)}
               </p>
+                  {item.user.userId==user.userId ? (
+                    <>
+                      <div className={styles.dropdown_menu}>수정</div>
+                      <div className={styles.dropdown_menu}>삭제</div>
+                    </>
+                  ):(
+                    <>
+                    <Modal>
+                      <ModalTrigger>
+                      <div className={styles.dropdown_menu}>신고</div>
+                      </ModalTrigger>
+                      <ModalContent>
+                        <ReportModal id={item.postId}/>
+                      </ModalContent>
+                    </Modal>
+                    </>
+                  )}                 
+              </div>
             </div>
 
             <div className={styles.divider} />

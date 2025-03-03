@@ -21,10 +21,17 @@ const protectedEndpoints = new Set([
   `PATCH:${APIEndPoints.BOARD_DETAIL}`,
   `DELETE:${APIEndPoints.BOARD_DETAIL}`,
 
+  `POST:${APIEndPoints.BOARD_REPORTS}`,  
+
   `POST:${APIEndPoints.COMMUNITY_COMMENTS}`,
   `DELETE:${APIEndPoints.COMMUNITY_COMMENTS}`,
 
+  `POST:${APIEndPoints.COMMENTS_REPLIES}`,
+  `DELETE:${APIEndPoints.COMMENTS_REPLIES}`,
+
   `POST:${APIEndPoints.BOARD_LIKE}`,
+  `POST:${APIEndPoints.COMMENTS_LIKE}`,
+  
 
   `POST:${APIEndPoints.TRIP_CREATE}`,
   `GET:${APIEndPoints.TRIP_MY}`,
