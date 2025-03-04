@@ -14,6 +14,8 @@ const protectedEndpoints = new Set([
   `GET:${APIEndPoints.PROFILE}`,
   `PUT:${APIEndPoints.USER_CHANGE_PASSWORD}`,
 
+  `POST:${APIEndPoints.PREFER_DEST}`,
+
   `POST:${APIEndPoints.BOARD}`,
   `PATCH:${APIEndPoints.BOARD}`,
   `DELETE:${APIEndPoints.BOARD}`,

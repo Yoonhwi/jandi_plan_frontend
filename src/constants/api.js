@@ -35,6 +35,8 @@ export const APIEndPoints = {
   REFRESH: "/users/token/refresh",
   USER: "/users",
 
+  PREFER_DEST: "/trip/cities/prefer",
+
   RESISTER: "/users/register",
   USER_CHANGE_PASSWORD: "/users/change-password",
   USER_VERIFY: "/users/verify",
