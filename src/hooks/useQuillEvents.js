@@ -6,12 +6,34 @@ const useQuillEvents = (quill, setValue, targetId) => {
   const { createToast } = useToast();
 
   useEffect(() => {
-    if (!quill) return;
+    if (!quill || !targetId) return;
+
     const editorElement = quill.root;
 
     quill.on("text-change", () => {
       setValue("content", quill.getContents());
     });
+
+    const handleImage = async (file) => {
+      const range = quill.getSelection();
+
+      await uploadCommunityImage(file, targetId)
+        .then((res) => {
+          createToast({
+            type: "success",
+            text: "이미지가 성공적으로 업로드되었습니다.",
+          });
+          const imageUrl = res.data.imageUrl;
+          quill.insertEmbed(range?.index ?? 0, "image", imageUrl, "user");
+          quill.setSelection((range?.index ?? 0) + 1);
+        })
+        .catch(() =>
+          createToast({
+            type: "error",
+            text: "이미지 업로드에 실패했습니다.",
+          })
+        );
+    };
 
     editorElement.addEventListener("paste", (e) => {
       const clipboardData = e.clipboardData;
@@ -43,26 +65,11 @@ const useQuillEvents = (quill, setValue, targetId) => {
       }
     });
 
-    async function handleImage(file) {
-      const range = quill.getSelection();
+    return () => {
+      editorElement.removeEventListener("paste", () => {});
+      editorElement.removeEventListener("drop", () => {});
+    };
 
-      await uploadCommunityImage(file, targetId)
-        .then((res) => {
-          createToast({
-            type: "success",
-            text: "이미지가 성공적으로 업로드되었습니다.",
-          });
-          const imageUrl = res.data.imageUrl;
-          quill.insertEmbed(range?.index ?? 0, "image", imageUrl, "user");
-          quill.setSelection((range?.index ?? 0) + 1);
-        })
-        .catch(() =>
-          createToast({
-            type: "error",
-            text: "이미지 업로드에 실패했습니다.",
-          })
-        );
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetId, quill]);
 };
