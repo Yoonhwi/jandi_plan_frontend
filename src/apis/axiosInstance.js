@@ -22,6 +22,7 @@ const protectedEndpoints = new Set([
   `PATCH:${APIEndPoints.BOARD}`,
   `DELETE:${APIEndPoints.BOARD}`,
 
+  `GET:${APIEndPoints.BOARD_DETAIL}`,
   `PATCH:${APIEndPoints.BOARD_DETAIL}`,
   `DELETE:${APIEndPoints.BOARD_DETAIL}`,
 

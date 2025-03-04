@@ -35,6 +35,7 @@ const BoardDetail = () => {
     })
       .then((res) => {
         const items = res.data.items;
+        console.log(res);
         let content;
         try {
           const parsed = JSON.parse(items.content);
