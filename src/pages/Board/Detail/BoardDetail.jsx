@@ -2,11 +2,17 @@ import { BaseLayout } from "@/layouts";
 import { FaThumbsUp } from "react-icons/fa";
 import styles from "./BoardDetail.module.css";
 import Comment from "./Comment";
-import { APIEndPoints } from "@/constants";
-import { useParams } from "react-router-dom";
+import { APIEndPoints, PageEndPoints } from "@/constants";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { Loading, Modal, ModalContent, ModalTrigger } from "@/components";
-import { useAxios } from "@/hooks";
+import {
+  Button,
+  Loading,
+  Modal,
+  ModalContent,
+  ModalTrigger,
+} from "@/components";
+import { useAxios, useCommunity } from "@/hooks";
 import { formatDistanceToNow } from "date-fns";
 import "quill/dist/quill.snow.css";
 import "highlight.js/styles/github.css";
@@ -14,17 +20,22 @@ import hljs from "highlight.js";
 import { buildPath, parseContent } from "@/utils";
 import { useAuth, useToast } from "@/contexts";
 import ReportModal from "./components/ReportModal";
+import DeleteModal from "@/components/Modal/ModalContents/DeleteModal";
 
 const BoardDetail = () => {
-  const { id } = useParams();
   const [item, setItem] = useState();
   const [likes, setLikes] = useState();
+
+  const { id } = useParams();
   const contentRef = useRef(null);
+
   const { loading, fetchData, response } = useAxios();
   const { fetchData: likeFetch } = useAxios();
   const { user } = useAuth();
-
   const { createToast } = useToast();
+  const navigate = useNavigate();
+
+  const { deleteCommunity } = useCommunity();
 
   useEffect(() => {
     fetchData({
@@ -108,10 +119,27 @@ const BoardDetail = () => {
                   {formatDistanceToNow(item.createdAt)}
                 </p>
                 {item.user.userId == user.userId ? (
-                  <>
-                    <div className={styles.dropdown_menu}>수정</div>
-                    <div className={styles.dropdown_menu}>삭제</div>
-                  </>
+                  <div className={styles.flex_row}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        navigate(buildPath(PageEndPoints.BOARD_MODIFY, { id }))
+                      }
+                    >
+                      수정
+                    </Button>
+                    <Modal>
+                      <ModalTrigger>
+                        <Button variant="ghost" size="sm">
+                          삭제
+                        </Button>
+                      </ModalTrigger>
+                      <ModalContent>
+                        <DeleteModal callback={() => deleteCommunity(id)} />
+                      </ModalContent>
+                    </Modal>
+                  </div>
                 ) : (
                   <>
                     <Modal>

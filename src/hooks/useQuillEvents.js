@@ -64,7 +64,7 @@ const useQuillEvents = (quill, setValue, targetId) => {
         );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetId]);
+  }, [targetId, quill]);
 };
 
 export default useQuillEvents;

@@ -1,6 +1,6 @@
 import { Button, Loading, Pagination } from "@/components";
-import { APIEndPoints, PageEndPoints } from "@/constants";
-import { useAxios } from "@/hooks";
+import { PageEndPoints } from "@/constants";
+import { useCommunity } from "@/hooks";
 import { usePagination } from "@/hooks";
 import { BaseLayout } from "@/layouts";
 import { useEffect } from "react";
@@ -10,23 +10,18 @@ import BoardItem from "./BoardItem";
 
 const BoardPage = () => {
   const navigate = useNavigate();
-  const { loading, fetchData, response } = useAxios();
   const { currentPage, totalPage, setTotalPage, handlePageChange } =
     usePagination();
 
+  const { communities, fetchCommunities, getLoading } = useCommunity();
+
   useEffect(() => {
-    fetchData({
-      method: "GET",
-      url: `${APIEndPoints.BOARD}`,
-      params: { page: currentPage - 1 },
-    }).then((res) => {
-      setTotalPage(res.data.pageInfo.totalPages || 0);
-    });
-  }, [currentPage, fetchData, setTotalPage]);
+    fetchCommunities(currentPage - 1, setTotalPage);
+  }, [currentPage, fetchCommunities, setTotalPage]);
 
   return (
     <BaseLayout>
-      {loading && <Loading />}
+      {getLoading && <Loading />}
       <div className={styles.container}>
         <div className={styles.header}>
           <p className={styles.header_title}>잡담부터 정보까지 !</p>
@@ -48,7 +43,7 @@ const BoardPage = () => {
           </div>
 
           <ul className={styles.content_list}>
-            {response?.items.map((item) => {
+            {communities?.items.map((item) => {
               return <BoardItem item={item} key={item.postId} />;
             })}
           </ul>

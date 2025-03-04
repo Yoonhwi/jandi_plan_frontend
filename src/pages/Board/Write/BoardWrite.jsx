@@ -1,63 +1,27 @@
-import { Button, Editor, Input } from "@/components";
+import { Button } from "@/components";
+import { APIEndPoints } from "@/constants";
+import { useAxios, useCommunity, useQuillEvents } from "@/hooks";
 import { BaseLayout } from "@/layouts";
-import { useAxios } from "@/hooks";
-import { useCallback, useEffect, useState } from "react";
-import styles from "./BoardWrite.module.css";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { boardWriteScheme } from "../constants";
-import { APIEndPoints, PageEndPoints } from "@/constants";
 import "quill/dist/quill.snow.css";
-import { useQuillEvents } from "@/hooks";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useToast } from "@/contexts";
-import { buildPath } from "@/utils";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
+import { boardWriteScheme } from "../constants";
+import FormEditor from "../FormEditor";
 
 const BoardWrite = () => {
   const [quill, setQuill] = useState(null);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm({
+  const formController = useForm({
     resolver: zodResolver(boardWriteScheme),
   });
 
-  const navigate = useNavigate();
-  const { createToast } = useToast();
-
+  const { setValue } = formController;
   const [searchParams, setSearchParams] = useSearchParams();
   const tempPostId = searchParams.get("tempPostId");
 
   const { fetchData: getTempId } = useAxios();
-  const { fetchData: postBoard } = useAxios();
-
-  const onSubmit = useCallback(
-    async (data) => {
-      await postBoard({
-        url: APIEndPoints.BOARD,
-        method: "POST",
-        data,
-      })
-        .then((response) => {
-          createToast({
-            type: "success",
-            text: "게시글이 성공적으로 등록되었습니다.",
-          });
-          navigate(
-            buildPath(PageEndPoints.BOARD_DETAIL, { id: response.data.postId })
-          );
-        })
-        .catch(() => {
-          createToast({
-            type: "error",
-            text: "게시글 등록에 실패했습니다.",
-          });
-        });
-    },
-    [createToast, navigate, postBoard]
-  );
+  const { addCommunity } = useCommunity();
 
   useQuillEvents(quill, setValue, tempPostId);
 
@@ -74,39 +38,23 @@ const BoardWrite = () => {
 
   return (
     <BaseLayout>
-      <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          placeholder="제목을 입력해주세요"
+      <FormEditor
+        formController={formController}
+        onSubmit={addCommunity}
+        setQuill={setQuill}
+        tempPostId={tempPostId}
+      >
+        <Button
+          type="submit"
+          variant="solid"
+          size="md"
           style={{
-            boxSizing: "border-box",
-            width: "100%",
+            marginLeft: "auto",
           }}
-          size="lg"
-          register={register}
-          name="title"
-        />
-
-        <div className={styles.editor}>
-          <Editor onLoaded={setQuill} tempPostId={tempPostId} />
-        </div>
-
-        <div className={styles.submit}>
-          {(errors.content || errors.title) && (
-            <p style={{ color: "red" }}>제목 또는 내용을 입력해주세요.</p>
-          )}
-
-          <Button
-            type="submit"
-            variant="solid"
-            size="md"
-            style={{
-              marginLeft: "auto",
-            }}
-          >
-            포스팅 완료
-          </Button>
-        </div>
-      </form>
+        >
+          포스팅 완료
+        </Button>
+      </FormEditor>
     </BaseLayout>
   );
 };

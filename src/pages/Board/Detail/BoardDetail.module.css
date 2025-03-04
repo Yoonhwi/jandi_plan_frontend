@@ -21,16 +21,19 @@
   font-size: var(--text-sm);
   color: var(--color-gray-400);
 }
-.header_right_box{
+
+.header_right_box {
   display: flex;
   gap: 1rem;
+  align-items: center;
 }
-.dropdown_menu{
-  width: 2rem;
-  font-size: var(--text-sm);
-  background-color: var( --color-bg-primary);
-  cursor: pointer;
+
+.flex_row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
+
 .user_info {
   display: flex;
   align-items: center;
