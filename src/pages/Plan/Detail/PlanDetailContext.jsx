@@ -8,6 +8,9 @@ export const PlanDetailContext = createContext({
 
   setFocusDay: () => {}, // 현재 보고 있는 일자를 변경하는 함수
 
+  updatePlan: () => {}, // 여행 계획의 기본 정보를 수정하는 함수
+  deletePlan: () => {}, // 여행 계획을 삭제하는 함수
+
   addReservation: () => {}, // 예약 정보를 추가하는 함수
   updateReservation: () => {}, // 예약 정보를 수정하는 함수
   deleteReservation: () => {}, // 예약 정보를 삭제하는 함수

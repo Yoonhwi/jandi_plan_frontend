@@ -11,54 +11,53 @@ const Reserved = ({ reserved }) => {
   const order = ["TRANSPORTATION", "ACCOMMODATION", "ETC"];
 
   const { deleteReservation } = usePlanDetail();
+  console.log("data", data);
 
   return (
     <div className={styles.container}>
-      {Object.keys(data)
-        .sort((a, b) => order.indexOf(a) - order.indexOf(b))
-        .map((key) => {
-          return (
-            <div key={key} className={styles.des_item}>
-              <p className={styles.des_title}>{key}</p>
-              {data[key].map((item) => {
-                return (
-                  <div
-                    key={item.reservationId}
-                    className={styles.rservation_container}
-                  >
-                    <div className={styles.reservation_info}>
-                      <p>{item.title}</p>
-                      <p>{formatPrice(item.cost)}원</p>
-                    </div>
-                    <div className={styles.icon_wrapper}>
-                      <Modal>
-                        <ModalTrigger>
-                          <Tooltip text="수정">
-                            <div className={styles.icon_box}>
-                              <LuClipboardPen size={14} />
-                            </div>
-                          </Tooltip>
-                        </ModalTrigger>
-                        <ModalContent>
-                          <ModifyReservation reservation={item} />
-                        </ModalContent>
-                      </Modal>
-
-                      <Tooltip
-                        text="삭제"
-                        onClick={() => deleteReservation(item.reservationId)}
-                      >
-                        <div className={styles.icon_box}>
-                          <TiDelete size={20} color="var(--color-red-500)" />
-                        </div>
-                      </Tooltip>
-                    </div>
+      {order.map((v) => {
+        return (
+          <div key={v} className={styles.des_item}>
+            <p className={styles.des_title}>{v}</p>
+            {(data[v] ?? []).map((item) => {
+              return (
+                <div
+                  key={item.reservationId}
+                  className={styles.rservation_container}
+                >
+                  <div className={styles.reservation_info}>
+                    <p>{item.title}</p>
+                    <p>{formatPrice(item.cost)}원</p>
                   </div>
-                );
-              })}
-            </div>
-          );
-        })}
+                  <div className={styles.icon_wrapper}>
+                    <Modal>
+                      <ModalTrigger>
+                        <Tooltip text="수정">
+                          <div className={styles.icon_box}>
+                            <LuClipboardPen size={14} />
+                          </div>
+                        </Tooltip>
+                      </ModalTrigger>
+                      <ModalContent>
+                        <ModifyReservation reservation={item} />
+                      </ModalContent>
+                    </Modal>
+
+                    <Tooltip
+                      text="삭제"
+                      onClick={() => deleteReservation(item.reservationId)}
+                    >
+                      <div className={styles.icon_box}>
+                        <TiDelete size={20} color="var(--color-red-500)" />
+                      </div>
+                    </Tooltip>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
     </div>
   );
 };

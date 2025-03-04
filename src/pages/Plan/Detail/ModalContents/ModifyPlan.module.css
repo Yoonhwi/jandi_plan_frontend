@@ -19,7 +19,24 @@
   gap: 1rem;
 }
 
-.place {
+.error {
+  color: var(--color-red-600);
+  font-size: var(--text-xs);
+}
+
+.private_box {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
+  align-items: center;
+}
+
+.radio_box {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.radio_label {
+  position: relative;
+  top: 2px;
 }
