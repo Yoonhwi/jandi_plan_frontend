@@ -6,10 +6,12 @@ import styles from "./BoardWrite.module.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { boardWriteScheme } from "../constants";
-import { APIEndPoints } from "@/constants";
+import { APIEndPoints, PageEndPoints } from "@/constants";
 import "quill/dist/quill.snow.css";
 import { useQuillEvents } from "@/hooks";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useToast } from "@/contexts";
+import { buildPath } from "@/utils";
 
 const BoardWrite = () => {
   const [quill, setQuill] = useState(null);
@@ -22,7 +24,11 @@ const BoardWrite = () => {
     resolver: zodResolver(boardWriteScheme),
   });
 
+  const navigate = useNavigate();
+  const { createToast } = useToast();
+
   const [searchParams, setSearchParams] = useSearchParams();
+  const tempPostId = searchParams.get("tempPostId");
 
   const { fetchData: getTempId } = useAxios();
   const { fetchData: postBoard } = useAxios();
@@ -35,16 +41,25 @@ const BoardWrite = () => {
         data,
       })
         .then((response) => {
-          console.log("response", response);
+          createToast({
+            type: "success",
+            text: "게시글이 성공적으로 등록되었습니다.",
+          });
+          navigate(
+            buildPath(PageEndPoints.BOARD_DETAIL, { id: response.data.postId })
+          );
         })
-        .catch((error) => {
-          console.error("error", error);
+        .catch(() => {
+          createToast({
+            type: "error",
+            text: "게시글 등록에 실패했습니다.",
+          });
         });
     },
-    [postBoard]
+    [createToast, navigate, postBoard]
   );
 
-  useQuillEvents(quill, setValue);
+  useQuillEvents(quill, setValue, tempPostId);
 
   useEffect(() => {
     getTempId({
@@ -52,7 +67,8 @@ const BoardWrite = () => {
       method: "POST",
     }).then((res) => {
       const tempPostId = res.data.tempPostId;
-      setSearchParams({ tempId: tempPostId });
+      setValue("tempPostId", tempPostId);
+      setSearchParams({ tempPostId });
     });
   }, []);
 
@@ -69,14 +85,16 @@ const BoardWrite = () => {
           register={register}
           name="title"
         />
+
         <div className={styles.editor}>
-          <Editor onLoaded={setQuill} />
+          <Editor onLoaded={setQuill} tempPostId={tempPostId} />
         </div>
 
         <div className={styles.submit}>
           {(errors.content || errors.title) && (
             <p style={{ color: "red" }}>제목 또는 내용을 입력해주세요.</p>
           )}
+
           <Button
             type="submit"
             variant="solid"

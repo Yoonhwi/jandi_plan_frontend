@@ -1,5 +1,5 @@
 import Quill from "quill";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import BlotFormatter from "@enzedonline/quill-blot-formatter2";
 import hljs from "highlight.js";
 import "quill/dist/quill.core.css";
@@ -8,43 +8,6 @@ import { uploadCommunityImage } from "@/apis/image";
 
 const Uploader = Quill.import("modules/uploader");
 
-const toolbarOptions = {
-  container: [
-    [{ header: [1, 2, 3, false] }],
-    ["bold", "italic", "underline", "strike"],
-    [{ color: [] }, { background: [] }],
-    ["blockquote", "code-block"],
-    ["image", "link"],
-    ["clean"],
-  ],
-
-  handlers: {
-    image: function () {
-      const quill = this.quill;
-      const input = document.createElement("input");
-      input.setAttribute("type", "file");
-      input.setAttribute("accept", "image/*");
-      input.click();
-
-      input.onchange = async function () {
-        const file = input.files[0];
-        if (!file) return;
-
-        const range = quill.getSelection();
-        const res = await uploadCommunityImage(file);
-
-        quill.insertEmbed(
-          range?.index ?? 0,
-          "image",
-          res.data.imageUrl,
-          "user"
-        );
-        quill.setSelection((range?.index ?? 0) + 1);
-      };
-    },
-  },
-};
-
 class CustomUploader extends Uploader {
   upload() {}
 }
@@ -52,18 +15,62 @@ class CustomUploader extends Uploader {
 Quill.register("modules/uploader", CustomUploader, true);
 Quill.register("modules/blotFormmater", BlotFormatter);
 
-const modules = {
-  syntax: { hljs },
-  toolbar: toolbarOptions,
-  blotFormmater: {
-    image: {
-      allowAltTitleEdit: false,
-    },
-  },
-  clipboard: true,
-};
+const Editor = ({ defaultValue, onLoaded, tempPostId }) => {
+  const tempPostIdRef = useRef(tempPostId);
+  tempPostIdRef.current = tempPostId;
 
-const Editor = ({ defaultValue, onLoaded }) => {
+  const toolbarOptions = useMemo(() => {
+    return {
+      container: [
+        [{ header: [1, 2, 3, false] }],
+        ["bold", "italic", "underline", "strike"],
+        [{ color: [] }, { background: [] }],
+        ["blockquote", "code-block"],
+        ["image", "link"],
+        ["clean"],
+      ],
+
+      handlers: {
+        image: function () {
+          const quill = this.quill;
+          const input = document.createElement("input");
+          input.setAttribute("type", "file");
+          input.setAttribute("accept", "image/*");
+          input.click();
+
+          input.onchange = async function () {
+            const file = input.files[0];
+            if (!file) return;
+
+            const range = quill.getSelection();
+            const res = await uploadCommunityImage(file, tempPostIdRef.current);
+
+            quill.insertEmbed(
+              range?.index ?? 0,
+              "image",
+              res.data.imageUrl,
+              "user"
+            );
+            quill.setSelection((range?.index ?? 0) + 1);
+          };
+        },
+      },
+    };
+  }, [tempPostId]);
+
+  const modules = useMemo(() => {
+    return {
+      syntax: { hljs },
+      toolbar: toolbarOptions,
+      blotFormmater: {
+        image: {
+          allowAltTitleEdit: false,
+        },
+      },
+      clipboard: true,
+    };
+  }, [toolbarOptions]);
+
   const quillRef = useRef(null);
 
   useEffect(() => {
@@ -83,7 +90,7 @@ const Editor = ({ defaultValue, onLoaded }) => {
     return () => {
       quillRef.current = null;
     };
-  }, [defaultValue, onLoaded]);
+  }, [defaultValue, modules, onLoaded]);
 
   return (
     <div

@@ -1,10 +1,14 @@
 import { uploadCommunityImage } from "@/apis/image";
+import { useToast } from "@/contexts";
 import { useEffect } from "react";
 
-const useQuillEvents = (quill, setValue) => {
+const useQuillEvents = (quill, setValue, targetId) => {
+  const { createToast } = useToast();
+
   useEffect(() => {
     if (!quill) return;
     const editorElement = quill.root;
+
     quill.on("text-change", () => {
       setValue("content", quill.getContents());
     });
@@ -42,18 +46,25 @@ const useQuillEvents = (quill, setValue) => {
     async function handleImage(file) {
       const range = quill.getSelection();
 
-      try {
-        const {
-          data: { imageUrl },
-        } = await uploadCommunityImage(file);
-        quill.insertEmbed(range?.index ?? 0, "image", imageUrl, "user");
-      } catch (error) {
-        console.error("error", error);
-      }
-
-      quill.setSelection((range?.index ?? 0) + 1);
+      await uploadCommunityImage(file, targetId)
+        .then((res) => {
+          createToast({
+            type: "success",
+            text: "이미지가 성공적으로 업로드되었습니다.",
+          });
+          const imageUrl = res.data.imageUrl;
+          quill.insertEmbed(range?.index ?? 0, "image", imageUrl, "user");
+          quill.setSelection((range?.index ?? 0) + 1);
+        })
+        .catch(() =>
+          createToast({
+            type: "error",
+            text: "이미지 업로드에 실패했습니다.",
+          })
+        );
     }
-  }, [quill, setValue]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetId]);
 };
 
 export default useQuillEvents;
