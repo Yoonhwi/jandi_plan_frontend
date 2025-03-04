@@ -34,6 +34,7 @@ export const APIEndPoints = {
   PROFILE: "/users/profile",
   REFRESH: "/users/token/refresh",
   USER: "/users",
+  PROFILE_UPLOAD: "images/upload/profile",
 
   PREFER_DEST: "/trip/cities/prefer",
 
