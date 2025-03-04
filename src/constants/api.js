@@ -57,6 +57,7 @@ export const APIEndPoints = {
   PLACE: "/place",
 
   TRIP_MY: "/trip/my/allTrips",
+  TRIP_LIKED: "/trip/my/likedTrips",
   TRIP_CREATE: "/trip/my/create",
   TRIP_ALL: "/trip/allTrips",
   TRIP_DETAIL: "/trip/:id",

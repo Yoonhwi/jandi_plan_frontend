@@ -65,7 +65,7 @@ const MyPage = () => {
           </Modal>
         </div>
 
-        <MyPlan size={size} />
+        <MyPlan size={size} title="여행 계획" fetchUrl={APIEndPoints.TRIP_MY} queryKey="myPlan"/>
 
         <div className={styles.interest_container}>
           <div className={styles.title_box}>
@@ -93,7 +93,8 @@ const MyPage = () => {
           </Slider>
         </div>
 
-        <div className={styles.like_container}>
+        <MyPlan title="좋아요 한 플랜"  fetchUrl={APIEndPoints.TRIP_LIKED} queryKey="likedPlan" size={size} />
+        {/* <div className={styles.like_container}>
           <div className={styles.title_box}>
             <p className={styles.title}>좋아요한 플랜</p>
           </div>
@@ -117,7 +118,7 @@ const MyPage = () => {
               </>
             )}
           </Slider>
-        </div>
+        </div> */}
       </div>
     </BaseLayout>
   );
