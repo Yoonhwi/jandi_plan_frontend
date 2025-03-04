@@ -58,6 +58,7 @@ export const APIEndPoints = {
   TRIP_CREATE: "/trip/my/create",
   TRIP_ALL: "/trip/allTrips",
   TRIP_DETAIL: "/trip/:id",
+  TRIP_MY_DETAIL: "/trip/my/:id",
   TRIP_ITINERARY: "/trip/itinerary/:id",
   TRIP_RESERVATION: "/trip/reservation/:id",
 

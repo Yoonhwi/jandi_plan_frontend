@@ -21,7 +21,7 @@ const protectedEndpoints = new Set([
   `PATCH:${APIEndPoints.BOARD_DETAIL}`,
   `DELETE:${APIEndPoints.BOARD_DETAIL}`,
 
-  `POST:${APIEndPoints.BOARD_REPORTS}`,  
+  `POST:${APIEndPoints.BOARD_REPORTS}`,
 
   `POST:${APIEndPoints.COMMUNITY_COMMENTS}`,
   `DELETE:${APIEndPoints.COMMUNITY_COMMENTS}`,
@@ -31,11 +31,13 @@ const protectedEndpoints = new Set([
 
   `POST:${APIEndPoints.BOARD_LIKE}`,
   `POST:${APIEndPoints.COMMENTS_LIKE}`,
-  
 
   `POST:${APIEndPoints.TRIP_CREATE}`,
   `GET:${APIEndPoints.TRIP_MY}`,
+
   `GET:${APIEndPoints.TRIP_DETAIL}`,
+  `PATCH:${APIEndPoints.TRIP_MY_DETAIL}`,
+  `DELETE:${APIEndPoints.TRIP_MY_DETAIL}`,
 
   `GET:${APIEndPoints.TRIP_ITINERARY}`,
   `POST:${APIEndPoints.TRIP_ITINERARY}`,
@@ -73,8 +75,11 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response.status === 403) {
-      //응답에 인증 필요할 때 403 에러러
+    if (
+      error.response.status === 401 &&
+      error.config.url !== APIEndPoints.REFRESH
+    ) {
+      console.log("error", error);
       const refreshToken = localStorage.getItem("refresh-token");
 
       if (refreshToken) {
