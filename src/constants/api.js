@@ -23,6 +23,7 @@ export const PageEndPoints = {
   BOARD_MODIFY: "/board/modify/:id",
 
   MYPAGE: "/mypage",
+  ADMIN: "/admin",
 
   DESTINATION_DETAIL: "/destination/:id",
   DESTINATION_LIST: "/destination/list",
@@ -73,4 +74,7 @@ export const APIEndPoints = {
   IMAGE_UPLOAD: "/images/profiles/upload",
 
   TEMP: "/temp",
+
+  USER_ALL: "/manage/user/all",
+  MANAGE_UTIL: "/manage/util/all",
 };

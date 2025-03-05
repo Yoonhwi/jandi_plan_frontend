@@ -373,6 +373,9 @@
 
   --color-editor-blockquote-bg: var(--color-gray-100);
   --color-editor-blockquote-border: var(--color-gray-300);
+
+  --color-admin-side-bg: var(--color-gray-500);
+  --color-admin-bg: var(--color-gray-50);
 }
 
 :root[theme="dark"] {
@@ -401,4 +404,7 @@
 
   --color-editor-blockquote-bg: var(--color-gray-600);
   --color-editor-blockquote-border: var(--color-gray-400);
+
+  --color-admin-side-bg: var(--color-gray-600);
+  --color-admin-bg: var(--color-gray-700);
 }

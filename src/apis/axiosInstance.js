@@ -13,6 +13,8 @@ const axiosInstance = axios.create({
 const protectedEndpoints = new Set([
   `GET:${APIEndPoints.PROFILE}`,
   `PUT:${APIEndPoints.USER_CHANGE_PASSWORD}`,
+  `GET:${APIEndPoints.USER_ALL}`,
+  `GET:${APIEndPoints.MANAGE_UTIL}`,
 
   `POST:${APIEndPoints.BOARD}`,
   `PATCH:${APIEndPoints.BOARD}`,

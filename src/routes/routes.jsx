@@ -16,6 +16,7 @@ import {
   DestinationList,
   PreferenceLayout,
   BoardModify,
+  AdminPage,
 } from "@/pages";
 
 export const routes = [
@@ -97,6 +98,11 @@ export const routes = [
   {
     path: PageEndPoints.BOARD_MODIFY,
     element: <BoardModify />,
+    requireAuth: true,
+  },
+  {
+    path: PageEndPoints.ADMIN,
+    element: <AdminPage />,
     requireAuth: true,
   },
 ];
