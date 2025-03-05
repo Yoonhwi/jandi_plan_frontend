@@ -1,8 +1,18 @@
 import styles from "./CityCard.module.css";
+import { useNavigate } from "react-router-dom";
+import { buildPath } from "@/utils";
+import { PageEndPoints } from "@/constants";
 
 const CityCard = ({ item }) => {
+  const navigate = useNavigate();
+
+  const goDetail = () =>{
+   const path = buildPath(PageEndPoints.DESTINATION_DETAIL, { id: item.cityId });
+   navigate(path);
+ }
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={goDetail}>
       <div
         className={styles.img_container}
         style={{
