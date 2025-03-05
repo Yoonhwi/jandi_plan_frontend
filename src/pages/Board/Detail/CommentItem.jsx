@@ -11,31 +11,18 @@ import { useAuth, useToast } from "@/contexts";
 import { buildPath } from "@/utils";
 
 
-const CommentItem = ({ comment,deleteComment, user, fetchComments }) => {
+const CommentItem = ({ comment,deleteComment, user, fetchComments,handleLike }) => {
+  console.log(comment);
   const [isOpen, setIsOpen] = useState(false);
   const formmatDate = formatDistanceToNow(new Date(comment.createdAt));
   const id = comment.commentId; 
   const [likes, setLikes] = useState(comment.likeCount);
+  const [isLiked, setIsLiked] = useState(comment.liked);
   const { loading, fetchData } = useAxios();
   const [isReplying, setIsReplying] = useState(false); 
   const [commentText, setCommentText] = useState("");
   
   const { createToast } = useToast();
-
-  const handleLike = () =>{
-    fetchData({
-      method: "POST",
-      url: buildPath(APIEndPoints.COMMENTS_LIKE, { id }),
-    }).then(() => {
-      setLikes(likes+1);
-    }).catch((err) => {
-      console.log(err);
-      createToast({
-        type: "error",
-        text: err.data.message,
-      });
-    })
-  }
 
   const addReply = () =>{
     if(commentText===""){
@@ -79,7 +66,7 @@ const CommentItem = ({ comment,deleteComment, user, fetchComments }) => {
             : 
               <>
                 <p className={styles.report}>신고</p>
-                <FaThumbsUp size={12} color={comment.isRecommended? "var(--color-amber-400)": "var( --color-gray-300)"} onClick={()=>{handleLike()}} />
+                <FaThumbsUp size={12} color={comment.liked? "var(--color-amber-400)": "var( --color-gray-300)"} onClick={()=>{handleLike(comment.commentId,comment.liked)}} />
                 <p className={styles.likeCount}> {likes}</p>
               </>}
 

@@ -28,6 +28,7 @@ const protectedEndpoints = new Set([
 
   `POST:${APIEndPoints.BOARD_REPORTS}`,  
 
+  `GET:${APIEndPoints.COMMUNITY_COMMENTS}`,
   `POST:${APIEndPoints.COMMUNITY_COMMENTS}`,
   `DELETE:${APIEndPoints.COMMUNITY_COMMENTS}`,
 
@@ -37,6 +38,7 @@ const protectedEndpoints = new Set([
   `POST:${APIEndPoints.BOARD_LIKE}`,
   `DELETE:${APIEndPoints.BOARD_LIKE}`,
   `POST:${APIEndPoints.COMMENTS_LIKE}`,
+  `DELETE:${APIEndPoints.COMMENTS_LIKE}`,
   
 
   `POST:${APIEndPoints.TRIP_CREATE}`,
