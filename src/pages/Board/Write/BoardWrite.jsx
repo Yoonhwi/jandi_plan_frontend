@@ -1,50 +1,29 @@
-import { Button, Editor, Input } from "@/components";
-import { BaseLayout } from "@/layouts";
-import { useAxios } from "@/hooks";
-import { useCallback, useEffect, useState } from "react";
-import styles from "./BoardWrite.module.css";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { boardWriteScheme } from "../constants";
+import { Button } from "@/components";
 import { APIEndPoints } from "@/constants";
+import { useAxios, useCommunity, useQuillEvents } from "@/hooks";
+import { BaseLayout } from "@/layouts";
+import { zodResolver } from "@hookform/resolvers/zod";
 import "quill/dist/quill.snow.css";
-import { useQuillEvents } from "@/hooks";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
+import { boardWriteScheme } from "../constants";
+import FormEditor from "../FormEditor";
 
 const BoardWrite = () => {
   const [quill, setQuill] = useState(null);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm({
+  const formController = useForm({
     resolver: zodResolver(boardWriteScheme),
   });
 
+  const { setValue } = formController;
   const [searchParams, setSearchParams] = useSearchParams();
+  const tempPostId = searchParams.get("tempPostId");
 
   const { fetchData: getTempId } = useAxios();
-  const { fetchData: postBoard } = useAxios();
+  const { addCommunity } = useCommunity();
 
-  const onSubmit = useCallback(
-    async (data) => {
-      await postBoard({
-        url: APIEndPoints.BOARD,
-        method: "POST",
-        data,
-      })
-        .then((response) => {
-          console.log("response", response);
-        })
-        .catch((error) => {
-          console.error("error", error);
-        });
-    },
-    [postBoard]
-  );
-
-  useQuillEvents(quill, setValue);
+  useQuillEvents(quill, setValue, tempPostId);
 
   useEffect(() => {
     getTempId({
@@ -52,43 +31,30 @@ const BoardWrite = () => {
       method: "POST",
     }).then((res) => {
       const tempPostId = res.data.tempPostId;
-      setSearchParams({ tempId: tempPostId });
+      setValue("tempPostId", tempPostId);
+      setSearchParams({ tempPostId });
     });
   }, []);
 
   return (
     <BaseLayout>
-      <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          placeholder="제목을 입력해주세요"
+      <FormEditor
+        formController={formController}
+        onSubmit={addCommunity}
+        setQuill={setQuill}
+        tempPostId={tempPostId}
+      >
+        <Button
+          type="submit"
+          variant="solid"
+          size="md"
           style={{
-            boxSizing: "border-box",
-            width: "100%",
+            marginLeft: "auto",
           }}
-          size="lg"
-          register={register}
-          name="title"
-        />
-        <div className={styles.editor}>
-          <Editor onLoaded={setQuill} />
-        </div>
-
-        <div className={styles.submit}>
-          {(errors.content || errors.title) && (
-            <p style={{ color: "red" }}>제목 또는 내용을 입력해주세요.</p>
-          )}
-          <Button
-            type="submit"
-            variant="solid"
-            size="md"
-            style={{
-              marginLeft: "auto",
-            }}
-          >
-            포스팅 완료
-          </Button>
-        </div>
-      </form>
+        >
+          포스팅 완료
+        </Button>
+      </FormEditor>
     </BaseLayout>
   );
 };

@@ -16,4 +16,5 @@
 
 .trigger {
   width: fit-content;
+  cursor: pointer;
 }

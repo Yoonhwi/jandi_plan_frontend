@@ -53,3 +53,8 @@ export const createScheduleSchema = z.object({
       message: "숫자만 입력해주세요",
     }),
 });
+
+export const modifyPlanSchema = z.object({
+  title: z.string().nonempty("플랜 제목을 입력해주세요"),
+  privatePlan: z.string().nonempty("공개 여부를 선택해주세요"),
+});

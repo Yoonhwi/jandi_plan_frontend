@@ -6,7 +6,7 @@ import PlanInfo from "./PlanInfo/PlanInfo";
 import PlanDes from "./PlanDes/PlanDes";
 import PlanBudget from "./PlanBudget/PlanBudget";
 import PlanMap from "./PlanMap/PlanMap";
-import { useAuth} from "@/contexts";
+import { useAuth } from "@/contexts";
 
 const PlanDetail = () => {
   const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -17,7 +17,7 @@ const PlanDetail = () => {
       <PlanDetailProvider>
         <APIProvider apiKey={API_KEY}>
           <div className={styles.container}>
-            <PlanInfo user={user}/>
+            <PlanInfo user={user} />
             <PlanMap />
             <PlanDes />
             <PlanBudget />

@@ -42,7 +42,7 @@ const DropDown = ({ children, style = {}, dropdownRef = null }) => {
     const viewportHeight = window.innerHeight;
 
     let top = 0;
-    let right = 0;
+    let left = 0;
 
     if (viewportHeight - triggerRect.bottom >= contentRect.height) {
       top = 0;
@@ -50,13 +50,13 @@ const DropDown = ({ children, style = {}, dropdownRef = null }) => {
       top = -contentRect.height - triggerRect.height - 8;
     }
 
-    if (viewportWidth - triggerRect.right >= contentRect.width) {
-      right = 0;
+    if (viewportWidth - triggerRect.left >= contentRect.width) {
+      left = 0;
     } else {
-      right = -(contentRect.width - triggerRect.width);
+      left = -(contentRect.width - triggerRect.width);
     }
 
-    setPosition({ top, right });
+    setPosition({ top, left });
   }, [isVisible]);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const DropDownTrigger = ({ children, style = {} }) => {
 };
 
 const DropDownContent = ({ children }) => {
-  const { isVisible, close, contentRef, position } = useDropDown();
+  const { isVisible, contentRef, position } = useDropDown();
 
   return (
     <div className={styles.relative}>
@@ -120,9 +120,8 @@ const DropDownContent = ({ children }) => {
         style={{
           display: isVisible ? "block" : "none",
           top: `${position.top}px`,
-          right: `${position.right}px`,
+          left: `${position.left}px`,
         }}
-        onClickCapture={close}
       >
         {children}
       </div>

@@ -4,7 +4,7 @@
   gap: 1rem;
 }
 
-.header_box{
+.header_box {
   display: flex;
   justify-content: space-between;
 }
@@ -14,7 +14,7 @@
   font-size: var(--text-2xl);
 }
 
-.header_menu{
+.header_menu {
   display: flex;
   gap: 1rem;
 }

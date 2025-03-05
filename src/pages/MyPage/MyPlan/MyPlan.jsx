@@ -12,7 +12,6 @@ const MyPlan = ({ title, fetchUrl, queryKey, size }) => {
   const { currentPage, totalPage, setTotalPage, handlePageChange } =
     usePagination(queryKey);
 
-  console.log("size", size);
   // size가 변경될때, 변경된 totalPages보다 높은 페이지를 보고 있을 수도 있기에, 페이지를 1로 초기화
   useEffect(() => {
     setSearchParams({ [queryKey]: 1 });
