@@ -5,24 +5,24 @@ import { useEffect } from "react";
 import styles from "./MyPlan.module.css";
 import { useSearchParams } from "react-router-dom";
 
-const MyPlan = ({ size }) => {
+const MyPlan = ({ title, fetchUrl, queryKey, size }) => {
   // eslint-disable-next-line no-unused-vars
   const [_, setSearchParams] = useSearchParams();
   const { fetchData, response } = useAxios();
   const { currentPage, totalPage, setTotalPage, handlePageChange } =
-    usePagination("myPlan");
+    usePagination(queryKey);
 
   console.log("size", size);
   // size가 변경될때, 변경된 totalPages보다 높은 페이지를 보고 있을 수도 있기에, 페이지를 1로 초기화
   useEffect(() => {
-    setSearchParams({ myPlan: 1 });
+    setSearchParams({ [queryKey]: 1 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size]);
 
   useEffect(() => {
     fetchData({
       method: "GET",
-      url: APIEndPoints.TRIP_MY,
+      url: fetchUrl,
       params: { page: currentPage - 1, size },
     }).then((res) => {
       setTotalPage(res.data.pageInfo?.totalPages || 0);
@@ -32,7 +32,7 @@ const MyPlan = ({ size }) => {
   return (
     <div className={styles.myplan_box}>
       <div className={styles.title_box}>
-        <p className={styles.title}>여행 계획</p>
+        <p className={styles.title}>{title}</p>
       </div>
 
       {response?.items?.length > 0 ? (
@@ -55,7 +55,7 @@ const MyPlan = ({ size }) => {
           </div>
         </div>
       ) : (
-        <p>여행 계획이 없습니다.</p>
+        <p>{title}이 없습니다.</p>
       )}
     </div>
   );

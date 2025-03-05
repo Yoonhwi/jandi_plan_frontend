@@ -3,8 +3,14 @@ import { formatDate } from "date-fns";
 import styles from "./MyInfo.module.css";
 import PasswordForm from "./PasswordForm";
 import { useCallback } from "react";
+import { useAxios } from "@/hooks";
+import { APIEndPoints } from "@/constants";
+import { useToast } from "@/contexts";
 
 const MyInfo = ({ user }) => {
+  console.log(user);
+  const { loading, fetchData, response } = useAxios();
+  const { createToast } = useToast();
   const formatted = formatDate(user.updatedAt, "yyyy-MM-dd");
   const handleChangeProfileImage = useCallback(() => {
     const input = document.createElement("input");
@@ -15,9 +21,25 @@ const MyInfo = ({ user }) => {
     input.onchange = async (e) => {
       const file = e.target.files[0];
       const formData = new FormData();
-      formData.append("profileImage", file);
+      formData.append("file", file);
 
       // 프로필 이미지 변경 API 호출 추가
+      fetchData({
+        method: "POST",
+        url: APIEndPoints.PROFILE_UPLOAD,
+        data: formData,
+      }).then((res)=>{
+        createToast({
+          type: "success",
+          text: "프로필 이미지가 변경되었습니다.",
+        });
+      }).catch((err)=>{
+        console.log(err)
+        createToast({
+          type: "error",
+          text: "프로필 이미지 변경에 실패하였습니다.",
+        });
+      })
     };
   }, []);
 

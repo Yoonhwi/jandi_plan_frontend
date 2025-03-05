@@ -1,67 +1,62 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { FaThumbsUp } from "react-icons/fa";
 import styles from "./CommentItem.module.css";
 import { RiArrowDownWideLine, RiArrowUpWideLine } from "react-icons/ri";
 import { formatDistanceToNow } from "date-fns";
 import ReplyComment from "./ReplyComment";
-import { Input, Button } from "@/components";
+import { Input, Button,  Modal, ModalContent, ModalTrigger } from "@/components";
 import { APIEndPoints } from "@/constants";
 import { useAxios } from "@/hooks";
 import { useAuth, useToast } from "@/contexts";
 import { buildPath } from "@/utils";
+import ReportModal from "./components/ReportModal";
 
 
-const CommentItem = ({ comment,deleteComment, user, fetchComments }) => {
+const CommentItem = ({ comment,deleteComment, user, fetchComments,handleLike }) => {
+  const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const formmatDate = formatDistanceToNow(new Date(comment.createdAt));
   const id = comment.commentId; 
   const [likes, setLikes] = useState(comment.likeCount);
+  const [isLiked, setIsLiked] = useState(comment.liked);
   const { loading, fetchData } = useAxios();
+  const { fetchData: postApi } = useAxios();
   const [isReplying, setIsReplying] = useState(false); 
   const [commentText, setCommentText] = useState("");
   
+  
   const { createToast } = useToast();
 
-  const handleLike = () =>{
-    fetchData({
-      method: "POST",
-      url: buildPath(APIEndPoints.COMMENTS_LIKE, { id }),
-    }).then(() => {
-      setLikes(likes+1);
-    }).catch((err) => {
-      console.log(err);
-      createToast({
-        type: "error",
-        text: err.data.message,
-      });
-    })
-  }
+  const addReply = useCallback(() =>{
+    const text = ref.current.value;
 
-  const addReply = () =>{
-    if(commentText===""){
+    if(text === "" || text === null){
       createToast({
         type: "error",
         text: "답글 내용을 입력해주세요",
       });
     }else{
-      fetchData({
+      postApi({
         method: "POST",
         url: buildPath(APIEndPoints.COMMENTS_REPLIES, {id}),
         data: {
-          contents: commentText,
+          contents: text,
         }
-      }).then((res) => {
-        console.log("성공")
-        setCommentText("");
+      }).then(() => {
+        ref.current.value = "";
         fetchComments();
-      }).catch((err) => {
+        createToast({
+          type: "success",
+          text: "답글이 등록되었습니다",
+        });
+      }).catch(() => {
         createToast({
           type: "error",
           text: "답글 등록에 실패하였습니다",
         });
       })
     }
-  }
+  },[createToast, fetchComments,id,postApi]);
 
   return (
     <div className={styles.comment_item}>
@@ -78,8 +73,15 @@ const CommentItem = ({ comment,deleteComment, user, fetchComments }) => {
               </>
             : 
               <>
-                <p className={styles.report}>신고</p>
-                <FaThumbsUp size={12} color={comment.isRecommended? "var(--color-amber-400)": "var( --color-gray-300)"} onClick={()=>{handleLike()}} />
+                <Modal>
+                  <ModalTrigger>
+                    <p className={styles.report}>신고</p>
+                  </ModalTrigger>
+                  <ModalContent>
+                    <ReportModal id={comment.commentId} getUrl="commentReport"/>
+                  </ModalContent>
+                </Modal>
+                <FaThumbsUp size={12} color={comment.liked? "var(--color-amber-400)": "var( --color-gray-300)"} onClick={()=>{handleLike(comment.commentId,comment.liked)}} />
                 <p className={styles.likeCount}> {likes}</p>
               </>}
 
@@ -94,8 +96,7 @@ const CommentItem = ({ comment,deleteComment, user, fetchComments }) => {
           <Input
             size="sm"
             placeholder="답글을 입력해주세요."
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
+            ref={ref}
             style={{
               borderRadius: "var(--radius-3xl)",
               padding: "0.8rem 1rem",

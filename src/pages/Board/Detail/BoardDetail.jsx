@@ -21,6 +21,7 @@ const BoardDetail = () => {
   const { id } = useParams();
   const [item, setItem] = useState();
   const [likes, setLikes] = useState();
+  const [isLiked, setIsLiked] = useState(false);
   const contentRef = useRef(null);
   const { loading, fetchData } = useAxios();
   const { user } = useAuth();
@@ -35,6 +36,7 @@ const BoardDetail = () => {
     })
       .then((res) => {
         const items = res.data.items;
+        console.log(res);
         let content;
         try {
           const parsed = JSON.parse(items.content);
@@ -70,6 +72,7 @@ const BoardDetail = () => {
         });
 
         setLikes(items.likeCount);
+        setIsLiked(items.liked);
       })
       .catch((err) => {
         console.error(err);
@@ -87,11 +90,25 @@ const BoardDetail = () => {
   }, [item]);
 
   const handleLike = () =>{
+    console.log(isLiked);
+    let method="";
+    if(isLiked){
+      method="DELETE"
+    }else{
+      method="POST"
+    }
     fetchData({
-      method: "POST",
+      method: method,
       url: buildPath(APIEndPoints.BOARD_LIKE, { id }),
     }).then(() => {
-      setLikes(likes+1);
+      if(isLiked){
+        setLikes(likes-1);
+        setIsLiked((prev) => !prev);
+      }
+      else{
+        setLikes(likes+1);
+        setIsLiked((prev) => !prev);
+      }
     }).catch((err) => {
       console.log(err);
       createToast({
@@ -135,7 +152,7 @@ const BoardDetail = () => {
                       <div className={styles.dropdown_menu}>신고</div>
                       </ModalTrigger>
                       <ModalContent>
-                        <ReportModal id={item.postId}/>
+                        <ReportModal id={item.postId} setUrl="boardReport"/>
                       </ModalContent>
                     </Modal>
                     </>
@@ -155,7 +172,7 @@ const BoardDetail = () => {
               <FaThumbsUp
                 size={32}
                 color={
-                  item.isRecommended
+                  isLiked
                     ? "var(--color-amber-400)"
                     : "var( --color-gray-300)"
                 }
