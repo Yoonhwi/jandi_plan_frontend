@@ -14,6 +14,7 @@ const Comment = ({ id }) => {
   const { loading, fetchData, response } = useAxios();
   const { fetchData: postApi } = useAxios();
   const { fetchData: deleteApi } = useAxios();
+  const { fetchData: fetchApi } = useAxios();
 
   const { currentPage, totalPage, setTotalPage, handlePageChange } =
     usePagination();
@@ -94,6 +95,31 @@ const Comment = ({ id }) => {
     [createToast, deleteApi, fetchComments]
   );
 
+  const handleLike = useCallback(
+    (id, liked) => {
+      let method="";
+      if(liked){
+        method="DELETE";
+      }else{
+        method="POST";
+      }
+      fetchApi({
+        method: method,
+        url: buildPath(APIEndPoints.COMMENTS_LIKE, { id }),
+      })
+        .then(() => {
+          fetchComments();
+        })
+        .catch(() =>
+          createToast({
+            type: "error",
+            text: "좋아요 설정에 실패하였습니다",
+          })
+        );
+    },
+    [createToast, deleteApi, fetchComments]
+  );
+
   useEffect(() => {
     fetchComments();
   }, [fetchComments, id]);
@@ -141,6 +167,7 @@ const Comment = ({ id }) => {
               deleteComment={deleteComment}
               user={user}
               fetchComments={fetchComments}
+              handleLike={handleLike}
             />
           );
         })}

@@ -2,8 +2,9 @@ import styles from "./DestinationList.module.css";
 import { useState, useEffect } from "react";
 import { BaseLayout } from "@/layouts";
 import { Button, CityCard } from "@/components";
-import { PageEndPoints, APIEndPoints } from "@/constants";
+import { APIEndPoints } from "@/constants";
 import { useAxios } from "@/hooks";
+
 const DestinationList = () => {
   const { loading, fetchData, response } = useAxios();
   const [continents, setContinents] = useState([]);
@@ -12,7 +13,6 @@ const DestinationList = () => {
 
   const [selectedContinent, setSelectedContinent] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
-
 
   useEffect(() => {
     fetchData({
@@ -67,7 +67,6 @@ const DestinationList = () => {
       setDestinations(res.data);
     });
   }, [selectedContinent, selectedCountry]);
-
 
   return (
     <BaseLayout>

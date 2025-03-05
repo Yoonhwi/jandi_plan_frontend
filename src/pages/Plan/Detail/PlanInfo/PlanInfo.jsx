@@ -1,5 +1,11 @@
 import { Button, Modal, ModalContent, ModalTrigger } from "@/components";
+import { APIEndPoints } from "@/constants";
+import { useToast } from "@/contexts";
+import { useAxios } from "@/hooks";
+import { buildPath } from "@/utils";
+import { useState } from "react";
 import { BsPersonArmsUp } from "react-icons/bs";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
 import DeletePlan from "../ModalContents/DeletePlan";
@@ -9,6 +15,26 @@ import styles from "./PlanInfo.module.css";
 
 const PlanInfo = (user) => {
   const { tripDetail } = usePlanDetail();
+  const [liked, setLiked] = useState(false); //나중에 trip좋아요 정보 넘어오면 여기 수정
+  const { createToast } = useToast();
+  const { fetchData: postApi } = useAxios();
+
+  const likedTrip = (setMethod, id) => {
+    postApi({
+      method: setMethod,
+      url: buildPath(APIEndPoints.TRIP_SET_LIKED, { id }),
+    })
+      .then(() => {
+        setLiked((prev) => !prev);
+      })
+      .catch((err) => {
+        console.log(err);
+        createToast({
+          type: "error",
+          text: err.data.message,
+        });
+      });
+  };
 
   if (!tripDetail) return null;
   const isMine = tripDetail.user.userId === user?.user.userId;
@@ -38,7 +64,17 @@ const PlanInfo = (user) => {
           </div>
         ) : (
           <div className={styles.header_menu}>
-            <p className={styles.username}>{user.user.username}</p>
+            {liked ? (
+              <FaHeart
+                size={24}
+                onClick={() => likedTrip("DELETE", tripDetail.tripId)}
+              />
+            ) : (
+              <FaRegHeart
+                size={24}
+                onClick={() => likedTrip("POST", tripDetail.tripId)}
+              />
+            )}
           </div>
         )}
       </div>

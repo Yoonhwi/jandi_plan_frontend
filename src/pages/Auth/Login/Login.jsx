@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useAuth, useToast } from "@/contexts";
+import { useAxios } from "@/hooks";
 
 const schema = z.object({
   id: z
@@ -20,6 +21,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, signIn } = useAuth(); //로그인 관리
+  const { loading, fetchData } = useAxios();
   const [errorMessage, setErrorMessage] = useState("");
 
   const { createToast } = useToast();
@@ -48,8 +50,22 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (user) {
-      const redirectPath = location.state?.from || PageEndPoints.HOME;
-      navigate(redirectPath, { replace: true });
+      fetchData({
+        method: "GET",
+        url: `${APIEndPoints.PREFER_DEST}`,
+      }).then((res)=>{
+        console.log(res.data);
+
+        if (Array.isArray(res.data) && res.data.length === 0) {
+          navigate(PageEndPoints.PREF_CONT, { replace: true });
+        } else {
+          const redirectPath = location.state?.from || PageEndPoints.HOME;
+          navigate(redirectPath, { replace: true });
+        }
+      })
+
+      // const redirectPath = location.state?.from || PageEndPoints.HOME;
+      // navigate(redirectPath, { replace: true });
     }
   }, [location.state?.from, navigate, user]);
 

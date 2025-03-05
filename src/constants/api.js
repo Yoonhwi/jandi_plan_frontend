@@ -35,6 +35,9 @@ export const APIEndPoints = {
   PROFILE: "/users/profile",
   REFRESH: "/users/token/refresh",
   USER: "/users",
+  PROFILE_UPLOAD: "images/upload/profile",
+
+  PREFER_DEST: "/trip/cities/prefer",
 
   RESISTER: "/users/register",
   USER_CHANGE_PASSWORD: "/users/change-password",
@@ -52,10 +55,13 @@ export const APIEndPoints = {
   COMMENTS_LIKE: "/community/comments/likes/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
   BOARD_REPORTS: "/community/posts/reports/:id",
+  COMMENTS_REPORTS: "/community/comments/reports/:id",
 
   PLACE: "/place",
 
   TRIP_MY: "/trip/my/allTrips",
+  TRIP_LIKED: "/trip/my/likedTrips",
+  TRIP_SET_LIKED: "/trip/my/likedTrips/:id",
   TRIP_CREATE: "/trip/my/create",
   TRIP_ALL: "/trip/allTrips",
   TRIP_DETAIL: "/trip/:id",

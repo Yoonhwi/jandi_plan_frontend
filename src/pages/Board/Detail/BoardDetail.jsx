@@ -27,10 +27,10 @@ const BoardDetail = () => {
   const [likes, setLikes] = useState();
 
   const { id } = useParams();
+  const [isLiked, setIsLiked] = useState(false);
   const contentRef = useRef(null);
 
-  const { loading, fetchData, response } = useAxios();
-  const { fetchData: likeFetch } = useAxios();
+  const { loading, fetchData } = useAxios();
   const { user } = useAuth();
   const { createToast } = useToast();
   const navigate = useNavigate();
@@ -52,6 +52,9 @@ const BoardDetail = () => {
             content,
           };
         });
+
+        setLikes(items.likeCount);
+        setIsLiked(items.liked);
       })
       .catch((err) => {
         console.error(err);
@@ -68,24 +71,25 @@ const BoardDetail = () => {
     }
   }, [item]);
 
-  // response가 변경될때, 좋아요 갯수를 업데이트
-  // 추후 isLiked가 추가되면, 좋아요 또는 좋아요취소 시, 게시글 fetch를 다시한다면, 자동적으로 업데이트 가능
-  useEffect(() => {
-    if (!response) return;
-
-    const likeCount = response.items.likeCount || 0;
-    setLikes(likeCount);
-  }, [response]);
-
-  // 추후 좋아요 또는 좋아요 취소 시 게시글 fetch를 다시합니다.
-  // 그렇다면, likes state또한 제거 가능합니다.
   const handleLike = () => {
-    likeFetch({
-      method: "POST",
+    let method = "";
+    if (isLiked) {
+      method = "DELETE";
+    } else {
+      method = "POST";
+    }
+    fetchData({
+      method: method,
       url: buildPath(APIEndPoints.BOARD_LIKE, { id }),
     })
       .then(() => {
-        setLikes(likes + 1);
+        if (isLiked) {
+          setLikes(likes - 1);
+          setIsLiked((prev) => !prev);
+        } else {
+          setLikes(likes + 1);
+          setIsLiked((prev) => !prev);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -141,16 +145,14 @@ const BoardDetail = () => {
                     </Modal>
                   </div>
                 ) : (
-                  <>
-                    <Modal>
-                      <ModalTrigger>
-                        <div className={styles.dropdown_menu}>신고</div>
-                      </ModalTrigger>
-                      <ModalContent>
-                        <ReportModal id={item.postId} />
-                      </ModalContent>
-                    </Modal>
-                  </>
+                  <Modal>
+                    <ModalTrigger>
+                      <div className={styles.dropdown_menu}>신고</div>
+                    </ModalTrigger>
+                    <ModalContent>
+                      <ReportModal id={item.postId} />
+                    </ModalContent>
+                  </Modal>
                 )}
               </div>
             </div>
@@ -167,9 +169,7 @@ const BoardDetail = () => {
               <FaThumbsUp
                 size={32}
                 color={
-                  item.isRecommended
-                    ? "var(--color-amber-400)"
-                    : "var( --color-gray-300)"
+                  isLiked ? "var(--color-amber-400)" : "var( --color-gray-300)"
                 }
                 onClick={() => handleLike()}
               />
