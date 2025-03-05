@@ -6,6 +6,8 @@ import { buildPath } from "@/utils";
 import { APIEndPoints } from "@/constants";
 import { useAuth, useToast} from "@/contexts";
 import { FaThumbsUp } from "react-icons/fa";
+import ReportModal from "./components/ReportModal";
+import { Modal, ModalContent, ModalTrigger } from "@/components";
 
 const ReplyComment = ({ commentId, user }) => {
   const [data, setData] = useState([]);
@@ -83,7 +85,14 @@ const ReplyComment = ({ commentId, user }) => {
                   </>
                 : 
                   <>
-                    <p className={styles.report}>신고</p>
+                  <Modal>
+                    <ModalTrigger>
+                      <p className={styles.report}>신고</p>
+                    </ModalTrigger>
+                    <ModalContent>
+                      <ReportModal id={comment.commentId} setUrl="replyReport"/>
+                    </ModalContent>
+                  </Modal>
                     <FaThumbsUp size={12} color={comment.isRecommended? "var(--color-amber-400)": "var( --color-gray-300)"} onClick={()=>{handleLike()}} />
                     <p className={styles.likeCount}> {comment.likeCount}</p>
                   </>}

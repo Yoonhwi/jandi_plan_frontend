@@ -4,11 +4,12 @@ import styles from "./CommentItem.module.css";
 import { RiArrowDownWideLine, RiArrowUpWideLine } from "react-icons/ri";
 import { formatDistanceToNow } from "date-fns";
 import ReplyComment from "./ReplyComment";
-import { Input, Button } from "@/components";
+import { Input, Button,  Modal, ModalContent, ModalTrigger } from "@/components";
 import { APIEndPoints } from "@/constants";
 import { useAxios } from "@/hooks";
 import { useAuth, useToast } from "@/contexts";
 import { buildPath } from "@/utils";
+import ReportModal from "./components/ReportModal";
 
 
 const CommentItem = ({ comment,deleteComment, user, fetchComments,handleLike }) => {
@@ -22,6 +23,7 @@ const CommentItem = ({ comment,deleteComment, user, fetchComments,handleLike }) 
   const { fetchData: postApi } = useAxios();
   const [isReplying, setIsReplying] = useState(false); 
   const [commentText, setCommentText] = useState("");
+  
   
   const { createToast } = useToast();
 
@@ -71,7 +73,14 @@ const CommentItem = ({ comment,deleteComment, user, fetchComments,handleLike }) 
               </>
             : 
               <>
-                <p className={styles.report}>신고</p>
+                <Modal>
+                  <ModalTrigger>
+                    <p className={styles.report}>신고</p>
+                  </ModalTrigger>
+                  <ModalContent>
+                    <ReportModal id={comment.commentId} getUrl="commentReport"/>
+                  </ModalContent>
+                </Modal>
                 <FaThumbsUp size={12} color={comment.liked? "var(--color-amber-400)": "var( --color-gray-300)"} onClick={()=>{handleLike(comment.commentId,comment.liked)}} />
                 <p className={styles.likeCount}> {likes}</p>
               </>}

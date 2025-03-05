@@ -27,6 +27,7 @@ const protectedEndpoints = new Set([
   `DELETE:${APIEndPoints.BOARD_DETAIL}`,
 
   `POST:${APIEndPoints.BOARD_REPORTS}`,  
+  `POST:${APIEndPoints.COMMENTS_REPORTS}`,  
 
   `GET:${APIEndPoints.COMMUNITY_COMMENTS}`,
   `POST:${APIEndPoints.COMMUNITY_COMMENTS}`,

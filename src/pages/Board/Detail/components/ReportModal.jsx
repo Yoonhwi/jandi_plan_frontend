@@ -6,7 +6,7 @@ import { useAxios } from "@/hooks";
 import { APIEndPoints } from "@/constants";
 import { buildPath } from "@/utils";
 
-const ReportModal = ({id}) => {
+const ReportModal = ({id,getUrl}) => {
     const [reportText, setReportText] = useState("");
       const { createToast } = useToast();
       const { fetchData } = useAxios();
@@ -16,9 +16,15 @@ const ReportModal = ({id}) => {
             createToast({ type: "error", text: "신고 내용을 입력해주세요." });
             return;
           }
+        let setUrl="";
+        if(getUrl==="boardReport"){
+            setUrl=buildPath(APIEndPoints.BOARD_REPORTS, {id});
+        }else if(getUrl==="commentReport"){
+            setUrl=buildPath(APIEndPoints.COMMENTS_REPORTS, {id});
+        }
         fetchData({
         method: "POST",
-        url: buildPath(APIEndPoints.BOARD_REPORTS, {id}),
+        url: setUrl,
         data: { 
             contents: reportText 
         },
