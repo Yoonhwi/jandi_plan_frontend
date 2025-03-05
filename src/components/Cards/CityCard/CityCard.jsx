@@ -8,7 +8,7 @@ const CityCard = ({ item }) => {
 
   const goDetail = () =>{
    const path = buildPath(PageEndPoints.DESTINATION_DETAIL, { id: item.cityId });
-   navigate(path);
+   navigate(path,{ state: { cityName: item.name } });
  }
 
   return (
