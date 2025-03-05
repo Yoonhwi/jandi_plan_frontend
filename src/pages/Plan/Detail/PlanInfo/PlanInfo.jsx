@@ -1,14 +1,40 @@
 import styles from "./PlanInfo.module.css";
-import { FaThumbsUp } from "react-icons/fa";
+import { FaRegHeart,FaHeart } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { BsPersonArmsUp } from "react-icons/bs";
 import { MdDateRange } from "react-icons/md";
 import { usePlanDetail } from "../PlanDetailContext";
+import { useState, useCallback } from "react";
+import { useAxios } from "@/hooks";
+import { useAuth, useToast } from "@/contexts";
+import { APIEndPoints } from "@/constants";
+import { buildPath } from "@/utils";
+
 
 const PlanInfo = (user) => {
   const { tripDetail } = usePlanDetail();
+  const [liked, setLiked] = useState(false);//나중에 trip좋아요 정보 넘어오면 여기 수정
   console.log(user.user.userId);
   console.log(tripDetail);
+  const { loading, fetchData } = useAxios();
+  const { createToast } = useToast();
+  const { fetchData: postApi } = useAxios();
+
+  const likedTrip = (setMethod, id) =>{
+    postApi({
+      method: setMethod,
+      url: buildPath(APIEndPoints.TRIP_SET_LIKED, { id }),
+    }).then(() => {
+      setLiked((prev) => !prev);
+    }).catch((err) => {
+      console.log(err);
+      createToast({
+        type: "error",
+        text: err.data.message,
+      });
+    })
+  }
+    
 
   if (!tripDetail) return null;
   return (
@@ -22,7 +48,8 @@ const PlanInfo = (user) => {
           </div>
         : 
         <div className={styles.header_menu}>
-          <p className={styles.username}>{user.user.username}</p>
+          {/* <p className={styles.username}>{user.user.username}</p> */}
+          {liked? <FaHeart size={24} onClick={()=> likedTrip("DELETE",tripDetail.tripId)}/> : <FaRegHeart size={24} onClick={()=> likedTrip("POST",tripDetail.tripId)}/>}
         </div>
         }
       </div>

@@ -43,6 +43,8 @@ const protectedEndpoints = new Set([
   `GET:${APIEndPoints.TRIP_DETAIL}`,
 
   `GET:${APIEndPoints.TRIP_LIKED}`,
+  `POST:${APIEndPoints.TRIP_SET_LIKED}`,
+  `DELETE:${APIEndPoints.TRIP_SET_LIKED}`,
 
   `GET:${APIEndPoints.TRIP_ITINERARY}`,
   `POST:${APIEndPoints.TRIP_ITINERARY}`,
