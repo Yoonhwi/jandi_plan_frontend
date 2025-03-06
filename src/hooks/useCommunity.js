@@ -20,12 +20,15 @@ const useCommunity = () => {
   const { fetchData: deleteApi } = useAxios();
 
   const fetchCommunities = useCallback(
-    async (page, setTotalPage) => {
-      const url = buildPath(APIEndPoints.BOARD);
+    async (params, setTotalPage) => {
+      const isSearch = params.keyword ? true : false;
+      const url = isSearch
+        ? buildPath(APIEndPoints.BOARD_SEARCH)
+        : buildPath(APIEndPoints.BOARD);
       await getApi({
         method: "GET",
         url,
-        params: { page },
+        params,
       }).then((res) => {
         setTotalPage(res.data.pageInfo.totalPages || 0);
       });

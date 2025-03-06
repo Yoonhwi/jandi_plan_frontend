@@ -14,3 +14,10 @@ export const boardWriteScheme = z.object({
     invalid_type_error: "tempCommunityId는 숫자여야 합니다.",
   }),
 });
+
+export const searchBoardScheme = z.object({
+  keyword: z
+    .string()
+    .min(4, { message: "검색어는 6글자 이상이어야 합니다." })
+    .nonempty({ message: "검색어를 입력하세요." }),
+});
