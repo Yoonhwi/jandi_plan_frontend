@@ -1,29 +1,58 @@
 import { Button, Modal, ModalContent, ModalTrigger } from "@/components";
 import styles from "./Country.module.css";
 import { useAxios } from "@/hooks";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { APIEndPoints } from "@/constants";
 import AddDestModal from "./components/AddDestModal";
+import { useToast } from "@/contexts";
+import { buildPath } from "@/utils";
 
 
 const Country = ({ setView }) => {
-  const { fetchData, response } = useAxios();
+  const [items, setItems] = useState();
+  const { loading, fetchData, response } = useAxios();
+  const { fetchData: deleteApi } = useAxios();
+  const { fetchData: fetchApi } = useAxios();
+  const { createToast } = useToast();
 
-  useEffect(() => {
-    fetchData({
+  const fetchCountries = useCallback(async () => {
+    await fetchData({
       url: APIEndPoints.COUNTRY,
       method: "GET",
       params: {
         category: "ALL",
       },
-    });
-  }, [fetchData]);
+    }).then((res) => {
+      console.log(res.data)
+      setItems(res.data)
+    }).catch((err) =>{
+      setItems();
+    })
+  },[fetchData, setView]);
+
+  const deleteContries = useCallback((id) => {
+    deleteApi({
+            method: "DELETE",
+            url: buildPath(APIEndPoints.COUNTRY_MANAGE, { id }),
+          })
+            .then(() => {
+              fetchCountries();
+              createToast({
+                type: "success",
+                text: "도시가 삭제되었습니다",
+              });
+            })
+            .catch((err) =>
+              createToast({
+                type: "error",
+                text: err.data.message,
+              })
+            );
+  },[createToast, deleteApi, fetchCountries])
 
   useEffect(() => {
-    if (!response) return;
-  }, [response]);
-
-  console.log(response);
+    fetchCountries();
+  }, [fetchCountries, setView]);
 
   return (
     <div className={styles.container}>
@@ -62,7 +91,7 @@ const Country = ({ setView }) => {
           </thead>
 
           <tbody>
-            {response?.map((country) => {
+            {items?.map((country) => {
               return (
                 <tr key={country.countryId}>
                   <td>{country.countryId}</td>
@@ -72,7 +101,7 @@ const Country = ({ setView }) => {
                     <Button size="sm" variant="ghost">
                       View
                     </Button>
-                    <Button size="sm" variant="ghost" >
+                    <Button size="sm" variant="ghost" onClick={()=>deleteContries(country.countryId)}>
                       Delete
                     </Button>
                   </td>
