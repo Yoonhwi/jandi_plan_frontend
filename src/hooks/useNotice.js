@@ -2,8 +2,9 @@ import { useCallback, useEffect } from "react";
 import { useAxios } from "@/hooks";
 import { APIEndPoints } from "@/constants";
 import { useToast } from "@/contexts";
-import { buildPath } from "@/utils";
+import { buildPath, handleApiCall } from "@/utils";
 
+// 공지사항을 다룹니다.
 const useNotice = () => {
   const { createToast } = useToast();
 
@@ -13,66 +14,65 @@ const useNotice = () => {
   const { fetchData: updateApi } = useAxios();
 
   const getNotice = useCallback(async () => {
-    await getApi({ url: APIEndPoints.NOTICEALL, method: "GET" });
+    const url = buildPath(APIEndPoints.NOTICEALL);
+    await getApi({ url, method: "GET" });
   }, [getApi]);
 
   const addNotice = useCallback(
     async (data) => {
-      console.log("Data", data);
-      await postApi({
-        method: "POST",
-        url: APIEndPoints.NOTICE,
-        data: {
-          title: data.title,
-          tempNoticeId: data.tempNoticeId,
-          contents: data.content,
-        },
-      })
-        .then(() => {
-          createToast({ text: "공지사항이 등록되었습니다.", type: "success" });
-        })
-        .catch(() => {
-          createToast({ text: "공지사항 등록에 실패했습니다.", type: "error" });
-        });
+      const url = buildPath(APIEndPoints.NOTICE);
 
-      await getNotice();
+      await handleApiCall(
+        () =>
+          postApi({
+            url,
+            method: "POST",
+            data: {
+              title: data.title,
+              tempNoticeId: data.tempNoticeId,
+              contents: data.content,
+            },
+          }),
+        "공지사항이 등록되었습니다.",
+        "공지사항 등록에 실패했습니다.",
+        createToast,
+        getNotice
+      );
     },
     [createToast, getNotice, postApi]
   );
 
   const updateNotice = useCallback(
     async (id, data) => {
-      await updateApi({
-        method: "PATCH",
-        url: buildPath(APIEndPoints.NOTICE_DETAIL, { id }),
-        data,
-      })
-        .then(() => {
-          createToast({ text: "공지사항이 수정되었습니다.", type: "success" });
-        })
-        .catch(() => {
-          createToast({ text: "공지사항 수정에 실패했습니다.", type: "error" });
-        });
+      const url = buildPath(APIEndPoints.NOTICE_DETAIL, { id });
 
-      await getNotice();
+      await handleApiCall(
+        () =>
+          updateApi({
+            url,
+            method: "PATCH",
+            data: { title: data.title, contents: data.content },
+          }),
+        "공지사항이 수정되었습니다.",
+        "공지사항 수정에 실패했습니다.",
+        createToast,
+        getNotice
+      );
     },
     [createToast, getNotice, updateApi]
   );
 
   const deleteNotice = useCallback(
     async (id) => {
-      await deleteApi({
-        method: "DELETE",
-        url: buildPath(APIEndPoints.NOTICE_DETAIL, { id }),
-      })
-        .then(() => {
-          createToast({ text: "공지사항이 삭제되었습니다.", type: "success" });
-        })
-        .catch(() => {
-          createToast({ text: "공지사항 삭제에 실패했습니다.", type: "error" });
-        });
+      const url = buildPath(APIEndPoints.NOTICE_DETAIL, { id });
 
-      await getNotice();
+      await handleApiCall(
+        () => deleteApi({ url, method: "DELETE" }),
+        "공지사항이 삭제되었습니다.",
+        "공지사항 삭제에 실패했습니다.",
+        createToast,
+        getNotice
+      );
     },
     [createToast, deleteApi, getNotice]
   );

@@ -13,7 +13,7 @@ const NoticeItem = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef(null);
   const formmatDate = format(new Date(item.createdAt), "yy. MM. dd");
-  const parsedContent = parseContent(item.contents);
+  const parsedContent = parseContent(item.content);
 
   return (
     <div className={styles.container}>

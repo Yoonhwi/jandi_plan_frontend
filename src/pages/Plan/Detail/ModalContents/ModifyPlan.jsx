@@ -4,9 +4,12 @@ import { useForm } from "react-hook-form";
 import { modifyPlanSchema } from "../../constants";
 import { usePlanDetail } from "../PlanDetailContext";
 import styles from "./ModifyPlan.module.css";
+import { useModal } from "@/components/Modal/ModalContext";
+import { useCallback } from "react";
 
 const ModifyPlan = ({ plan }) => {
   const { updatePlan } = usePlanDetail();
+  const { closeModal } = useModal();
 
   const {
     register,
@@ -20,16 +23,21 @@ const ModifyPlan = ({ plan }) => {
     },
   });
 
+  const onSubmit = useCallback(
+    (data) => {
+      updatePlan(data);
+      closeModal();
+    },
+    [closeModal, updatePlan]
+  );
+
   if (!plan) return <p>해당 계획을 불러오기 실패했습니다.</p>;
 
   return (
     <div className={styles.container}>
       <p className={styles.title}>계획 수정</p>
 
-      <form
-        className={styles.form_container}
-        onSubmit={handleSubmit(updatePlan)}
-      >
+      <form className={styles.form_container} onSubmit={handleSubmit(onSubmit)}>
         <Field
           label="플랜 제목"
           helperText="ex)오사카 가족여행"
