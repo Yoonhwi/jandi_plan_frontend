@@ -40,7 +40,7 @@ const Country = ({ setView }) => {
               <AddDestModal content="나라"/>
             </ModalContent>
           </Modal>
-          <Button variant="ghost" size="sm" onClick={() => setView("plan")}>
+          <Button variant="ghost" size="sm" onClick={() => setView("city")}>
             여행지 관리
           </Button>
           <Button variant="ghost" size="sm" onClick={() => setView("plan")}>
@@ -72,7 +72,7 @@ const Country = ({ setView }) => {
                     <Button size="sm" variant="ghost">
                       View
                     </Button>
-                    <Button size="sm" variant="ghost">
+                    <Button size="sm" variant="ghost" >
                       Delete
                     </Button>
                   </td>
