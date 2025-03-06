@@ -1,27 +1,58 @@
 import { Button, Modal, ModalContent, ModalTrigger } from "@/components";
 import styles from "./City.module.css";
 import { useAxios } from "@/hooks";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { APIEndPoints } from "@/constants";
 import AddDestModal from "./components/AddDestModal";
+import { useToast } from "@/contexts";
+import { buildPath } from "@/utils";
 
 
 const City = ({ setView }) => {
-  const { fetchData, response } = useAxios();
+  const [items, setItems] = useState();
+  const { loading, fetchData, response } = useAxios();
+  const { fetchData: deleteApi } = useAxios();
+  const { fetchData: fetchApi } = useAxios();
+  const { createToast } = useToast();
 
-  useEffect(() => {
-    fetchData({
+  const fetchCities = useCallback(async () => {
+    await fetchData({
       url: APIEndPoints.DESTINATION,
       method: "GET",
       params: {
         category: "ALL",
       },
-    });
-  }, [fetchData]);
+    }).then((res) => {
+      console.log(res.data)
+      setItems(res.data)
+    }).catch((err) =>{
+      setItems();
+    })
+  }, [fetchData, setView]);
+
+  const deleteCities = useCallback((id) => {
+    deleteApi({
+            method: "DELETE",
+            url: buildPath(APIEndPoints.CITY_MANAGE, { id }),
+          })
+            .then(() => {
+              fetchCities();
+              createToast({
+                type: "success",
+                text: "도시가 삭제되었습니다",
+              });
+            })
+            .catch((err) =>
+              createToast({
+                type: "error",
+                text: err.data.message,
+              })
+            );
+  },[createToast, deleteApi, fetchCities])
 
   useEffect(() => {
-    if (!response) return;
-  }, [response]);
+    fetchCities();
+  }, [fetchCities, setView]);
 
   return (
     <div className={styles.container}>
@@ -61,7 +92,7 @@ const City = ({ setView }) => {
           </thead>
 
           <tbody>
-            {response?.map((city) => {
+            {items?.map((city) => {
               return (
                 <tr key={city.cityId}>
                   <td>{city.cityId}</td>
@@ -72,7 +103,7 @@ const City = ({ setView }) => {
                     <Button size="sm" variant="ghost">
                       View
                     </Button>
-                    <Button size="sm" variant="ghost">
+                    <Button size="sm" variant="ghost" onClick={()=>deleteCities(city.cityId)}>
                       Delete
                     </Button>
                   </td>

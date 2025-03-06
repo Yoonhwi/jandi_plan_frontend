@@ -14,6 +14,18 @@ export const createCitySchema = z.object({
   .refine((files) => files.length > 0, {
     message: "도시 파일을 넣어주세요", // 파일이 없을 경우 메시지
   }),
-  latitude: z.string().nonempty("위도를 입력해주세요"),
-  longtitude: z.string().nonempty("경도를 입력해주세요"),
+  latitude: z.coerce
+  .number()
+  .positive("위도를 입력해주세요")
+  .refine((value) => !isNaN(value), {
+    message: "숫자만 입력해주세요",
+  }),
+
+longitude: z.coerce
+.number()
+.positive("경도를 입력해주세요")
+.refine((value) => !isNaN(value), {
+  message: "숫자만 입력해주세요",
+}),
+
 });

@@ -3,8 +3,14 @@ import {Button,Input,Field} from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { createCitySchema } from "./constants";
+import { APIEndPoints } from "@/constants";
+import { useToast } from "@/contexts";
+import { useAxios } from "@/hooks";
 
 const FormAddCity = () =>{
+    const { fetchData, response } = useAxios();
+    const { createToast } = useToast();
+
     const formController = useForm({
             resolver: zodResolver(createCitySchema),
           });
@@ -17,9 +23,31 @@ const FormAddCity = () =>{
     
         const onSubmit = (data) => {
             console.log(data);
-            // addCity(data);
-            formController.reset();
+            addCity(data);
           };
+
+          const addCity=(data)=>{
+                  console.log(data); 
+                  const formData = new FormData();
+                  formData.append("country", data.country);
+                  formData.append("city", data.city);
+                  formData.append("description", data.description);
+                  formData.append("file", data.file?.[0]);
+                  formData.append("latitude", parseFloat(data.latitude));
+                  formData.append("longitude", parseFloat(data.longitude));
+                  fetchData({
+                      method: "POST",
+                      url: APIEndPoints.CITY_ADD,
+                      data: formData,
+                  }).then(()=>{
+                      createToast({ type: "success", text: "등록에 성공하였습니다" });
+                      formController.reset();
+                  }).catch((err)=> {
+                    console.log(err);
+                      createToast({ type: "error", text: err.data.message });
+                  })
+              }
+          
 
     return(
         <div>
@@ -107,7 +135,7 @@ const FormAddCity = () =>{
                     </Field>
                 </div>
                 <div className={styles.columns}>
-                    <Field label="경도" isRequire error={errors.longtitude}>
+                    <Field label="경도" isRequire error={errors.longitude}>
                         <Input 
                             type="text"
                             style={{
@@ -116,7 +144,7 @@ const FormAddCity = () =>{
                             }}
                             size="sm"
                             register={register}
-                            name="longtitude"
+                            name="longitude"
                         />
                         {/* {errors.country && (
                             <p className={styles.error}>{errors.country.message}</p>
