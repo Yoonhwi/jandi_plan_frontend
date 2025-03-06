@@ -34,6 +34,7 @@ const BoardWrite = () => {
       setValue("tempPostId", tempPostId);
       setSearchParams({ tempPostId });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

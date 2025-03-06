@@ -27,11 +27,7 @@ const useNotice = () => {
           postApi({
             url,
             method: "POST",
-            data: {
-              title: data.title,
-              tempNoticeId: data.tempNoticeId,
-              contents: data.content,
-            },
+            data,
           }),
         "공지사항이 등록되었습니다.",
         "공지사항 등록에 실패했습니다.",
@@ -51,7 +47,7 @@ const useNotice = () => {
           updateApi({
             url,
             method: "PATCH",
-            data: { title: data.title, contents: data.content },
+            data,
           }),
         "공지사항이 수정되었습니다.",
         "공지사항 수정에 실패했습니다.",

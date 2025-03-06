@@ -1,19 +1,15 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import styles from "./NoticeItem.module.css";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
 import { format } from "date-fns";
 import { IoAlertCircleSharp } from "react-icons/io5";
-import { parseContent } from "@/utils";
-import "quill/dist/quill.snow.css";
-import "highlight.js/styles/github.css";
+import { ViewEditorContent } from "@/components";
 
 const NoticeItem = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const contentRef = useRef(null);
   const formmatDate = format(new Date(item.createdAt), "yy. MM. dd");
-  const parsedContent = parseContent(item.content);
 
   return (
     <div className={styles.container}>
@@ -51,10 +47,11 @@ const NoticeItem = ({ item }) => {
             }}
             style={{ overflow: "hidden" }}
           >
-            <div
-              dangerouslySetInnerHTML={{ __html: parsedContent }}
-              className={`ql-editor ${styles.content}`}
-              ref={contentRef}
+            <ViewEditorContent
+              content={item.content}
+              style={{
+                padding: "1rem 4rem",
+              }}
             />
           </motion.div>
         )}

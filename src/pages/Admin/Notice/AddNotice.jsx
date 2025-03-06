@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./AddNotice.module.css";
 import { useAxios, useQuillEvents } from "@/hooks";
 import { APIEndPoints } from "@/constants";
@@ -8,9 +8,12 @@ import { useForm } from "react-hook-form";
 import FormEditor from "@/pages/Board/FormEditor";
 import { Button } from "@/components";
 import { noticeWriteSchema } from "./constants";
+import { useModal } from "@/components/Modal/ModalContext";
 
 const AddNotice = ({ callback }) => {
   const [quill, setQuill] = useState(null);
+  const { closeModal } = useModal();
+
   const formController = useForm({
     resolver: zodResolver(noticeWriteSchema),
   });
@@ -22,6 +25,14 @@ const AddNotice = ({ callback }) => {
   const { fetchData: getTempId } = useAxios();
 
   useQuillEvents(quill, setValue, tempNoticeId, "notice");
+
+  const onSubmit = useCallback(
+    (data) => {
+      callback(data);
+      closeModal();
+    },
+    [callback, closeModal]
+  );
 
   useEffect(() => {
     getTempId({
@@ -42,7 +53,8 @@ const AddNotice = ({ callback }) => {
       newSearchParams.delete("tempNoticeId");
       setSearchParams(newSearchParams);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getTempId, setValue]);
 
   return (
     <div className={styles.container}>
@@ -50,7 +62,7 @@ const AddNotice = ({ callback }) => {
 
       <FormEditor
         formController={formController}
-        onSubmit={callback}
+        onSubmit={onSubmit}
         setQuill={setQuill}
         tempPostId={tempNoticeId}
         category="notice"
