@@ -7,9 +7,10 @@ import { APIEndPoints } from "@/constants";
 import { useToast } from "@/contexts";
 import { useAxios } from "@/hooks";
 import { useEffect } from "react";
+import { buildPath } from "@/utils";
 
 const FormCity = ({forUse,data,onSuccess}) =>{
-    console.log(forUse);
+    console.log(data);
     const { fetchData, response } = useAxios();
     const { createToast } = useToast();
 
@@ -61,31 +62,29 @@ const FormCity = ({forUse,data,onSuccess}) =>{
             }).then(()=>{
                 createToast({ type: "success", text: "등록에 성공하였습니다" });
                 onSuccess?.();
-                formController.reset();
             }).catch((err)=> {
             console.log(err);
                 createToast({ type: "error", text: err.data.message });
             })
         }
 
-        const updateCity=(data)=>{
-            console.log(data); 
+        const updateCity=(changeData)=>{
             const formData = new FormData();
-            formData.append("country", data.country);
-            formData.append("city", data.city);
-            formData.append("description", data.description);
-            if (data.file?.[0]) {
-                formData.append("file", data.file[0]);
+            formData.append("country", changeData.country);
+            formData.append("city", changeData.city);
+            formData.append("description", changeData.description);
+            if (changeData.file?.[0]) {
+                formData.append("file", changeData.file[0]);
             }
-            formData.append("latitude", parseFloat(data.latitude));
-            formData.append("longitude", parseFloat(data.longitude));
+            formData.append("latitude", parseFloat(changeData.latitude));
+            formData.append("longitude", parseFloat(changeData.longitude));
             fetchData({
-                method: "POST",
-                url: APIEndPoints.CITY_MANAGE,
+                method: "PATCH",
+                url: buildPath(APIEndPoints.CITY_MANAGE, { id: data.cityId }),
                 data: formData,
             }).then(()=>{
                 createToast({ type: "success", text: "수정에 성공하였습니다" });
-                formController.reset();
+                onSuccess?.();
             }).catch((err)=> {
             console.log(err);
                 createToast({ type: "error", text: err.data.message });

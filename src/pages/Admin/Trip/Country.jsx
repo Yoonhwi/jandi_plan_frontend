@@ -7,6 +7,7 @@ import AddDestModal from "./components/AddDestModal";
 import { useToast } from "@/contexts";
 import { buildPath } from "@/utils";
 import DeleteModal from "@/components/Modal/ModalContents/DeleteModal";
+import DestMoreInfo from "./components/DestMoreInfo";
 
 
 const Country = ({ setView }) => {
@@ -99,9 +100,16 @@ const Country = ({ setView }) => {
                   <td>{country.continent.name}</td>
                   <td>{country.name}</td>
                   <td className={styles.actions}>
+                    <Modal>
+                    <ModalTrigger>
                     <Button size="sm" variant="ghost">
                       View
                     </Button>
+                    </ModalTrigger>
+                    <ModalContent>
+                      <DestMoreInfo content="나라" data={country} onSuccess={fetchCountries}/>
+                    </ModalContent>
+                  </Modal>
                     <Modal>
                       <ModalTrigger>
                         <Button size="sm" variant="ghost">

@@ -109,7 +109,7 @@ const City = ({ setView }) => {
                     </Button>
                     </ModalTrigger>
                     <ModalContent>
-                      <DestMoreInfo content="도시" data={city}/>
+                      <DestMoreInfo content="도시" data={city} onSuccess={fetchCities}/>
                     </ModalContent>
                   </Modal>
                   <Modal>
