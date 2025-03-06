@@ -1,5 +1,5 @@
 import { createCountrySchema } from "./constants";
-import styles from "./FormAddCountry.module.css";
+import styles from "./FormCountry.module.css";
 import {Button,Input,Field} from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -7,7 +7,7 @@ import { APIEndPoints } from "@/constants";
 import { useToast } from "@/contexts";
 import { useAxios } from "@/hooks";
 
-const FormAddCountry = () =>{
+const FormCountry = () =>{
     const { fetchData, response } = useAxios();
     const { createToast } = useToast();
 
@@ -88,4 +88,4 @@ const FormAddCountry = () =>{
     );
 }
 
-export default FormAddCountry;
+export default FormCountry;

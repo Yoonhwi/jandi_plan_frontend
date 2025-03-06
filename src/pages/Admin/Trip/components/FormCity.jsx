@@ -1,4 +1,4 @@
-import styles from "./FormAddCity.module.css";
+import styles from "./FormCity.module.css";
 import {Button,Input,Field} from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -7,7 +7,7 @@ import { APIEndPoints } from "@/constants";
 import { useToast } from "@/contexts";
 import { useAxios } from "@/hooks";
 
-const FormAddCity = () =>{
+const FormCity = () =>{
     const { fetchData, response } = useAxios();
     const { createToast } = useToast();
 
@@ -64,9 +64,6 @@ const FormAddCity = () =>{
                             register={register}
                             name="country"
                         />
-                        {/* {errors.continent && (
-                            <p className={styles.error}>{errors.continent.message}</p>
-                        )} */}
                     </Field>
                 </div>
                 <div className={styles.columns}>
@@ -81,9 +78,6 @@ const FormAddCity = () =>{
                             register={register}
                             name="city"
                         />
-                        {/* {errors.country && (
-                            <p className={styles.error}>{errors.country.message}</p>
-                        )} */}
                     </Field>
                 </div>
                 <div className={styles.columns}>
@@ -98,9 +92,6 @@ const FormAddCity = () =>{
                             register={register}
                             name="description"
                         />
-                        {/* {errors.country && (
-                            <p className={styles.error}>{errors.country.message}</p>
-                        )} */}
                     </Field>
                 </div>
                 <div className={styles.columns}>
@@ -129,9 +120,6 @@ const FormAddCity = () =>{
                             register={register}
                             name="latitude"
                         />
-                        {/* {errors.country && (
-                            <p className={styles.error}>{errors.country.message}</p>
-                        )} */}
                     </Field>
                 </div>
                 <div className={styles.columns}>
@@ -146,9 +134,6 @@ const FormAddCity = () =>{
                             register={register}
                             name="longitude"
                         />
-                        {/* {errors.country && (
-                            <p className={styles.error}>{errors.country.message}</p>
-                        )} */}
                     </Field>
                 </div>
                 <div className={styles.button_container}>
@@ -161,4 +146,4 @@ const FormAddCity = () =>{
     );
 }
 
-export default FormAddCity;
+export default FormCity;
