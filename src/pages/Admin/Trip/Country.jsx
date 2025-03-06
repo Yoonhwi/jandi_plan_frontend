@@ -1,17 +1,17 @@
 import { Button, Modal, ModalContent, ModalTrigger } from "@/components";
-import styles from "./City.module.css";
+import styles from "./Country.module.css";
 import { useAxios } from "@/hooks";
 import { useEffect } from "react";
 import { APIEndPoints } from "@/constants";
 import AddDestModal from "./components/AddDestModal";
 
 
-const City = ({ setView }) => {
+const Country = ({ setView }) => {
   const { fetchData, response } = useAxios();
 
   useEffect(() => {
     fetchData({
-      url: APIEndPoints.DESTINATION,
+      url: APIEndPoints.COUNTRY,
       method: "GET",
       params: {
         category: "ALL",
@@ -23,23 +23,25 @@ const City = ({ setView }) => {
     if (!response) return;
   }, [response]);
 
+  console.log(response);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <p className={styles.title}>여행지 관리</p>
+        <p className={styles.title}>나라 관리</p>
         <div>
           <Modal>
             <ModalTrigger>
             <Button variant="ghost" size="sm">
-              도시 추가
+              나라 추가
             </Button>
             </ModalTrigger>
             <ModalContent>
-              <AddDestModal content="도시"/>
+              <AddDestModal content="나라"/>
             </ModalContent>
           </Modal>
-          <Button variant="ghost" size="sm" onClick={() => setView("country")}>
-            나라 관리
+          <Button variant="ghost" size="sm" onClick={() => setView("plan")}>
+            여행지 관리
           </Button>
           <Button variant="ghost" size="sm" onClick={() => setView("plan")}>
             여행계획 관리
@@ -55,19 +57,17 @@ const City = ({ setView }) => {
               <th>ID</th>
               <th>대륙</th>
               <th>나라</th>
-              <th>도시</th>
               <th className={styles.action_title}>Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {response?.map((city) => {
+            {response?.map((country) => {
               return (
-                <tr key={city.cityId}>
-                  <td>{city.cityId}</td>
-                  <td>{city.country.continent.name}</td>
-                  <td>{city.country.name}</td>
-                  <td>{city.name}</td>
+                <tr key={country.countryId}>
+                  <td>{country.countryId}</td>
+                  <td>{country.continent.name}</td>
+                  <td>{country.name}</td>
                   <td className={styles.actions}>
                     <Button size="sm" variant="ghost">
                       View
@@ -86,4 +86,4 @@ const City = ({ setView }) => {
   );
 };
 
-export default City;
+export default Country;

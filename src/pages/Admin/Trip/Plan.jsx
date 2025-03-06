@@ -3,7 +3,7 @@ import styles from "./Plan.module.css";
 import { useEffect } from "react";
 import { APIEndPoints } from "@/constants";
 import { Button, Pagination } from "@/components";
-const Plan = ({ set }) => {
+const Plan = ({ setView }) => {
   const { currentPage, totalPage, setTotalPage, handlePageChange } =
     usePagination("trip");
 
@@ -23,9 +23,14 @@ const Plan = ({ set }) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <p className={styles.title}>여행계획 관리</p>
-        <Button variant="ghost" size="sm" onClick={() => set(true)}>
-          여행지 관리
-        </Button>
+        <div>
+          <Button variant="ghost" size="sm" onClick={() => setView("country")}>
+            나라 관리
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => setView("city")}>
+            여행지 관리
+          </Button>
+        </div>
       </div>
       <div className={styles.table_wrapper}>
         <table className={styles.table}>
