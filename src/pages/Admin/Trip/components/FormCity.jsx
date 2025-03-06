@@ -6,47 +6,91 @@ import { createCitySchema } from "./constants";
 import { APIEndPoints } from "@/constants";
 import { useToast } from "@/contexts";
 import { useAxios } from "@/hooks";
+import { useEffect } from "react";
 
-const FormCity = () =>{
+const FormCity = ({forUse,data,onSuccess}) =>{
+    console.log(forUse);
     const { fetchData, response } = useAxios();
     const { createToast } = useToast();
 
     const formController = useForm({
-            resolver: zodResolver(createCitySchema),
+            resolver: zodResolver(createCitySchema(forUse)),
           });
     
-        const {
-            register,
-            handleSubmit,
-            formState: { errors },
-        } = formController;
-    
-        const onSubmit = (data) => {
-            console.log(data);
-            addCity(data);
-          };
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = formController;
 
-          const addCity=(data)=>{
-                  console.log(data); 
-                  const formData = new FormData();
-                  formData.append("country", data.country);
-                  formData.append("city", data.city);
-                  formData.append("description", data.description);
-                  formData.append("file", data.file?.[0]);
-                  formData.append("latitude", parseFloat(data.latitude));
-                  formData.append("longitude", parseFloat(data.longitude));
-                  fetchData({
-                      method: "POST",
-                      url: APIEndPoints.CITY_ADD,
-                      data: formData,
-                  }).then(()=>{
-                      createToast({ type: "success", text: "등록에 성공하였습니다" });
-                      formController.reset();
-                  }).catch((err)=> {
-                    console.log(err);
-                      createToast({ type: "error", text: err.data.message });
-                  })
-              }
+    useEffect(() => {
+        if (forUse === "PATCH" && data) {
+          setValue("country", data.country.name);
+          setValue("city", data.name);
+          setValue("description", data.description);
+          setValue("latitude", data.latitude);
+          setValue("longitude", data.longitude);
+        }
+    }, [forUse, data, setValue]);
+
+    const onSubmit = (data) => {
+        console.log(data);
+        if (forUse === "PATCH") {
+            // 수정 로직 추가
+            updateCity(data);
+          } else {
+            // 추가 로직
+            addCity(data);
+          }
+        };
+
+    const addCity=(data)=>{
+            console.log(data); 
+            const formData = new FormData();
+            formData.append("country", data.country);
+            formData.append("city", data.city);
+            formData.append("description", data.description);
+            formData.append("file", data.file?.[0]);
+            formData.append("latitude", parseFloat(data.latitude));
+            formData.append("longitude", parseFloat(data.longitude));
+            fetchData({
+                method: "POST",
+                url: APIEndPoints.CITY_ADD,
+                data: formData,
+            }).then(()=>{
+                createToast({ type: "success", text: "등록에 성공하였습니다" });
+                onSuccess?.();
+                formController.reset();
+            }).catch((err)=> {
+            console.log(err);
+                createToast({ type: "error", text: err.data.message });
+            })
+        }
+
+        const updateCity=(data)=>{
+            console.log(data); 
+            const formData = new FormData();
+            formData.append("country", data.country);
+            formData.append("city", data.city);
+            formData.append("description", data.description);
+            if (data.file?.[0]) {
+                formData.append("file", data.file[0]);
+            }
+            formData.append("latitude", parseFloat(data.latitude));
+            formData.append("longitude", parseFloat(data.longitude));
+            fetchData({
+                method: "POST",
+                url: APIEndPoints.CITY_MANAGE,
+                data: formData,
+            }).then(()=>{
+                createToast({ type: "success", text: "수정에 성공하였습니다" });
+                formController.reset();
+            }).catch((err)=> {
+            console.log(err);
+                createToast({ type: "error", text: err.data.message });
+            })
+        }
           
 
     return(
@@ -138,7 +182,7 @@ const FormCity = () =>{
                 </div>
                 <div className={styles.button_container}>
                     <Button size="lg" variant="ghost" type="submit">
-                        나라 추가하기
+                        {forUse === "PATCH" ? "도시 수정하기" : "도시 추가하기"}
                     </Button>
                 </div>
             </form>

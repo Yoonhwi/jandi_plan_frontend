@@ -7,7 +7,7 @@ import { APIEndPoints } from "@/constants";
 import { useToast } from "@/contexts";
 import { useAxios } from "@/hooks";
 
-const FormCountry = () =>{
+const FormCountry = ({forUse,data,onSuccess}) =>{
     const { fetchData, response } = useAxios();
     const { createToast } = useToast();
 
@@ -38,6 +38,7 @@ const FormCountry = () =>{
         }).then(()=>{
             createToast({ type: "success", text: "등록에 성공하였습니다" });
             formController.reset();
+            onSuccess?.();
         }).catch((err)=> {
             createToast({ type: "error", text: err.data.message });
         })

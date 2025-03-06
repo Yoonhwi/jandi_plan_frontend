@@ -1,11 +1,12 @@
 import { Button, Modal, ModalContent, ModalTrigger } from "@/components";
 import styles from "./Country.module.css";
 import { useAxios } from "@/hooks";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { APIEndPoints } from "@/constants";
 import AddDestModal from "./components/AddDestModal";
 import { useToast } from "@/contexts";
 import { buildPath } from "@/utils";
+import DeleteModal from "@/components/Modal/ModalContents/DeleteModal";
 
 
 const Country = ({ setView }) => {
@@ -66,7 +67,7 @@ const Country = ({ setView }) => {
             </Button>
             </ModalTrigger>
             <ModalContent>
-              <AddDestModal content="나라"/>
+              <AddDestModal content="나라"  onSuccess={fetchCountries}/>
             </ModalContent>
           </Modal>
           <Button variant="ghost" size="sm" onClick={() => setView("city")}>
@@ -101,9 +102,17 @@ const Country = ({ setView }) => {
                     <Button size="sm" variant="ghost">
                       View
                     </Button>
-                    <Button size="sm" variant="ghost" onClick={()=>deleteCountries(country.countryId)}>
-                      Delete
-                    </Button>
+                    <Modal>
+                      <ModalTrigger>
+                        <Button size="sm" variant="ghost">
+                          Delete
+                        </Button>
+                      </ModalTrigger>
+                      <ModalContent>
+                        <DeleteModal callback={() => deleteCountries(country.countryId)} />
+                      </ModalContent>
+                    </Modal>
+                    
                   </td>
                 </tr>
               );

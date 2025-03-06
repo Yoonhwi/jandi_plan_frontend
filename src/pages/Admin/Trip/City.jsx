@@ -1,11 +1,13 @@
 import { Button, Modal, ModalContent, ModalTrigger } from "@/components";
 import styles from "./City.module.css";
 import { useAxios } from "@/hooks";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { APIEndPoints } from "@/constants";
 import AddDestModal from "./components/AddDestModal";
 import { useToast } from "@/contexts";
 import { buildPath } from "@/utils";
+import DestMoreInfo from "./components/DestMoreInfo";
+import DeleteModal from "@/components/Modal/ModalContents/DeleteModal";
 
 
 const City = ({ setView }) => {
@@ -66,7 +68,7 @@ const City = ({ setView }) => {
             </Button>
             </ModalTrigger>
             <ModalContent>
-              <AddDestModal content="도시"/>
+              <AddDestModal content="도시" onSuccess={fetchCities}/>
             </ModalContent>
           </Modal>
           <Button variant="ghost" size="sm" onClick={() => setView("country")}>
@@ -100,12 +102,26 @@ const City = ({ setView }) => {
                   <td>{city.country.name}</td>
                   <td>{city.name}</td>
                   <td className={styles.actions}>
+                  <Modal>
+                    <ModalTrigger>
                     <Button size="sm" variant="ghost">
                       View
                     </Button>
-                    <Button size="sm" variant="ghost" onClick={()=>deleteCities(city.cityId)}>
-                      Delete
-                    </Button>
+                    </ModalTrigger>
+                    <ModalContent>
+                      <DestMoreInfo content="도시" data={city}/>
+                    </ModalContent>
+                  </Modal>
+                  <Modal>
+                    <ModalTrigger>
+                      <Button size="sm" variant="ghost" >
+                        Delete
+                      </Button>
+                    </ModalTrigger>
+                    <ModalContent>
+                      <DeleteModal callback={() => deleteCities(city.cityId)} />
+                    </ModalContent>
+                  </Modal>
                   </td>
                 </tr>
               );
