@@ -30,7 +30,7 @@ const Country = ({ setView }) => {
     })
   },[fetchData, setView]);
 
-  const deleteContries = useCallback((id) => {
+  const deleteCountries = useCallback((id) => {
     deleteApi({
             method: "DELETE",
             url: buildPath(APIEndPoints.COUNTRY_MANAGE, { id }),
@@ -101,7 +101,7 @@ const Country = ({ setView }) => {
                     <Button size="sm" variant="ghost">
                       View
                     </Button>
-                    <Button size="sm" variant="ghost" onClick={()=>deleteContries(country.countryId)}>
+                    <Button size="sm" variant="ghost" onClick={()=>deleteCountries(country.countryId)}>
                       Delete
                     </Button>
                   </td>
