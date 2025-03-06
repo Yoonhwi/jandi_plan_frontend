@@ -6,3 +6,4 @@ export { default as usePlanItinerary } from "./usePlanItinerary";
 export { default as usePlanReservation } from "./usePlanReservation";
 export { default as usePlan } from "./usePlanDetail";
 export { default as useCommunity } from "./useCommunity";
+export { default as useNotice } from "./useNotice";

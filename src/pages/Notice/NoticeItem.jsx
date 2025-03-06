@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./NoticeItem.module.css";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdArrowDropup } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
 import { format } from "date-fns";
 import { IoAlertCircleSharp } from "react-icons/io5";
+import { parseContent } from "@/utils";
+import "quill/dist/quill.snow.css";
+import "highlight.js/styles/github.css";
 
 const NoticeItem = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const contentRef = useRef(null);
   const formmatDate = format(new Date(item.createdAt), "yy. MM. dd");
+  const parsedContent = parseContent(item.contents);
 
   return (
     <div className={styles.container}>
@@ -37,14 +42,20 @@ const NoticeItem = ({ item }) => {
         {isOpen && (
           <motion.div
             key="content"
-            className={styles.content}
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "10rem", opacity: 1 }}
+            animate={{ height: "fit-content", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{
+              height: { duration: 0.2 },
+              opacity: { duration: 0 },
+            }}
             style={{ overflow: "hidden" }}
           >
-            <p>{item.contents}</p>
+            <div
+              dangerouslySetInnerHTML={{ __html: parsedContent }}
+              className={`ql-editor ${styles.content}`}
+              ref={contentRef}
+            />
           </motion.div>
         )}
       </AnimatePresence>

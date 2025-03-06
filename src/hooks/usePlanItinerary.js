@@ -18,7 +18,6 @@ const usePlanItinerary = (id) => {
     await getApi({ url, method: "GET" });
   }, [id, getApi]);
 
-  // 일정 데이터를 추가하는 함수
   const addItinerary = useCallback(
     async (data) => {
       const url = buildPath(APIEndPoints.TRIP_ITINERARY, { id });
@@ -35,7 +34,6 @@ const usePlanItinerary = (id) => {
     [id, postApi, fetchItineraries, createToast]
   );
 
-  // 일정 데이터를 수정하는 함수
   const updateItinerary = useCallback(
     async (itemId, data) => {
       const url = buildPath(APIEndPoints.TRIP_ITINERARY, { id: itemId });
@@ -52,7 +50,6 @@ const usePlanItinerary = (id) => {
     [updateApi, fetchItineraries, createToast]
   );
 
-  // 일정 데이터를 삭제하는 함수
   const deleteItinerary = useCallback(
     async (itemId) => {
       const url = buildPath(APIEndPoints.TRIP_ITINERARY, { id: itemId });

@@ -20,7 +20,6 @@ const usePlan = (id) => {
     await getApi({ url, method: "GET" });
   }, [id, getApi]);
 
-  // 여행계획 데이터를 추가하는 함수
   const addPlan = useCallback(
     async (data) => {
       const url = buildPath(APIEndPoints.TRIP_CREATE);
@@ -43,7 +42,6 @@ const usePlan = (id) => {
     [createToast, fetchTripDetail, navigate, postApi]
   );
 
-  // 여행계획 데이터를 수정하는 함수
   const updatePlan = useCallback(
     async (data) => {
       const url = buildPath(APIEndPoints.TRIP_MY_DETAIL, { id });
@@ -60,7 +58,6 @@ const usePlan = (id) => {
     [createToast, fetchTripDetail, id, updateApi]
   );
 
-  // 여행계획 데이터를 삭제하는 함수
   const deletePlan = useCallback(async () => {
     const url = buildPath(APIEndPoints.TRIP_MY_DETAIL, { id });
     await deleteApi({ url, method: "DELETE" })

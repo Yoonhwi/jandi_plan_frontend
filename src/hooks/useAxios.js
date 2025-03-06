@@ -24,9 +24,6 @@ const useAxios = () => {
 
     try {
       const res = await axiosInstance.request({
-        headers: {
-          ...params.headers,
-        },
         ...params,
       });
 

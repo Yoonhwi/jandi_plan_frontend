@@ -1,0 +1,9 @@
+.container {
+  width: 50rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  box-sizing: border-box;
+  padding: 2rem;
+}

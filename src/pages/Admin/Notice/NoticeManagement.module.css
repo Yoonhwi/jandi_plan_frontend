@@ -9,6 +9,11 @@
   gap: 1rem;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .title {
   font-size: var(--text-xl);
   font-weight: var(--font-weight-semibold);
@@ -39,12 +44,4 @@
 .actions {
   display: flex;
   gap: 0.5rem;
-}
-
-.content {
-  max-width: 10rem;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }

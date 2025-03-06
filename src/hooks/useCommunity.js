@@ -22,7 +22,7 @@ const useCommunity = () => {
     async (page, setTotalPage) => {
       await getApi({
         method: "GET",
-        url: `${APIEndPoints.BOARD}`,
+        url: APIEndPoints.BOARD,
         params: { page },
       }).then((res) => {
         setTotalPage(res.data.pageInfo.totalPages || 0);
@@ -35,7 +35,7 @@ const useCommunity = () => {
     async (data) => {
       await postApi({
         method: "POST",
-        url: buildPath(APIEndPoints.BOARD),
+        url: APIEndPoints.BOARD,
         data,
       })
         .then((res) => {

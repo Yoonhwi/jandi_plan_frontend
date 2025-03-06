@@ -2,7 +2,7 @@ import { uploadCommunityImage } from "@/apis/image";
 import { useToast } from "@/contexts";
 import { useEffect } from "react";
 
-const useQuillEvents = (quill, setValue, targetId) => {
+const useQuillEvents = (quill, setValue, targetId, category = "community") => {
   const { createToast } = useToast();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const useQuillEvents = (quill, setValue, targetId) => {
     const handleImage = async (file) => {
       const range = quill.getSelection();
 
-      await uploadCommunityImage(file, targetId)
+      await uploadCommunityImage(file, targetId, category)
         .then((res) => {
           createToast({
             type: "success",
