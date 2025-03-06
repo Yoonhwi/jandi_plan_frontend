@@ -8,7 +8,7 @@ const FormEditor = ({
   children,
   setQuill,
   defaultValue,
-  category = "community",
+  category,
 }) => {
   const {
     register,

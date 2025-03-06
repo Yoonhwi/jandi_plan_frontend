@@ -2,7 +2,7 @@ import { uploadCommunityImage } from "@/apis/image";
 import { useToast } from "@/contexts";
 import { useEffect } from "react";
 
-const useQuillEvents = (quill, setValue, targetId, category = "community") => {
+const useQuillEvents = (quill, setValue, targetId, category) => {
   const { createToast } = useToast();
 
   useEffect(() => {
@@ -10,9 +10,10 @@ const useQuillEvents = (quill, setValue, targetId, category = "community") => {
 
     const editorElement = quill.root;
 
-    quill.on("text-change", () => {
+    const handleTextChange = () => {
       setValue("content", quill.getContents());
-    });
+    };
+    quill.on("text-change", handleTextChange);
 
     const handleImage = async (file) => {
       const range = quill.getSelection();
@@ -35,7 +36,7 @@ const useQuillEvents = (quill, setValue, targetId, category = "community") => {
         );
     };
 
-    editorElement.addEventListener("paste", (e) => {
+    const handlePaste = (e) => {
       const clipboardData = e.clipboardData;
       if (clipboardData && clipboardData.items) {
         for (let i = 0; i < clipboardData.items.length; i++) {
@@ -49,10 +50,9 @@ const useQuillEvents = (quill, setValue, targetId, category = "community") => {
           }
         }
       }
-    });
+    };
 
-    // 드래그앤드롭 이벤트 처리
-    editorElement.addEventListener("drop", (e) => {
+    const handleDrop = (e) => {
       const dt = e.dataTransfer;
       if (dt && dt.files && dt.files.length) {
         for (let i = 0; i < dt.files.length; i++) {
@@ -63,15 +63,17 @@ const useQuillEvents = (quill, setValue, targetId, category = "community") => {
           }
         }
       }
-    });
-
-    return () => {
-      editorElement.removeEventListener("paste", () => {});
-      editorElement.removeEventListener("drop", () => {});
     };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetId, quill]);
+    editorElement.addEventListener("paste", handlePaste);
+    editorElement.addEventListener("drop", handleDrop);
+
+    return () => {
+      editorElement.removeEventListener("paste", handlePaste);
+      editorElement.removeEventListener("drop", handleDrop);
+      quill.off("text-change", handleTextChange);
+    };
+  }, [targetId, quill, setValue, category, createToast]);
 };
 
 export default useQuillEvents;

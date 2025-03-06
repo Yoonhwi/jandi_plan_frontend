@@ -61,7 +61,7 @@ const Editor = ({ defaultValue, onLoaded, tempPostId, category }) => {
       },
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tempPostId]);
+  }, [category, tempPostId]);
 
   const modules = useMemo(() => {
     return {

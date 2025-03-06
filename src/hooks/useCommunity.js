@@ -42,7 +42,11 @@ const useCommunity = () => {
           postApi({
             method: "POST",
             url,
-            data,
+            data: {
+              title: data.title,
+              tempPostId: data.tempCommunityId,
+              content: data.content,
+            },
           }),
         "게시글이 등록되었습니다.",
         "게시글 등록에 실패했습니다.",
@@ -58,11 +62,20 @@ const useCommunity = () => {
 
   const updateCommunity = useCallback(
     async (data) => {
-      const id = data.tempPostId;
+      const id = data.tempCommunityId;
       const url = buildPath(APIEndPoints.BOARD_DETAIL, { id });
 
       await handleApiCall(
-        () => updateApi({ method: "PATCH", url, data }),
+        () =>
+          updateApi({
+            method: "PATCH",
+            url,
+            data: {
+              title: data.title,
+              content: data.content,
+              tempPostId: data.tempCommunityId,
+            },
+          }),
         "게시글이 수정되었습니다.",
         "게시글 수정에 실패했습니다.",
         createToast,

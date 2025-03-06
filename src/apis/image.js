@@ -3,8 +3,8 @@ import axiosInstance from "./axiosInstance";
 
 export const uploadCommunityImage = async (file, targetId, category) => {
   const urlMap = {
-    notice: APIEndPoints.IMAGE_UPLOAD_NOTICE,
-    community: APIEndPoints.IMAGE_UPLOAD_COMMUNITY,
+    Notice: APIEndPoints.IMAGE_UPLOAD_NOTICE,
+    Community: APIEndPoints.IMAGE_UPLOAD_COMMUNITY,
   };
 
   const url = urlMap[category];

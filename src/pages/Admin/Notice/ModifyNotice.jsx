@@ -3,54 +3,64 @@ import styles from "./ModifyNotice.module.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { noticeModifySchema } from "./constants";
 import FormEditor from "@/pages/Board/FormEditor";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { Button } from "@/components";
-import { useQuillEvents } from "@/hooks";
+import { useQuillSetup } from "@/hooks";
+import { useModal } from "@/components/Modal/ModalContext";
 
 const ModifyNotice = ({ notice, callback }) => {
-  const [quill, setQuill] = useState(null);
-
   const formController = useForm({
     resolver: zodResolver(noticeModifySchema),
-    defaultValues: {
-      title: notice.title,
-      contents: notice.contents,
-    },
   });
 
+  const { closeModal } = useModal();
   const { setValue } = formController;
+  const { setQuill } = useQuillSetup(
+    formController,
+    "Notice",
+    notice.noticeId,
+    true
+  );
 
-  useQuillEvents(quill, setValue, notice.noticeId);
+  const parsedContent = JSON.parse(notice.content);
+
+  const onSubmit = useCallback(
+    async (data) => {
+      await callback(notice.noticeId, data);
+      closeModal();
+    },
+    [callback, closeModal, notice.noticeId]
+  );
 
   useEffect(() => {
-    const parsed = JSON.parse(notice.contents);
     setValue("title", notice.title);
-    setValue("contents", parsed);
-  }, [notice.contents, notice.title, setValue]);
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+    setValue("content", parsedContent);
+  }, [notice.title, parsedContent, setValue]);
 
   return (
     <div className={styles.container}>
-      <p>공지사항 수정</p>
-      <FormEditor
-        formController={formController}
-        onSubmit={onSubmit}
-        setQuill={setQuill}
-        tempPostId={notice.noticeId}
-        category="notice"
-      >
-        <Button
-          type="submit"
-          variant="solid"
-          size="sm"
-          className={styles.submit}
+      <p className={styles.title}>공지사항 수정</p>
+
+      <div className={styles.form_container}>
+        <FormEditor
+          formController={formController}
+          onSubmit={onSubmit}
+          setQuill={setQuill}
+          tempPostId={notice.noticeId}
+          defaultValue={parsedContent}
+          category="Notice"
         >
-          수정하기
-        </Button>
-      </FormEditor>
+          <Button
+            type="submit"
+            variant="solid"
+            style={{
+              marginLeft: "auto",
+            }}
+          >
+            수정하기
+          </Button>
+        </FormEditor>
+      </div>
     </div>
   );
 };
