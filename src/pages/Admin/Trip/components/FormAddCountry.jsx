@@ -3,8 +3,14 @@ import styles from "./FormAddCountry.module.css";
 import {Button,Input,Field} from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { APIEndPoints } from "@/constants";
+import { useToast } from "@/contexts";
+import { useAxios } from "@/hooks";
 
 const FormAddCountry = () =>{
+    const { fetchData, response } = useAxios();
+    const { createToast } = useToast();
+
     const formController = useForm({
         resolver: zodResolver(createCountrySchema),
       });
@@ -17,9 +23,25 @@ const FormAddCountry = () =>{
 
     const onSubmit = (data) => {
         console.log(data);
-        // addCountry(data);
-        formController.reset();
+        addCountry(data);
       };
+
+    const addCountry=(data)=>{
+        console.log(data); 
+        const formData = new FormData();
+        formData.append("continent", data.continent);
+        formData.append("country", data.country);
+        fetchData({
+            method: "POST",
+            url: APIEndPoints.CONTINENT_ADD,
+            data: formData,
+        }).then(()=>{
+            createToast({ type: "success", text: "등록에 성공하였습니다" });
+            formController.reset();
+        }).catch((err)=> {
+            createToast({ type: "error", text: err.data.message });
+        })
+    }
 
     return(
         <form className={styles.form_box} onSubmit={handleSubmit(onSubmit)}>

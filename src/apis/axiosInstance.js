@@ -16,6 +16,8 @@ const protectedEndpoints = new Set([
   `GET:${APIEndPoints.USER_ALL}`,
   `POST:${APIEndPoints.PROFILE_UPLOAD}`,
   `GET:${APIEndPoints.MANAGE_UTIL}`,
+  
+  `POST:${APIEndPoints.CONTINENT_ADD}`,
 
   `GET:${APIEndPoints.PREFER_DEST}`,
   `POST:${APIEndPoints.PREFER_DEST}`,

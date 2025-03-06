@@ -83,4 +83,6 @@ export const APIEndPoints = {
 
   USER_ALL: "/manage/user/all",
   MANAGE_UTIL: "/manage/util/all",
+  
+  CONTINENT_ADD: "/manage/trip/countries",
 };
