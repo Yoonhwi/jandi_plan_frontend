@@ -1,8 +1,10 @@
-import { Button } from "@/components";
+import { Button, Modal, ModalContent, ModalTrigger } from "@/components";
 import styles from "./City.module.css";
 import { useAxios } from "@/hooks";
 import { useEffect } from "react";
 import { APIEndPoints } from "@/constants";
+import AddDestModal from "./components/AddDestModal";
+
 
 const City = ({ set }) => {
   const { fetchData, response } = useAxios();
@@ -26,12 +28,26 @@ const City = ({ set }) => {
       <div className={styles.header}>
         <p className={styles.title}>여행지 관리</p>
         <div>
-          <Button variant="ghost" size="sm">
-            나라 추가
-          </Button>
-          <Button variant="ghost" size="sm">
-            도시 추가
-          </Button>
+          <Modal>
+            <ModalTrigger>
+            <Button variant="ghost" size="sm">
+              나라 추가
+            </Button>
+            </ModalTrigger>
+            <ModalContent>
+              <AddDestModal content="나라"/>
+            </ModalContent>
+          </Modal>
+          <Modal>
+            <ModalTrigger>
+            <Button variant="ghost" size="sm">
+              도시 추가
+            </Button>
+            </ModalTrigger>
+            <ModalContent>
+              <AddDestModal content="도시"/>
+            </ModalContent>
+          </Modal>
           <Button variant="ghost" size="sm" onClick={() => set(false)}>
             여행계획 관리
           </Button>
