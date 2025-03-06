@@ -33,7 +33,7 @@ const FormCountry = () =>{
         formData.append("country", data.country);
         fetchData({
             method: "POST",
-            url: APIEndPoints.CONTINENT_ADD,
+            url: APIEndPoints.COUNTRY_ADD,
             data: formData,
         }).then(()=>{
             createToast({ type: "success", text: "등록에 성공하였습니다" });
