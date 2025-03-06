@@ -57,7 +57,7 @@ const LoginPage = () => {
         console.log(res.data);
 
         if (Array.isArray(res.data) && res.data.length === 0) {
-          navigate(PageEndPoints.PREF_CONT, { replace: true });
+          navigate(PageEndPoints.PREF_CONT, { replace: true, state:{ mode: "create"}  });
         } else {
           const redirectPath = location.state?.from || PageEndPoints.HOME;
           navigate(redirectPath, { replace: true });

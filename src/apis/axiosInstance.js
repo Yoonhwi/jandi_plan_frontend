@@ -26,6 +26,7 @@ const protectedEndpoints = new Set([
 
   `GET:${APIEndPoints.PREFER_DEST}`,
   `POST:${APIEndPoints.PREFER_DEST}`,
+  `PATCH:${APIEndPoints.PREFER_DEST}`,
 
   `POST:${APIEndPoints.BOARD}`,
   `PATCH:${APIEndPoints.BOARD}`,
