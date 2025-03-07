@@ -6,13 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./AddNotice.module.css";
-import { noticeWriteSchema } from "./constants";
+import { noticeWriteScheme } from "./constants";
 
 const AddNotice = ({ callback }) => {
   const { closeModal } = useModal();
 
   const formController = useForm({
-    resolver: zodResolver(noticeWriteSchema),
+    resolver: zodResolver(noticeWriteScheme),
   });
 
   const { setQuill, tempId } = useQuillSetup(

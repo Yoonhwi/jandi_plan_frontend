@@ -1,7 +1,7 @@
 import { Button, Field, Input } from "@/components";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { modifyPlanSchema } from "../../constants";
+import { modifyPlanScheme } from "../../constants";
 import { usePlanDetail } from "../PlanDetailContext";
 import styles from "./ModifyPlan.module.css";
 import { useModal } from "@/components/Modal/ModalContext";
@@ -16,7 +16,7 @@ const ModifyPlan = ({ plan }) => {
     formState: { errors },
     handleSubmit,
   } = useForm({
-    resolver: zodResolver(modifyPlanSchema),
+    resolver: zodResolver(modifyPlanScheme),
     defaultValues: {
       title: plan.title,
       privatePlan: plan.privatePlan ? "yes" : "no",

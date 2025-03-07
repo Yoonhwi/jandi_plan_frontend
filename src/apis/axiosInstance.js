@@ -43,6 +43,7 @@ const protectedEndpoints = new Set([
   `POST:${APIEndPoints.COMMENTS_LIKE}`,
   `DELETE:${APIEndPoints.COMMENTS_LIKE}`,
 
+  `GET:${APIEndPoints.TRIP_ALL}`,
   `POST:${APIEndPoints.TRIP_CREATE}`,
   `GET:${APIEndPoints.TRIP_MY}`,
 
@@ -75,6 +76,9 @@ const protectedEndpoints = new Set([
   `POST:${APIEndPoints.NOTICE}`,
   `DELETE:${APIEndPoints.NOTICE_DETAIL}`,
   `PATCH:${APIEndPoints.NOTICE_DETAIL}`,
+
+  `PATCH:${APIEndPoints.BANNER_DETAIL}`,
+  `DELETE:${APIEndPoints.BANNER_DETAIL}`,
 ]);
 
 axiosInstance.interceptors.request.use((config) => {

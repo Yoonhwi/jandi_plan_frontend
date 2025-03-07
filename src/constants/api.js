@@ -48,7 +48,9 @@ export const APIEndPoints = {
   NOTICE: "/notice",
   NOTICE_DETAIL: "/notice/:id",
   NOTICEALL: "/notice/lists",
+
   BANNER: "/banner/lists",
+  BANNER_DETAIL: "/banner/lists/:id",
 
   BOARD: "/community/posts",
   BOARD_DETAIL: "/community/posts/:id",

@@ -25,6 +25,9 @@ const useAxios = () => {
     try {
       const res = await axiosInstance.request({
         ...params,
+        headers: {
+          ...params.headers,
+        },
       });
 
       setResponse((prevResponse) => {

@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { useAuth, useToast } from "@/contexts";
 import { useAxios } from "@/hooks";
 
-const schema = z.object({
+const scheme = z.object({
   id: z
     .string()
     .email({ message: "유효한 이메일을 입력하세요." })
@@ -31,7 +31,7 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(scheme),
   });
 
   const handleAdd = async (data) => {
@@ -53,7 +53,7 @@ const LoginPage = () => {
       fetchData({
         method: "GET",
         url: `${APIEndPoints.PREFER_DEST}`,
-      }).then((res)=>{
+      }).then((res) => {
         console.log(res.data);
 
         if (Array.isArray(res.data) && res.data.length === 0) {
@@ -62,7 +62,7 @@ const LoginPage = () => {
           const redirectPath = location.state?.from || PageEndPoints.HOME;
           navigate(redirectPath, { replace: true });
         }
-      })
+      });
 
       // const redirectPath = location.state?.from || PageEndPoints.HOME;
       // navigate(redirectPath, { replace: true });

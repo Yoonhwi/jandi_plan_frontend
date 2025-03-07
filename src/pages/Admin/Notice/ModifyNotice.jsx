@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import styles from "./ModifyNotice.module.css";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { noticeModifySchema } from "./constants";
+import { noticeModifyScheme } from "./constants";
 import FormEditor from "@/pages/Board/FormEditor";
 import { useCallback, useEffect } from "react";
 import { Button } from "@/components";
@@ -10,7 +10,7 @@ import { useModal } from "@/components/Modal/ModalContext";
 
 const ModifyNotice = ({ notice, callback }) => {
   const formController = useForm({
-    resolver: zodResolver(noticeModifySchema),
+    resolver: zodResolver(noticeModifyScheme),
   });
 
   const { closeModal } = useModal();

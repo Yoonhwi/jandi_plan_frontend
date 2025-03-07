@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const noticeWriteSchema = z.object({
+export const noticeWriteScheme = z.object({
   title: z.string().nonempty(),
   content: z.preprocess((content) => {
     if (typeof content === "object" && content !== null) {
@@ -16,7 +16,7 @@ export const noticeWriteSchema = z.object({
   }),
 });
 
-export const noticeModifySchema = z.object({
+export const noticeModifyScheme = z.object({
   title: z.string().nonempty(),
   content: z.preprocess((content) => {
     if (typeof content === "object" && content !== null) {
