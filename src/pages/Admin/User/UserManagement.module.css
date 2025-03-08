@@ -4,5 +4,5 @@
   padding: 1.5rem;
   box-sizing: border-box;
 
-  height: 35rem;
+  min-height: 35rem;
 }

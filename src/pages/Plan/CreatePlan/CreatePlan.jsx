@@ -3,7 +3,7 @@ import { BaseLayout } from "@/layouts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { createPlanSchema } from "../constants";
+import { createPlanScheme } from "../constants";
 import styles from "./CreatePlan.module.css";
 import FormCreatePlan from "./FormCreatePlan";
 
@@ -11,7 +11,7 @@ const CreatePlanPage = () => {
   const [selectedCity, setSelectedCity] = useState(null);
 
   const planUseForm = useForm({
-    resolver: zodResolver(createPlanSchema),
+    resolver: zodResolver(createPlanScheme),
   });
 
   const { handleSubmit, setValue } = planUseForm;

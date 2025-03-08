@@ -15,7 +15,7 @@ class CustomUploader extends Uploader {
 Quill.register("modules/uploader", CustomUploader, true);
 Quill.register("modules/blotFormmater", BlotFormatter);
 
-const Editor = ({ defaultValue, onLoaded, tempPostId }) => {
+const Editor = ({ defaultValue, onLoaded, tempPostId, category }) => {
   const tempPostIdRef = useRef(tempPostId);
   tempPostIdRef.current = tempPostId;
 
@@ -43,7 +43,11 @@ const Editor = ({ defaultValue, onLoaded, tempPostId }) => {
             if (!file) return;
 
             const range = quill.getSelection();
-            const res = await uploadCommunityImage(file, tempPostIdRef.current);
+            const res = await uploadCommunityImage(
+              file,
+              tempPostIdRef.current,
+              category
+            );
 
             quill.insertEmbed(
               range?.index ?? 0,
@@ -57,7 +61,7 @@ const Editor = ({ defaultValue, onLoaded, tempPostId }) => {
       },
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tempPostId]);
+  }, [category, tempPostId]);
 
   const modules = useMemo(() => {
     return {

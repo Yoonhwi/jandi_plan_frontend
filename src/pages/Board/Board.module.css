@@ -17,6 +17,10 @@
 .header_title {
   font-size: var(--text-xl);
   font-weight: var(--font-weight-bold);
+
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .content {
@@ -39,6 +43,21 @@
   text-align: center;
 }
 
+.header_sub {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.search_input {
+  width: 15rem;
+  position: relative;
+}
+
+.icon_search {
+  color: var(--color-black);
+}
+
 .index,
 .writer,
 .date,
@@ -53,7 +72,7 @@
   font-size: var(--text-sm);
 }
 
-.center {
+.pagination {
   margin-top: 1.5rem;
   display: flex;
   justify-content: center;

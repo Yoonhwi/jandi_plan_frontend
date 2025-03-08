@@ -1,10 +1,11 @@
 import { useCallback, useEffect } from "react";
 import { useAxios } from "@/hooks";
-import { buildPath } from "@/utils";
+import { buildPath, handleApiCall } from "@/utils";
 import { APIEndPoints, PageEndPoints } from "@/constants";
 import { useToast } from "@/contexts";
 import { useNavigate } from "react-router-dom";
 
+// id에 해당하는 여행의 상세 정보를 다룹니다.
 const usePlan = (id) => {
   const navigate = useNavigate();
   const { createToast } = useToast();
@@ -14,66 +15,57 @@ const usePlan = (id) => {
   const { fetchData: updateApi } = useAxios();
   const { fetchData: deleteApi } = useAxios();
 
-  // 여행계획 데이터를 가져오는 함수
   const fetchTripDetail = useCallback(async () => {
     const url = buildPath(APIEndPoints.TRIP_DETAIL, { id });
     await getApi({ url, method: "GET" });
   }, [id, getApi]);
 
-  // 여행계획 데이터를 추가하는 함수
   const addPlan = useCallback(
     async (data) => {
       const url = buildPath(APIEndPoints.TRIP_CREATE);
-      await postApi({ url, method: "POST", data })
-        .then((res) => {
-          createToast({ text: "계획이 추가되었습니다.", type: "success" });
 
+      await handleApiCall(
+        () => postApi({ url, method: "POST", data }),
+        "계획이 추가되었습니다.",
+        "계획 등록에 실패했습니다.",
+        createToast,
+        async (res) => {
           const path = buildPath(PageEndPoints.PLAN_DETAIL, {
             id: res.data.tripId,
           });
-
           navigate(path);
-        })
-        .catch(() =>
-          createToast({ text: "게획등록에 실패했습니다.", type: "error" })
-        );
-
-      await fetchTripDetail();
+        }
+      );
     },
-    [createToast, fetchTripDetail, navigate, postApi]
+    [createToast, navigate, postApi]
   );
 
-  // 여행계획 데이터를 수정하는 함수
   const updatePlan = useCallback(
     async (data) => {
       const url = buildPath(APIEndPoints.TRIP_MY_DETAIL, { id });
-      await updateApi({ url, method: "PATCH", data })
-        .then(() =>
-          createToast({ text: "계획이 수정되었습니다.", type: "success" })
-        )
-        .catch(() =>
-          createToast({ text: "계획 수정에 실패했습니다.", type: "error" })
-        );
 
-      await fetchTripDetail();
+      await handleApiCall(
+        () => updateApi({ url, method: "PATCH", data }),
+        "계획이 수정되었습니다.",
+        "계획 수정에 실패했습니다.",
+        createToast,
+        fetchTripDetail
+      );
     },
     [createToast, fetchTripDetail, id, updateApi]
   );
 
-  // 여행계획 데이터를 삭제하는 함수
   const deletePlan = useCallback(async () => {
     const url = buildPath(APIEndPoints.TRIP_MY_DETAIL, { id });
-    await deleteApi({ url, method: "DELETE" })
-      .then(() => {
-        createToast({ text: "계획이 삭제되었습니다.", type: "success" });
-        navigate(PageEndPoints.PLAN_LIST);
-      })
-      .catch(() =>
-        createToast({ text: "계획 삭제에 실패했습니다.", type: "error" })
-      );
 
-    await fetchTripDetail();
-  }, [createToast, deleteApi, fetchTripDetail, id, navigate]);
+    await handleApiCall(
+      () => deleteApi({ url, method: "DELETE" }),
+      "계획이 삭제되었습니다.",
+      "계획 삭제에 실패했습니다.",
+      createToast,
+      () => navigate(PageEndPoints.PLAN_LIST)
+    );
+  }, [createToast, deleteApi, id, navigate]);
 
   useEffect(() => {
     fetchTripDetail();

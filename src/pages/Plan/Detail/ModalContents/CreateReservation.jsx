@@ -3,11 +3,11 @@ import styles from "./CreateReservation.module.css";
 import { useForm } from "react-hook-form";
 import { usePlanDetail } from "../PlanDetailContext";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createReservationSchema } from "../../constants";
+import { createReservationScheme } from "../../constants";
 
 const CreateReservation = () => {
   const formController = useForm({
-    resolver: zodResolver(createReservationSchema),
+    resolver: zodResolver(createReservationScheme),
   });
 
   const {

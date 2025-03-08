@@ -8,6 +8,7 @@ const FormEditor = ({
   children,
   setQuill,
   defaultValue,
+  category,
 }) => {
   const {
     register,
@@ -33,6 +34,7 @@ const FormEditor = ({
           onLoaded={setQuill}
           tempPostId={tempPostId}
           defaultValue={defaultValue}
+          category={category}
         />
       </div>
 

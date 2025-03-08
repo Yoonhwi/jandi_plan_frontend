@@ -4,14 +4,14 @@ import { useForm } from "react-hook-form";
 import ScheduleDetail from "./ScheduleDetail";
 import SchedulePlace from "./SchedulePlace";
 import { usePlanDetail } from "../PlanDetailContext";
-import { createScheduleSchema } from "../../constants";
+import { createScheduleScheme } from "../../constants";
 
 const CreateSchedule = () => {
   const [isAddressStep, setIsAddressStep] = useState(false);
   const { addItinerary } = usePlanDetail();
 
   const formController = useForm({
-    resolver: zodResolver(createScheduleSchema),
+    resolver: zodResolver(createScheduleScheme),
   });
 
   const { handleSubmit, setValue } = formController;

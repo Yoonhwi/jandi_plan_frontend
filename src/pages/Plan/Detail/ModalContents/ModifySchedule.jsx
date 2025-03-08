@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import ScheduleDetail from "./ScheduleDetail";
 import SchedulePlace from "./SchedulePlace";
 import { usePlanDetail } from "../PlanDetailContext";
-import { createScheduleSchema } from "../../constants";
+import { createScheduleScheme } from "../../constants";
 import { useModal } from "@/components/Modal/ModalContext";
 
 const ModifySchedule = ({ item }) => {
@@ -13,7 +13,7 @@ const ModifySchedule = ({ item }) => {
   const { closeModal } = useModal();
 
   const formController = useForm({
-    resolver: zodResolver(createScheduleSchema),
+    resolver: zodResolver(createScheduleScheme),
     defaultValues: {
       placeName: item.place.name,
       placeId: item.place.placeId,

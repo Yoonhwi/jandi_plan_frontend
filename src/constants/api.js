@@ -45,12 +45,17 @@ export const APIEndPoints = {
   USER_CHECK_EMAIL: "/users/register/checkEmail",
   USER_CHECK_NICKNAME: "/users/register/checkName",
 
+  NOTICE: "/notice",
+  NOTICE_DETAIL: "/notice/:id",
   NOTICEALL: "/notice/lists",
+
   BANNER: "/banner/lists",
+  BANNER_DETAIL: "/banner/lists/:id",
 
   BOARD: "/community/posts",
   BOARD_DETAIL: "/community/posts/:id",
   BOARD_LIKE: "community/posts/likes/:id",
+  BOARD_SEARCH: "/community/search",
   COMMUNITY_COMMENTS: "/community/comments/:id",
   COMMENTS_LIKE: "/community/comments/likes/:id",
   COMMENTS_REPLIES: "/community/replies/:id",
@@ -77,6 +82,7 @@ export const APIEndPoints = {
   DESTINATION_BEST: "/trip/rank",
 
   IMAGE_UPLOAD_COMMUNITY: "/images/upload/community",
+  IMAGE_UPLOAD_NOTICE: "/images/upload/notice",
   IMAGE_UPLOAD: "/images/profiles/upload",
 
   TEMP: "/temp",

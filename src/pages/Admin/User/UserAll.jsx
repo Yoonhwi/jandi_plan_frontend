@@ -50,7 +50,7 @@ const UserAll = () => {
                 <tr key={user.userId}>
                   <td>{user.userId}</td>
                   <td>{user.userName}</td>
-                  <td>{user.email}</td>
+                  <td className={styles.user_email}>{user.email}</td>
                   <td>{date}</td>
                   <td>{user.reported ? "true" : "false"}</td>
                   <td className={styles.actions}>

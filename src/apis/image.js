@@ -1,13 +1,20 @@
 import { APIEndPoints } from "@/constants";
 import axiosInstance from "./axiosInstance";
 
-export const uploadCommunityImage = async (file, targetId) => {
+export const uploadCommunityImage = async (file, targetId, category) => {
+  const urlMap = {
+    Notice: APIEndPoints.IMAGE_UPLOAD_NOTICE,
+    Community: APIEndPoints.IMAGE_UPLOAD_COMMUNITY,
+  };
+
+  const url = urlMap[category];
+
   const formData = new FormData();
   formData.append("file", file);
   formData.append("targetId", targetId);
 
   return await axiosInstance({
-    url: APIEndPoints.IMAGE_UPLOAD_COMMUNITY,
+    url,
     method: "POST",
     data: formData,
   })

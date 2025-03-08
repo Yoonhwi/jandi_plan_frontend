@@ -1,31 +1,29 @@
 import { Button, Loading } from "@/components";
 import { APIEndPoints } from "@/constants";
 import { useAuth } from "@/contexts";
-import { useAxios, useCommunity, useQuillEvents } from "@/hooks";
+import { useAxios, useCommunity, useQuillSetup } from "@/hooks";
 import { BaseLayout } from "@/layouts";
 import { buildPath } from "@/utils";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { boardWriteScheme } from "../constants";
 import FormEditor from "../FormEditor";
 
 const BoardModify = () => {
-  const [defaultContent, setDefaultContent] = useState(null);
-  const [quill, setQuill] = useState(null);
   const { id } = useParams();
   const { fetchData, response, loading } = useAxios();
   const { user } = useAuth();
+  const { updateCommunity } = useCommunity();
 
   const formController = useForm({
     resolver: zodResolver(boardWriteScheme),
   });
 
   const { setValue } = formController;
-  const { updateCommunity } = useCommunity();
 
-  useQuillEvents(quill, setValue, id);
+  const { setQuill } = useQuillSetup(formController, "Community", id, true);
 
   useEffect(() => {
     fetchData({
@@ -36,15 +34,15 @@ const BoardModify = () => {
 
   useEffect(() => {
     if (!response) return;
+
     const parsed = JSON.parse(response.items.content);
     setValue("title", response.items.title);
-    setValue("tempPostId", Number(id));
+    setValue("tempCommunityId", Number(id));
     setValue("content", parsed);
-    setDefaultContent(parsed);
   }, [id, response, setValue]);
 
-  if (loading || !defaultContent) return <Loading />;
-  if (!response || !user || response.items.user.userId !== user.userId)
+  if (loading || !response) return <Loading />;
+  if (!user || response.items.user.userId !== user.userId)
     return <p>권한이 없습니다.</p>;
 
   return (
@@ -54,7 +52,8 @@ const BoardModify = () => {
         setQuill={setQuill}
         tempPostId={id}
         onSubmit={updateCommunity}
-        defaultValue={defaultContent}
+        defaultValue={response ? JSON.parse(response.items.content) : null}
+        category="Commnunity"
       >
         <Button
           type="submit"
