@@ -27,11 +27,40 @@
   gap: 1.5rem;
 }
 
+.comment_user_name{
+  font-size: var(--text-sm);
+}
+
 .comment_date,
 .recomment,
+.likeCount,
 .report {
   font-size: var(--text-sm);
   color: var(--color-gray-400);
+}
+
+.comment_text{
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+}
+
+
+.report {
+  cursor: pointer;
+}
+
+.form_box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-sizing: border-box;
+  margin-left: 4rem;
+}
+
+.current_user_img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
 }
 
 .recomment_container {

@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import styles from "./AuthLayout.module.css";
 import JoingPage from "./Join/Join";
 import LoginPage from "./Login/Login";
+import FindPWPage from "./Find/Find";
 import { PageEndPoints } from "@/constants";
 
 const AuthLayout = () => {
@@ -29,6 +30,7 @@ const AuthLayout = () => {
             <Routes location={location}>
               <Route path="login" element={<LoginPage />} />
               <Route path="join" element={<JoingPage />} />
+              <Route path="findPW" element={<FindPWPage />} />
             </Routes>
           </motion.div>
         </AnimatePresence>

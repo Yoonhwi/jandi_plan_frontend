@@ -28,8 +28,28 @@
   font-size: var(--text-lg);
 }
 
-.des_item_row {
+.rservation_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reservation_info {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.icon_wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.icon_box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
 }

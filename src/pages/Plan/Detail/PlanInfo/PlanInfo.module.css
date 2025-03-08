@@ -4,9 +4,19 @@
   gap: 1rem;
 }
 
+.header_box {
+  display: flex;
+  justify-content: space-between;
+}
+
 .title {
   font-weight: var(--font-weight-bold);
   font-size: var(--text-2xl);
+}
+
+.header_menu {
+  display: flex;
+  gap: 1rem;
 }
 
 .info {

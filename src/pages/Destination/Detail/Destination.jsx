@@ -2,27 +2,55 @@ import { BaseLayout } from "@/layouts";
 import styles from "./Destination.module.css";
 import { planItems,dummy } from "./constants";
 import Weather from "./components/Weather";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DestinationMap from "./components/DestinationMap";
-import {Slider} from "@/components";
+import {Slider, Loading} from "@/components";
 import { IoIosStar } from "react-icons/io";
+import { useLocation } from "react-router-dom";
+import { useAxios } from "@/hooks";
+import { APIEndPoints } from "@/constants";
 
 const Destination = () => {
-    const [selectedPlace, setSelectedPlace] = useState("Osaka");
+    const location = useLocation();
+    const cityName = location.state?.cityName;
+    const { loading, fetchData, response } = useAxios();
+    const [item,setItem]= useState();
+    const [selectedPlace, setSelectedPlace] = useState("오사카");
+
+    useEffect(()=>{
+        fetchData({
+            method:"GET",
+            url: `${APIEndPoints.DESTINATION}`,
+            params: {
+                category:"CITY",
+                filter: cityName,
+            }
+        }).then((res) => {
+            console.log(res);
+            const items = res.data[0];
+            setItem(items);
+        }).catch((err) => {
+            console.log(err);
+        })
+    },[fetchData])
 
     return(
         <BaseLayout>
+        {loading ? (
+        <Loading />
+      ) : (
+        item &&(
             <div className={styles.container}>
                 <div className={styles.title_box}>
-                    <p className={styles.main_title}>OSAKA</p>
+                    <p className={styles.main_title}>{item.name}</p>
                 </div>
                 <div className={styles.info_container}>
                     <div className={styles.map_container}>
-                        <DestinationMap />
+                        <DestinationMap latitude={item.latitude} longitude={item.longitude}/>
                     </div>
                     <div className={styles.info_box}>
                         <div className={styles.weather_box}>
-                            <Weather city={selectedPlace}/>
+                            <Weather latitude={item.latitude} longitude={item.longitude}/>
                         </div>
                         <div className={styles.plane_box}>
                             <p className={styles.item_title}>비행기 값 알아보기</p>
@@ -79,6 +107,8 @@ const Destination = () => {
                     </Slider>
                 </div>
             </div>
+            )
+        )}
         </BaseLayout>
     );
 };

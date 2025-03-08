@@ -1,17 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./BoardItem.module.css";
 import { PageEndPoints } from "@/constants";
-import { buildPath,formatDay } from "@/utils";
+import { buildPath, formatDay } from "@/utils";
 import { useCallback } from "react";
 
 const BoardItem = ({ item }) => {
   const navigate = useNavigate();
-  const commentCount = Number(item.comment_count);
 
   const handleClick = useCallback(() => {
     const path = buildPath(PageEndPoints.BOARD_DETAIL, { id: item.postId });
     navigate(path);
-  }, [item.id, navigate]);
+  }, [item.postId, navigate]);
 
   return (
     <li key={item.id} className={styles.container} onClick={handleClick}>

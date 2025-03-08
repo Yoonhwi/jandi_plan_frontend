@@ -24,13 +24,18 @@ const useAxios = () => {
 
     try {
       const res = await axiosInstance.request({
+        ...params,
         headers: {
           ...params.headers,
         },
-        ...params,
       });
 
-      setResponse(res.data);
+      setResponse((prevResponse) => {
+        if (JSON.stringify(prevResponse) !== JSON.stringify(res.data)) {
+          return res.data;
+        }
+        return prevResponse;
+      });
       setIsSuccess(true);
       return res;
     } catch (err) {

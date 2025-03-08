@@ -12,14 +12,15 @@ import {
 } from "@/components";
 import { RiSearchLine } from "react-icons/ri";
 import { LuMenu } from "react-icons/lu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { PageEndPoints } from "@/constants";
 import { useAuth } from "@/contexts";
 
 const Header = () => {
   const { toggleDarkMode, isDarkMode } = useDarkmodeContext();
   const navigate = useNavigate();
-  const { isLoggedIn, signOut } = useAuth();
+  const location = useLocation();
+  const { user, signOut } = useAuth();
 
   const tooltips = [
     {
@@ -28,7 +29,7 @@ const Header = () => {
         <LuUserRound size={20} onClick={() => navigate(PageEndPoints.MYPAGE)} />
       ),
     },
-    isLoggedIn
+    user
       ? {
           text: "로그아웃",
           icon: <LuLogOut size={20} onClick={signOut} />,
@@ -36,13 +37,17 @@ const Header = () => {
       : {
           text: "로그인",
           icon: (
-            <LuLogIn size={20} onClick={() => navigate(PageEndPoints.LOGIN)} />
+            <LuLogIn
+              size={20}
+              onClick={() =>
+                navigate(PageEndPoints.LOGIN, {
+                  state: { from: location.pathname },
+                })
+              }
+            />
           ),
         },
-    // {
-    //   text: "로그인",
-    //   icon: <LuLogIn size={20} onClick={() => navigate(PageEndPoints.LOGIN)} />,
-    // },
+
     {
       text: isDarkMode ? "밝게" : "어둡게",
       icon: <LuMoonStar size={20} onClick={toggleDarkMode} />,
@@ -59,6 +64,10 @@ const Header = () => {
   ];
 
   const menus = [
+    {
+      text: "여행지",
+      onClick: () => navigate(PageEndPoints.DESTINATION_LIST),
+    },
     {
       text: "여행 계획",
       onClick: () => navigate(PageEndPoints.PLAN_LIST),

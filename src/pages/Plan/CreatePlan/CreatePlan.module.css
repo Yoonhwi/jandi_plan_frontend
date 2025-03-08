@@ -35,7 +35,8 @@
 
 .plan_container {
   box-sizing: border-box;
-  border: 1px solid var(--color-text-dynamic);
+  border: 1px solid var(--color-gray-200);
+  box-shadow: var(--shadow-lg);
   border-radius: var(--radius-xl);
   width: 50%;
   background-color: var(--color-bg-primary);
@@ -97,22 +98,6 @@
   font-size: var(--text-2xl);
 }
 
-.input {
-  width: 52%;
-  background-color: var(--color-whitepure);
-  border: 1px solid var(--color-gray-300);
-  padding: 0.25rem 0.25rem;
-  border-radius: var(--radius-input);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.modal_container {
-  display: flex;
-  justify-content: center;
-}
-
 .button_container {
   flex: 1;
   display: flex;
@@ -128,4 +113,21 @@
 .error {
   color: var(--color-red-600);
   font-size: var(--text-xs);
+}
+
+.private_box {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.radio_box {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.radio_label {
+  position: relative;
+  top: 2px;
 }

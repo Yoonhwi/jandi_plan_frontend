@@ -55,7 +55,7 @@ const JoinPage = () => {
       const { passwordConfirm, nickname, ...rest } = data;
 
       await fetchResister({
-        url: APIEndPoints.USER_RESISTER,
+        url: APIEndPoints.RESISTER,
         method: "POST",
         data: {
           ...rest,

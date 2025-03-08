@@ -23,6 +23,7 @@ const Notice = () => {
       ) : (
         <div className={styles.container}>
           <p className={styles.title}>공지사항</p>
+
           <div className={styles.content_container}>
             {response?.items.map((item) => {
               return <NoticeItem key={item.noticeId} item={item} />;

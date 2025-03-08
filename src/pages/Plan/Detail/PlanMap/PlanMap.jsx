@@ -16,6 +16,9 @@ const PlanMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [infoWindowShown, setInfoWindowShown] = useState(false);
 
+  const { itineraries, focusDay, flattendItinerary, tripDetail } =
+    usePlanDetail();
+
   const onMouseEnter = useCallback((id) => {
     setHoverId(id);
   }, []);
@@ -24,91 +27,95 @@ const PlanMap = () => {
     setHoverId(null);
   }, []);
 
-  const onMarkerClick = useCallback(
-    (schedule, marker) => {
-      setSelectedSchedule(schedule);
-
-      if (marker) {
-        setSelectedMarker(marker);
-      }
-
-      if (schedule.id !== selectedSchedule?.id) {
-        setInfoWindowShown(true);
-      } else {
-        setInfoWindowShown((isShown) => !isShown);
-      }
-    },
-    [selectedSchedule]
-  );
-
   const closeInfoWindow = useCallback(() => {
     setSelectedSchedule(null);
     setSelectedMarker(null);
     setInfoWindowShown(false);
   }, []);
 
+  const onMarkerClick = useCallback(
+    (schedule, marker) => {
+      if (schedule.itineraryId === selectedSchedule?.itineraryId) {
+        closeInfoWindow();
+        return;
+      }
+
+      if (
+        selectedMarker !== marker ||
+        selectedSchedule?.itineraryId !== schedule.itineraryId
+      ) {
+        setSelectedSchedule(schedule);
+        setSelectedMarker(marker);
+        setInfoWindowShown(true);
+      }
+    },
+    [closeInfoWindow, selectedMarker, selectedSchedule?.itineraryId]
+  );
+
   const map = useMap("main-map");
 
-  const { plan, focusDay } = usePlanDetail();
+  const focusSchedule = flattendItinerary.find((v) => v.date === focusDay);
 
-  const allLocation = plan.data.map((day) => day.contentData).flat();
-
-  const focusSchedule = plan.data.find((v) => v.date === focusDay);
   const defaultPosition = useMemo(() => {
-    return { lat: plan.latitude, lng: plan.longitude };
-  }, [plan.latitude, plan.longitude]);
-
-  // 선택된 날짜의 첫번째 스케쥴을 Map의 중심으로 설정합니다.
+    return {
+      lat: tripDetail?.latitude,
+      lng: tripDetail?.longitude,
+    };
+  }, [tripDetail?.latitude, tripDetail?.longitude]);
 
   const renderSchedule = useMemo(() => {
-    if (!focusDay) return allLocation;
+    if (!focusDay) return itineraries ?? [];
+    const find = flattendItinerary.find((v) => v.date === focusDay);
 
-    return allLocation.filter((v) => v.date === focusDay);
-  }, [allLocation, focusDay]);
+    return find.data ?? [];
+  }, [flattendItinerary, focusDay, itineraries]);
 
   const flightPlanCoordinates = renderSchedule.map((v) => {
     const { place } = v;
-    return { lat: place.lat, lng: place.lng };
+    return { lat: place.latitude, lng: place.longitude };
   });
 
   useEffect(() => {
-    if (!map) return;
+    if (!map || !tripDetail) return;
 
-    if (focusSchedule?.contentData.length > 0) {
-      const firstContent = focusSchedule.contentData[0];
+    if (focusSchedule?.data?.length > 0) {
+      const firstContent = focusSchedule.data[0];
+
       map.panTo({
-        lat: firstContent.place.lat,
-        lng: firstContent.place.lng,
+        lat: firstContent.place.latitude,
+        lng: firstContent.place.longitude,
       });
     } else {
       map.panTo(defaultPosition);
     }
-  }, [defaultPosition, focusSchedule, map]);
+  }, [defaultPosition, focusSchedule, map, tripDetail]);
 
   return (
     <div className={styles.map_container}>
       <Map
         style={{ width: "100%", height: "100%" }}
         defaultCenter={defaultPosition}
-        defaultZoom={12}
+        defaultZoom={9}
         gestureHandling={"greedy"}
         disableDefaultUI={true}
-        id={"main-map"}
+        id="main-map"
         mapId="main-map"
         onClick={closeInfoWindow}
       >
         {renderSchedule.map((schedule) => {
           return (
             <CustomMarker
-              key={schedule.id}
+              key={schedule.itineraryId}
               schedule={schedule}
               selectedSchedule={selectedSchedule}
               onMarkerClick={(marker) => onMarkerClick(schedule, marker)}
-              onMouseEnter={() => onMouseEnter(schedule.id)}
+              onMouseEnter={() => onMouseEnter(schedule.itineraryId)}
               onMouseLeave={onMouseLeave}
               style={{
                 transform: `scale(${
-                  [hoverId, selectedSchedule?.id].includes(schedule.id)
+                  [hoverId, selectedSchedule?.itineraryId].includes(
+                    schedule.itineraryId
+                  )
                     ? 1.3
                     : 1
                 })`,
@@ -119,8 +126,10 @@ const PlanMap = () => {
         })}
 
         <Polyline path={flightPlanCoordinates} />
-        {infoWindowShown && selectedMarker && (
+
+        {infoWindowShown && selectedMarker && selectedSchedule && (
           <CustomInfoWindow
+            key={selectedSchedule?.itineraryId}
             selectedSchedule={selectedSchedule}
             selectedMarker={selectedMarker}
             onClose={closeInfoWindow}

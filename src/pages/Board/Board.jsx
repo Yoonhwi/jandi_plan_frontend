@@ -1,66 +1,103 @@
+import { Button, Input, Loading, Pagination } from "@/components";
+import { PageEndPoints } from "@/constants";
+import { useCommunity } from "@/hooks";
+import { usePagination } from "@/hooks";
 import { BaseLayout } from "@/layouts";
+import { useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styles from "./Board.module.css";
-import { Button,Loading } from "@/components";
 import BoardItem from "./BoardItem";
-import { useNavigate, useSearchParams  } from "react-router-dom";
-import { useAxios } from "@/hooks";
-import { PageEndPoints, APIEndPoints } from "@/constants";
-import { useState, useEffect } from "react";
-
+import { FiSearch } from "react-icons/fi";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { searchBoardScheme } from "./constants";
 
 const BoardPage = () => {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const pageFromParams = parseInt(searchParams.get("page")) || 1;
-  const [page, setPage] = useState(pageFromParams - 1);
-  const [totalPage, setTotalPage] = useState(0);
-  const { loading, fetchData, response } = useAxios();
+  const keyword = searchParams.get("keyword") || "";
 
-    useEffect(()=> {
-      fetchData({
-        method: "GET",
-        url: `${APIEndPoints.BOARD}`,
-        params: { page },
-      });
-    },[fetchData,page]);
+  const navigate = useNavigate();
+  const { currentPage, totalPage, setTotalPage, handlePageChange } =
+    usePagination();
 
-    useEffect(() => {
-      if (response?.pageInfo.totalPages) {
-        setTotalPage(response.pageInfo.totalPages);
-      }
-    }, [response]);
+  const { communities, fetchCommunities, getLoading } = useCommunity();
 
-    const handlePrevPage = () => {
-      if (page > 0) {
-        setPage((prev) => prev - 1);
-        setSearchParams({ page: page });
-      };
-    };
-  
-    const handleNextPage = () => {
-      if(page < totalPage - 1) setPage((prev) => prev + 1);
-      setSearchParams({ page: page + 2 });
-    };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(searchBoardScheme),
+  });
 
-    const handlePageChange = (num) => {
-      setPage(num);
-      setSearchParams({ page: num + 1 });
-    };
+  const onSubmit = (data) => {
+    const searchKeyword = data.keyword;
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", "1");
+    newSearchParams.set("keyword", searchKeyword);
+    setSearchParams(newSearchParams);
+  };
+
+  useEffect(() => {
+    fetchCommunities(
+      { page: currentPage - 1, keyword, category: "BOTH" },
+      setTotalPage
+    );
+  }, [currentPage, fetchCommunities, keyword, setTotalPage]);
 
   return (
     <BaseLayout>
-    {loading ? (
-        <Loading />
-      ) : (
+      {getLoading && <Loading />}
       <div className={styles.container}>
         <div className={styles.header}>
-          <p className={styles.header_title}>잡담부터 정보까지 !</p>
-          <Button
-            variant="ghost"
-            onClick={() => navigate(PageEndPoints.BOARD_WRITE)}
-          >
-            게시글 작성하기
-          </Button>
+          <div className={styles.header_title}>
+            <p>잡담부터 정보까지 !</p>
+            <Button
+              variant="solid"
+              onClick={() => navigate(PageEndPoints.BOARD_WRITE)}
+              size="sm"
+            >
+              게시글 작성하기
+            </Button>
+          </div>
+
+          <div className={styles.flex_column}>
+            <form
+              className={styles.search_input}
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <Input
+                size="md"
+                placeholder="Search ..."
+                style={{
+                  width: "100%",
+                  borderRadius: "28px",
+                  boxSizing: "border-box",
+                  padding: "0.7rem 3rem 0.7rem 1.5rem",
+                }}
+                register={register}
+                name="keyword"
+              />
+
+              <Button
+                variant="none"
+                type="submit"
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  right: 0,
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                }}
+              >
+                <FiSearch size={24} className={styles.icon_search} />
+              </Button>
+            </form>
+            {errors.keyword && (
+              <p className={styles.error_message}>{errors.keyword.message}</p>
+            )}
+          </div>
         </div>
 
         <div className={styles.content}>
@@ -73,49 +110,20 @@ const BoardPage = () => {
           </div>
 
           <ul className={styles.content_list}>
-            {response?.items.map((item) => {
+            {communities?.items.map((item) => {
               return <BoardItem item={item} key={item.postId} />;
             })}
           </ul>
         </div>
 
-        {/** UI확인 용 임시 페이지네이션 */}
-        <div className={styles.footer}>
-          <Button variant="ghost" onClick={handlePrevPage} disabled={page === 0}>이전</Button>
-          <Button variant={page === 0 ? "solid" : "ghost"} onClick={() => handlePageChange(0)} disabled={page === 0}>
-            1
-          </Button>
-          {page > 2 && <span>...</span>}
-          {page > 1 && (
-            <Button variant={page === page - 1 ? "solid" : "ghost"} onClick={() => handlePageChange(page - 1)}>
-              {page}
-            </Button>
-          )}
-          {page !== 0 && page !== totalPage - 1 && (
-            <Button variant="solid" disabled>
-              {page+1}
-            </Button>
-          )}
-          {page < totalPage - 2 && (
-            <Button variant={page === page - 1 ? "solid" : "ghost"} onClick={() => handlePageChange(page + 1)}>
-              {page + 2}
-            </Button>
-          )}
-          {page < totalPage - 3 && <span>...</span>}
-
-          {totalPage > 1 && (
-            <Button
-              variant={page === totalPage - 1 ? "solid" : "ghost"}
-              onClick={() => handlePageChange(totalPage-1)}
-              disabled={page === totalPage-1}
-            >
-              {totalPage}
-            </Button>
-          )}
-          <Button variant="ghost" onClick={handleNextPage} disabled={page === totalPage - 1}>다음</Button>
+        <div className={styles.pagination}>
+          <Pagination
+            callback={handlePageChange}
+            currentPage={currentPage}
+            totalPage={totalPage}
+          />
         </div>
       </div>
-      )}
     </BaseLayout>
   );
 };

@@ -1,0 +1,75 @@
+.container {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+
+  box-shadow: var(--shadow-md);
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.img_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+}
+
+.content_container {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.plan_container {
+  flex: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.destination {
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  width: 10rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.city {
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--text-2xl);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.country {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-sm);
+  color: var(--color-gray-600);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
