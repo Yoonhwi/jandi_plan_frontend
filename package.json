@@ -8,10 +8,11 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "postinstall": "npm install rollup @rollup/plugin-node-resolve @rollup/plugin-commonjs"
+    "postinstall": "npm install rollup @rollup/plugin-node-resolve @rollup/plugin-commonjs && npm install esbuild @esbuild/win32-x64"
   },
   "dependencies": {
     "@enzedonline/quill-blot-formatter2": "^2.3.0",
+    "@esbuild/win32-x64": "^0.25.0",
     "@hookform/resolvers": "^4.0.0",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.0",
@@ -19,6 +20,7 @@
     "@vis.gl/react-google-maps": "^1.5.1",
     "axios": "^1.7.9",
     "date-fns": "^4.1.0",
+    "esbuild": "^0.25.0",
     "framer-motion": "^12.0.11",
     "highlight.js": "^11.11.1",
     "quill": "^2.0.3",
