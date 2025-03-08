@@ -2,7 +2,6 @@ import styles from "./PrefDestination.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { Button, Loading } from "@/components";
-import { destinationItems } from "./constants";
 import { PageEndPoints,APIEndPoints } from "@/constants";
 import { FaCheck } from "react-icons/fa";
 import { BiSolidPlaneAlt } from "react-icons/bi";
@@ -18,6 +17,7 @@ const PrefDestination = () => {
     const [selectedDestinations, setSelectedDestinations] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [selectedContinents] = useState(state?.selectedContinents || []);
+    const [mode] = useState(state?.mode || []);
     
     useEffect(() =>{
         const params = new URLSearchParams();
@@ -67,24 +67,49 @@ const PrefDestination = () => {
             createToast({ type: "error", text: "관심있는 여행지를 선택해 주세요."});
             return;
         }
-        fetchData({
-            method: "POST",
-            url: `${APIEndPoints.PREFER_DEST}`,
-            data: {
-                cities: selectedDestinations,
-            },
-        }).then((res) =>{
-            createToast({
-                type: "success",
-                text: "관심가는 여행지를 저장하였습니다.",
-            });
-            navigate(PageEndPoints.HOME);
-        }).catch((err) =>{
-            createToast({
-                type: "error",
-                text: "관심가는 여행지를 저장하는데 실패하였습니다.",
-            });
-        })
+
+        if(mode==="create"){
+            fetchData({
+                method: "POST",
+                url: `${APIEndPoints.PREFER_DEST}`,
+                data: {
+                    cities: selectedDestinations,
+                },
+            }).then((res) =>{
+                createToast({
+                    type: "success",
+                    text: "관심가는 여행지를 저장하였습니다.",
+                });
+                navigate(PageEndPoints.HOME);
+            }).catch((err) =>{
+                createToast({
+                    type: "error",
+                    text: "관심가는 여행지를 저장하는데 실패하였습니다.",
+                });
+            })
+        }
+        else{
+            fetchData({
+                method: "PATCH",
+                url: `${APIEndPoints.PREFER_DEST}`,
+                data: {
+                    cities: selectedDestinations,
+                },
+            }).then((res) =>{
+                createToast({
+                    type: "success",
+                    text: "관심가는 여행지를 수정하였습니다.",
+                });
+                navigate(PageEndPoints.MYPAGE);
+            }).catch((err) =>{
+                createToast({
+                    type: "error",
+                    text: "관심가는 여행지를 수정하는데 실패하였습니다.",
+                });
+            })
+        }
+
+
     };
 
     const handlePrev = () => {

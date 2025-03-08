@@ -16,9 +16,17 @@ const protectedEndpoints = new Set([
   `GET:${APIEndPoints.USER_ALL}`,
   `POST:${APIEndPoints.PROFILE_UPLOAD}`,
   `GET:${APIEndPoints.MANAGE_UTIL}`,
+  
+  `POST:${APIEndPoints.COUNTRY_ADD}`,
+  `POST:${APIEndPoints.CITY_ADD}`,
+  `DELETE:${APIEndPoints.CITY_MANAGE}`,
+  `PATCH:${APIEndPoints.CITY_MANAGE}`,
+  `DELETE:${APIEndPoints.COUNTRY_MANAGE}`,
+  `PATCH:${APIEndPoints.COUNTRY_MANAGE}`,
 
   `GET:${APIEndPoints.PREFER_DEST}`,
   `POST:${APIEndPoints.PREFER_DEST}`,
+  `PATCH:${APIEndPoints.PREFER_DEST}`,
 
   `POST:${APIEndPoints.BOARD}`,
   `PATCH:${APIEndPoints.BOARD}`,

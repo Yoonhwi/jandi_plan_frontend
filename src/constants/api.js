@@ -83,4 +83,9 @@ export const APIEndPoints = {
 
   USER_ALL: "/manage/user/all",
   MANAGE_UTIL: "/manage/util/all",
+  
+  COUNTRY_ADD: "/manage/trip/countries",
+  COUNTRY_MANAGE: "/manage/trip/countries/:id",
+  CITY_ADD: "/manage/trip/cities",
+  CITY_MANAGE: "/manage/trip/cities/:id",
 };

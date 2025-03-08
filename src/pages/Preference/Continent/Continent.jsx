@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 import styles from "./Continent.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation  } from "react-router-dom";
 import { Button, Loading } from "@/components";
 import { PageEndPoints, APIEndPoints } from "@/constants";
 import { FaCheck } from "react-icons/fa";
@@ -14,6 +14,8 @@ const Continent = () => {
   const navigate = useNavigate();
   const { createToast } = useToast();
   const { loading, fetchData } = useAxios();
+  const location = useLocation();
+  const mode = location.state?.mode;
 
   useEffect(() => {
     fetchData({
@@ -40,7 +42,7 @@ const Continent = () => {
     {
       selectedContinents.length === 0
         ? createToast({ type: "error", text: "관심있는 대륙을 선택해 주세요."})
-        : navigate(PageEndPoints.PREF_DEST, { state: { selectedContinents } });
+        : navigate(PageEndPoints.PREF_DEST, { state: { selectedContinents, mode } });
     }
   };
 

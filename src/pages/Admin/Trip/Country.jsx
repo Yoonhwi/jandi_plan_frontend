@@ -1,25 +1,25 @@
 import { Button, Modal, ModalContent, ModalTrigger } from "@/components";
-import styles from "./City.module.css";
+import styles from "./Country.module.css";
 import { useAxios } from "@/hooks";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { APIEndPoints } from "@/constants";
 import AddDestModal from "./components/AddDestModal";
 import { useToast } from "@/contexts";
 import { buildPath } from "@/utils";
-import DestMoreInfo from "./components/DestMoreInfo";
 import DeleteModal from "@/components/Modal/ModalContents/DeleteModal";
+import DestMoreInfo from "./components/DestMoreInfo";
 
 
-const City = ({ setView }) => {
+const Country = ({ setView }) => {
   const [items, setItems] = useState();
   const { loading, fetchData, response } = useAxios();
   const { fetchData: deleteApi } = useAxios();
   const { fetchData: fetchApi } = useAxios();
   const { createToast } = useToast();
 
-  const fetchCities = useCallback(async () => {
+  const fetchCountries = useCallback(async () => {
     await fetchData({
-      url: APIEndPoints.DESTINATION,
+      url: APIEndPoints.COUNTRY,
       method: "GET",
       params: {
         category: "ALL",
@@ -30,15 +30,15 @@ const City = ({ setView }) => {
     }).catch((err) =>{
       setItems();
     })
-  }, [fetchData, setView]);
+  },[fetchData, setView]);
 
-  const deleteCities = useCallback((id) => {
+  const deleteCountries = useCallback((id) => {
     deleteApi({
             method: "DELETE",
-            url: buildPath(APIEndPoints.CITY_MANAGE, { id }),
+            url: buildPath(APIEndPoints.COUNTRY_MANAGE, { id }),
           })
             .then(() => {
-              fetchCities();
+              fetchCountries();
               createToast({
                 type: "success",
                 text: "도시가 삭제되었습니다",
@@ -50,29 +50,29 @@ const City = ({ setView }) => {
                 text: err.data.message,
               })
             );
-  },[createToast, deleteApi, fetchCities])
+  },[createToast, deleteApi, fetchCountries])
 
   useEffect(() => {
-    fetchCities();
-  }, [fetchCities, setView]);
+    fetchCountries();
+  }, [fetchCountries, setView]);
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <p className={styles.title}>여행지 관리</p>
+        <p className={styles.title}>나라 관리</p>
         <div>
           <Modal>
             <ModalTrigger>
             <Button variant="ghost" size="sm">
-              도시 추가
+              나라 추가
             </Button>
             </ModalTrigger>
             <ModalContent>
-              <AddDestModal content="도시" onSuccess={fetchCities}/>
+              <AddDestModal content="나라"  onSuccess={fetchCountries}/>
             </ModalContent>
           </Modal>
-          <Button variant="ghost" size="sm" onClick={() => setView("country")}>
-            나라 관리
+          <Button variant="ghost" size="sm" onClick={() => setView("city")}>
+            여행지 관리
           </Button>
           <Button variant="ghost" size="sm" onClick={() => setView("plan")}>
             여행계획 관리
@@ -88,40 +88,39 @@ const City = ({ setView }) => {
               <th>ID</th>
               <th>대륙</th>
               <th>나라</th>
-              <th>도시</th>
               <th className={styles.action_title}>Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {items?.map((city) => {
+            {items?.map((country) => {
               return (
-                <tr key={city.cityId}>
-                  <td>{city.cityId}</td>
-                  <td>{city.country.continent.name}</td>
-                  <td>{city.country.name}</td>
-                  <td>{city.name}</td>
+                <tr key={country.countryId}>
+                  <td>{country.countryId}</td>
+                  <td>{country.continent.name}</td>
+                  <td>{country.name}</td>
                   <td className={styles.actions}>
-                  <Modal>
+                    <Modal>
                     <ModalTrigger>
                     <Button size="sm" variant="ghost">
                       View
                     </Button>
                     </ModalTrigger>
                     <ModalContent>
-                      <DestMoreInfo content="도시" data={city} onSuccess={fetchCities}/>
+                      <DestMoreInfo content="나라" data={country} onSuccess={fetchCountries}/>
                     </ModalContent>
                   </Modal>
-                  <Modal>
-                    <ModalTrigger>
-                      <Button size="sm" variant="ghost" >
-                        Delete
-                      </Button>
-                    </ModalTrigger>
-                    <ModalContent>
-                      <DeleteModal callback={() => deleteCities(city.cityId)} />
-                    </ModalContent>
-                  </Modal>
+                    <Modal>
+                      <ModalTrigger>
+                        <Button size="sm" variant="ghost">
+                          Delete
+                        </Button>
+                      </ModalTrigger>
+                      <ModalContent>
+                        <DeleteModal callback={() => deleteCountries(country.countryId)} />
+                      </ModalContent>
+                    </Modal>
+                    
                   </td>
                 </tr>
               );
@@ -133,4 +132,4 @@ const City = ({ setView }) => {
   );
 };
 
-export default City;
+export default Country;
