@@ -5,6 +5,7 @@ import { IoMdArrowDropup } from "react-icons/io";
 import { AnimatePresence, motion } from "framer-motion";
 import { format } from "date-fns";
 import { IoAlertCircleSharp } from "react-icons/io5";
+import { ViewEditorContent } from "@/components";
 
 const NoticeItem = ({ item }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,14 +38,21 @@ const NoticeItem = ({ item }) => {
         {isOpen && (
           <motion.div
             key="content"
-            className={styles.content}
             initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "10rem", opacity: 1 }}
+            animate={{ height: "fit-content", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{
+              height: { duration: 0.2 },
+              opacity: { duration: 0 },
+            }}
             style={{ overflow: "hidden" }}
           >
-            <p>{item.contents}</p>
+            <ViewEditorContent
+              content={item.content}
+              style={{
+                padding: "1rem 4rem",
+              }}
+            />
           </motion.div>
         )}
       </AnimatePresence>

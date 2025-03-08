@@ -1,31 +1,115 @@
 import styles from "./PrefDestination.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { Button } from "@/components";
-import { destinationItems } from "./constants";
-import { PageEndPoints } from "@/constants";
+import { useState,useEffect } from "react";
+import { Button, Loading } from "@/components";
+import { PageEndPoints,APIEndPoints } from "@/constants";
 import { FaCheck } from "react-icons/fa";
 import { BiSolidPlaneAlt } from "react-icons/bi";
+import { useAuth, useToast } from "@/contexts";
+import { useAxios } from "@/hooks";
 
 const PrefDestination = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
-
-    const [selectedContinents] = useState(state?.selectedContinents || []);
-    const filteredDestinations = destinationItems.filter((item) =>
-        selectedContinents.includes(item.title)
-    );
-
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const { loading, fetchData } = useAxios();
+    const { createToast } = useToast();
+    const [destinations, setDestinations] = useState([]); //필터링 전체 도시 데이터
     const [selectedDestinations, setSelectedDestinations] = useState([]);
-    const currentDestination = filteredDestinations[currentIndex];
+    const [currentIndex, setCurrentIndex] = useState(0); 
+    const [selectedContinents] = useState(state?.selectedContinents || []);
+    const [mode] = useState(state?.mode || []);
+    
+    useEffect(() =>{
+        const params = new URLSearchParams();
+        params.append("category", "CONTINENT");
+        if (selectedContinents.length > 0) {
+            params.append("filter", selectedContinents.join(","));
+        }
+
+        fetchData({
+            method: "GET",
+            url: `${APIEndPoints.DESTINATION}`,
+            params,
+        }).then((res)=>{
+            console.log(res.data);
+            setDestinations(res.data || []);
+        })
+    }, [fetchData]);
+
+    const currentContinent = selectedContinents[currentIndex];
+    // 현재 선택된 대륙의 도시 필터링
+    const filteredDestinations = destinations.filter(
+        (destination) => destination.country.continent.name === currentContinent
+    );
+    // 대륙 도시 내 국가별 그룹화화
+    const groupedDestinations = filteredDestinations.reduce((acc, destination) => {
+        const { country } = destination;
+        if (!acc[country.countryId]) {
+            acc[country.countryId] = {
+                countryName: country.name,
+                destinations: [],
+            };
+        }
+        acc[country.countryId].destinations.push(destination);
+        return acc;
+    }, {});
 
     const handleNext = () => {
-        if (currentIndex < filteredDestinations.length - 1) {
+        if (currentIndex < state?.selectedContinents.length - 1) {
             setCurrentIndex(currentIndex + 1);
         } else {
-            {selectedDestinations.length === 0 ? null:navigate(PageEndPoints.HOME)}
+            handleComplete();
         }
+    };
+
+    const handleComplete = () => {
+        if (selectedDestinations.length === 0) {
+            createToast({ type: "error", text: "관심있는 여행지를 선택해 주세요."});
+            return;
+        }
+
+        if(mode==="create"){
+            fetchData({
+                method: "POST",
+                url: `${APIEndPoints.PREFER_DEST}`,
+                data: {
+                    cities: selectedDestinations,
+                },
+            }).then((res) =>{
+                createToast({
+                    type: "success",
+                    text: "관심가는 여행지를 저장하였습니다.",
+                });
+                navigate(PageEndPoints.HOME);
+            }).catch((err) =>{
+                createToast({
+                    type: "error",
+                    text: "관심가는 여행지를 저장하는데 실패하였습니다.",
+                });
+            })
+        }
+        else{
+            fetchData({
+                method: "PATCH",
+                url: `${APIEndPoints.PREFER_DEST}`,
+                data: {
+                    cities: selectedDestinations,
+                },
+            }).then((res) =>{
+                createToast({
+                    type: "success",
+                    text: "관심가는 여행지를 수정하였습니다.",
+                });
+                navigate(PageEndPoints.MYPAGE);
+            }).catch((err) =>{
+                createToast({
+                    type: "error",
+                    text: "관심가는 여행지를 수정하는데 실패하였습니다.",
+                });
+            })
+        }
+
+
     };
 
     const handlePrev = () => {
@@ -51,15 +135,14 @@ const PrefDestination = () => {
             </div>
 
             <div className={styles.destination_box}>
-            <h2 className={styles.continent_title}>{currentDestination.title}</h2>
-                {currentDestination && (
-                    <div key={currentDestination.title} className={styles.continent_section}>
+            <h2 className={styles.continent_title}>{currentContinent}</h2>
+                    <div className={styles.continent_section}>
                         <div className={styles.destination_list}>
-                            {currentDestination.subCategories.map((category) => (
-                            <div key={category.subTitle} className={styles.category_section}>
-                                <h3 className={styles.category_title}>{category.subTitle}</h3>
+                            {Object.values(groupedDestinations).map((category) => (
+                            <div className={styles.category_section}>
+                                <h3 className={styles.category_title}>{category.countryName}</h3>
                                 <div className={styles.destination_items}>
-                                {category.data.map((destination) => {
+                                {category.destinations.map((destination) => {
                                     const isSelected = selectedDestinations.includes(destination.name);
                                     return (
                                     <div
@@ -68,22 +151,22 @@ const PrefDestination = () => {
                                         onClick={() => handleSelectDestination(destination.name)}
                                     >
                                         <div className={styles.dest_trans}>                                        
-                                            {/* 앞면 */}
+
                                             <img
-                                            src={destination.imgSrc}
+                                            src={destination.imageUrl}
                                             alt={destination.name}
                                             className={`${styles.dest_img} ${isSelected ? styles.selected_img : ""}`}
                                             />
                                             {isSelected ? <BiSolidPlaneAlt className={styles.check_box}/>:null}
-                                            {/* 뒷면 */}
+
                                             <img
-                                            src={destination.imgSrc}
+                                            src={destination.imageUrl}
                                             alt={destination.name}
                                             className={styles.dest_back_img}
                                             />
                                             {isSelected ? <FaCheck className={styles.check_box_back}/>:null}
                                             <div className={styles.dest_back_box}>
-                                                <h1>여행지 설명</h1>
+                                                <h1>{destination.description}</h1>
                                             </div>
                                         </div>
                                         <div className={styles.destination_text}>{destination.name}</div>
@@ -95,7 +178,6 @@ const PrefDestination = () => {
                             ))}
                         </div>
                     </div>
-                )}
                 </div>
 
 
@@ -103,9 +185,9 @@ const PrefDestination = () => {
                 <Button size="lg" variant="outline" onClick={handlePrev}>
                     이전
                 </Button>
-                <p className={styles.index_number}>{currentIndex+1} / {filteredDestinations.length}</p>
+                <p className={styles.index_number}>{currentIndex+1} / {selectedContinents.length}</p>
                 <Button size="lg" variant="outline" onClick={handleNext}>
-                    {currentIndex === filteredDestinations.length - 1 ? "완료" : "다음"}
+                    {currentIndex === selectedContinents.length - 1 ? "완료" : "다음"}
                 </Button>
             </div>
         </div>

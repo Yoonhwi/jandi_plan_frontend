@@ -2,7 +2,7 @@ import { Button, Input } from "@/components";
 import styles from "./PasswordForm.module.css";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { changePasswordSchema } from "../constants";
+import { changePasswordScheme } from "../constants";
 import { useCallback } from "react";
 import { useAxios } from "@/hooks";
 import { APIEndPoints } from "@/constants";
@@ -17,7 +17,7 @@ const PasswordForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(changePasswordSchema),
+    resolver: zodResolver(changePasswordScheme),
   });
 
   const onSubmit = useCallback(

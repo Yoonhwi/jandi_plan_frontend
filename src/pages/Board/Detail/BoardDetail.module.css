@@ -22,6 +22,18 @@
   color: var(--color-gray-400);
 }
 
+.header_right_box {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.flex_row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .user_info {
   display: flex;
   align-items: center;

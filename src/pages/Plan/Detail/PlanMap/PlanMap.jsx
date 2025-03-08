@@ -16,7 +16,8 @@ const PlanMap = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [infoWindowShown, setInfoWindowShown] = useState(false);
 
-  const { itineraries, focusDay, flattendItinerary } = usePlanDetail();
+  const { itineraries, focusDay, flattendItinerary, tripDetail } =
+    usePlanDetail();
 
   const onMouseEnter = useCallback((id) => {
     setHoverId(id);
@@ -56,8 +57,11 @@ const PlanMap = () => {
   const focusSchedule = flattendItinerary.find((v) => v.date === focusDay);
 
   const defaultPosition = useMemo(() => {
-    return { lat: 35, lng: 139 };
-  }, []);
+    return {
+      lat: tripDetail?.latitude,
+      lng: tripDetail?.longitude,
+    };
+  }, [tripDetail?.latitude, tripDetail?.longitude]);
 
   const renderSchedule = useMemo(() => {
     if (!focusDay) return itineraries ?? [];
@@ -72,7 +76,7 @@ const PlanMap = () => {
   });
 
   useEffect(() => {
-    if (!map) return;
+    if (!map || !tripDetail) return;
 
     if (focusSchedule?.data?.length > 0) {
       const firstContent = focusSchedule.data[0];
@@ -84,14 +88,14 @@ const PlanMap = () => {
     } else {
       map.panTo(defaultPosition);
     }
-  }, [defaultPosition, focusSchedule, map]);
+  }, [defaultPosition, focusSchedule, map, tripDetail]);
 
   return (
     <div className={styles.map_container}>
       <Map
         style={{ width: "100%", height: "100%" }}
         defaultCenter={defaultPosition}
-        defaultZoom={12}
+        defaultZoom={9}
         gestureHandling={"greedy"}
         disableDefaultUI={true}
         id="main-map"

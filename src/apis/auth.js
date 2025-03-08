@@ -22,8 +22,9 @@ const login = async (loginData) => {
 const refreshAccessToken = async (refreshToken) => {
   try {
     const { data } = await axiosInstance.post(APIEndPoints.REFRESH, {
-      refreshToken: refreshToken,
+      refreshToken,
     });
+
     return { accessToken: data.accessToken, refreshToken: data.refreshToken };
   } catch (err) {
     console.log("액세스 토큰 갱신 에러", err);

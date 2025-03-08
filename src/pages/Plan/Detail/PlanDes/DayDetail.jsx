@@ -3,9 +3,10 @@ import { MdRunCircle } from "react-icons/md";
 import { formatPrice } from "@/utils";
 import { TiDelete } from "react-icons/ti";
 import { LuClipboardPen } from "react-icons/lu";
-import { Tooltip } from "@/components";
+import { Modal, ModalContent, ModalTrigger, Tooltip } from "@/components";
 import { usePlanDetail } from "../PlanDetailContext";
 import { useMemo } from "react";
+import ModifySchedule from "../ModalContents/ModifySchedule";
 
 const timeToSeconds = (time) => {
   const [hh, mm, ss] = time.split(":").map(Number);
@@ -14,7 +15,6 @@ const timeToSeconds = (time) => {
 
 const DayDetail = ({ focus }) => {
   const { itineraries, deleteItinerary } = usePlanDetail();
-  console.log("deleteItinerary", deleteItinerary);
 
   const contentData = useMemo(() => {
     if (!itineraries) return null;
@@ -37,13 +37,14 @@ const DayDetail = ({ focus }) => {
 
         <div className={styles.container_right}>
           {contentData.map((v) => {
-            console.log("v", v);
+            const split = v.startTime.split(":");
+            const time = split[0] + ":" + split[1];
             return (
               <div key={v.itineraryId} className={styles.content_wrapper}>
                 <div className={styles.dashed} />
                 <div className={styles.content_item}>
                   <div className={styles.content_item_des}>
-                    <div className={styles.content_item_time}>{v.time}</div>
+                    <div className={styles.content_item_time}>{time}</div>
                     <div className={styles.content_title}>{v.title}</div>
                   </div>
 
@@ -53,20 +54,27 @@ const DayDetail = ({ focus }) => {
                     </div>
 
                     <div className={styles.icon_wrapper}>
-                      <Tooltip text={"수정"}>
-                        <div className={styles.icon_box}>
-                          <LuClipboardPen
-                            size={18}
-                            color="var(--color-text-dynamic)"
-                          />
-                        </div>
-                      </Tooltip>
+                      <Modal>
+                        <ModalTrigger>
+                          <Tooltip text={"수정"}>
+                            <div className={styles.icon_box}>
+                              <LuClipboardPen
+                                size={18}
+                                color="var(--color-text-dynamic)"
+                              />
+                            </div>
+                          </Tooltip>
+                        </ModalTrigger>
+                        <ModalContent>
+                          <ModifySchedule item={v} />
+                        </ModalContent>
+                      </Modal>
 
-                      <Tooltip text={"삭제"}>
-                        <div
-                          className={styles.icon_box}
-                          onClick={() => deleteItinerary(v.itineraryId)}
-                        >
+                      <Tooltip
+                        text={"삭제"}
+                        onClick={() => deleteItinerary(v.itineraryId)}
+                      >
+                        <div className={styles.icon_box}>
                           <TiDelete size={24} color="var(--color-red-500)" />
                         </div>
                       </Tooltip>

@@ -35,3 +35,9 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}

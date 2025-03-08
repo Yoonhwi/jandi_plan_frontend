@@ -1,120 +1,184 @@
-import { Button, Input, Loading } from "@/components";
+import { Button, Input, Loading, Pagination } from "@/components";
 import styles from "./Comment.module.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAxios, usePagination } from "@/hooks";
 import CommentItem from "./CommentItem";
 import { buildPath } from "@/utils";
 import { APIEndPoints } from "@/constants";
-import { useAuth, useToast} from "@/contexts";
+import { useAuth, useToast } from "@/contexts";
 
 const Comment = ({ id }) => {
-  const { loading, fetchData } = useAxios();
   const [items, setItems] = useState();
-  const [totalSize, setTotalSize] = useState();
+  const ref = useRef(null);
+
+  const { loading, fetchData, response } = useAxios();
+  const { fetchData: postApi } = useAxios();
+  const { fetchData: deleteApi } = useAxios();
+  const { fetchData: fetchApi } = useAxios();
+
   const { currentPage, totalPage, setTotalPage, handlePageChange } =
-  usePagination(); 
+    usePagination();
   const { user } = useAuth();
-  const [commentText, setCommentText] = useState("");
   const { createToast } = useToast();
 
-  console.log(user);
+  const fetchComments = useCallback(async () => {
+    await fetchData({
+      url: buildPath(APIEndPoints.COMMUNITY_COMMENTS, { id }),
+      method: "GET",
+      params: {
+        page: currentPage - 1,
+      },
+    }).then((res) => {
+      setTotalPage(res.data.pageInfo.totalPages);
+      const itemsWithMine = res.data.items.map((comment) => ({
+        ...comment,
+        mine: comment.user.userId === user?.userId,
+      }));
 
-  useEffect(() => {
-    fetchComments();
-  }, [id]);
+      setItems(itemsWithMine);
+    });
+  }, [currentPage, fetchData, id, setTotalPage, user?.userId]);
 
-  const fetchComments = () => {
-    (async () => {
-      await fetchData({
-        url: buildPath(APIEndPoints.COMMUNITY_COMMENTS, { id }),
-        method: "GET",
-      }).then((res)=>{
-        const itemsWithMine = res.data.items.map((comment) => ({
-          ...comment,
-          mine: comment.user.userId === user?.userId,
-        }));
+  const addComment = useCallback(() => {
+    const text = ref.current.value;
 
-        console.log(itemsWithMine); 
-        setTotalPage(res.data.pageInfo?.totalPages || 0);
-        setItems(itemsWithMine);
-        setTotalSize(res.data.pageInfo?.totalSize);
-      });
-    })();
-  }
-
-  if (loading) return <Loading />;
-
-  const addComment = () =>{
-    if(commentText===""){
+    if (text === "" || text === null) {
       createToast({
         type: "error",
         text: "댓글 내용을 입력해주세요",
       });
-    }else{
-      fetchData({
+    } else {
+      postApi({
         method: "POST",
-        url: buildPath(APIEndPoints.COMMUNITY_COMMENTS, {id}),
+        url: buildPath(APIEndPoints.COMMUNITY_COMMENTS, { id }),
         data: {
-          contents: commentText,
-        }
-      }).then((res) => {
-        console.log("성공")
-        setCommentText("");
-        fetchComments();
-      }).catch((err) => {
-        createToast({
-          type: "error",
-          text: "댓글 등록에 실패하였습니다",
-        });
+          contents: text,
+        },
       })
+        .then(() => {
+          ref.current.value = "";
+          fetchComments();
+          createToast({
+            type: "success",
+            text: "댓글이 등록되었습니다",
+          });
+        })
+        .catch(() => {
+          createToast({
+            type: "error",
+            text: "댓글 등록에 실패하였습니다",
+          });
+        });
     }
-  }
+  }, [createToast, fetchComments, id, postApi]);
 
-  const deleteComment = (id) => {
-    fetchData({
-      method: "DELETE",
-      url: buildPath(APIEndPoints.COMMUNITY_COMMENTS, {id}),
-    }).then((res) => {
-      fetchComments();
-    }).catch((err) => {
-      createToast({
-        type: "error",
-        text: "댓글 삭제에 실패하였습니다",
-      });
-    })
-  }
+  const deleteComment = useCallback(
+    (id) => {
+      deleteApi({
+        method: "DELETE",
+        url: buildPath(APIEndPoints.COMMUNITY_COMMENTS, { id }),
+      })
+        .then(() => {
+          fetchComments();
+          createToast({
+            type: "success",
+            text: "댓글이 삭제되었습니다",
+          });
+        })
+        .catch(() =>
+          createToast({
+            type: "error",
+            text: "댓글 삭제에 실패하였습니다",
+          })
+        );
+    },
+    [createToast, deleteApi, fetchComments]
+  );
+
+  const handleLike = useCallback(
+    (id, liked) => {
+      let method="";
+      if(liked){
+        method="DELETE";
+      }else{
+        method="POST";
+      }
+      fetchApi({
+        method: method,
+        url: buildPath(APIEndPoints.COMMENTS_LIKE, { id }),
+      })
+        .then(() => {
+          fetchComments();
+        })
+        .catch(() =>
+          createToast({
+            type: "error",
+            text: "좋아요 설정에 실패하였습니다",
+          })
+        );
+    },
+    [createToast, deleteApi, fetchComments]
+  );
+
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments, id]);
+
+  if (loading) return <Loading />;
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <p className={styles.comment_count}>
-          댓글 {totalSize} 개
+          댓글 {response?.pageInfo?.totalSize} 개
         </p>
-        <div className={styles.form_box}>
+        <form
+          className={styles.form_box}
+          onSubmit={(e) => {
+            e.preventDefault();
+            addComment();
+          }}
+        >
           <img
             src={user?.profileImageUrl}
             className={styles.current_user_img}
           />
           <Input
             placeholder="댓글을 입력해주세요."
-            value={commentText}
-            onChange={(e) => setCommentText(e.target.value)}
+            ref={ref}
             style={{
               borderRadius: "var(--radius-3xl)",
               padding: "0.8rem 1rem",
               flex: 1,
             }}
           />
-          <Button variant="ghost" size="lg" onClick={()=>{addComment()}}>
+          <Button variant="ghost" size="lg" type="submit">
             등록하기
           </Button>
-        </div>
+        </form>
       </div>
 
       <div className={styles.comment_container}>
         {items?.map((comment) => {
-          return <CommentItem key={comment.commentId} comment={comment} deleteComment={deleteComment}/>;
+          return (
+            <CommentItem
+              key={comment.commentId}
+              comment={comment}
+              deleteComment={deleteComment}
+              user={user}
+              fetchComments={fetchComments}
+              handleLike={handleLike}
+            />
+          );
         })}
+      </div>
+
+      <div className={styles.pagination}>
+        <Pagination
+          currentPage={currentPage}
+          totalPage={totalPage}
+          callback={handlePageChange}
+        />
       </div>
     </div>
   );

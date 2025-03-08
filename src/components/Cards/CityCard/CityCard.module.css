@@ -7,6 +7,7 @@
 
   box-shadow: var(--shadow-md);
   aspect-ratio: 1;
+  cursor: pointer;
 }
 
 .img_container {

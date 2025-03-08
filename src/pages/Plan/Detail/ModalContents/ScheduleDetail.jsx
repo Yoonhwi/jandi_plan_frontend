@@ -2,7 +2,12 @@ import { Button, Field, Input } from "@/components";
 import styles from "./CreateSchedule.module.css";
 import { usePlanDetail } from "../PlanDetailContext";
 
-const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
+const ScheduleDetail = ({
+  formController,
+  onSubmit,
+  handleAddressStep,
+  isModify = false,
+}) => {
   const { formState, register, watch } = formController;
   const { tripDetail } = usePlanDetail();
   const { errors } = formState;
@@ -11,7 +16,7 @@ const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
 
   return (
     <div className={styles.container}>
-      <p className={styles.title}>일정을 추가하세요!</p>
+      <p className={styles.title}>일정을 {isModify ? "수정" : "추가"}하세요!</p>
       <form className={styles.form_container} onSubmit={onSubmit}>
         <Field label="날짜" isRequire error={errors.date}>
           <Input
@@ -77,7 +82,7 @@ const ScheduleDetail = ({ formController, onSubmit, handleAddressStep }) => {
           }}
           type="submit"
         >
-          추가하기
+          {isModify ? "수정" : "추가"}하기
         </Button>
       </form>
     </div>

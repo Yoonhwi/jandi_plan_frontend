@@ -1,80 +1,45 @@
-import { Button, Editor, Input } from "@/components";
+import { Button } from "@/components";
+import { useCommunity, useQuillSetup } from "@/hooks";
 import { BaseLayout } from "@/layouts";
-import { useAxios } from "@/hooks";
-import { useCallback, useState } from "react";
-import styles from "./BoardWrite.module.css";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { boardWriteScheme } from "../constants";
-import { APIEndPoints } from "@/constants";
-import "quill/dist/quill.snow.css";
-import { useQuillEvents } from "@/hooks";
+import FormEditor from "../FormEditor";
 
 const BoardWrite = () => {
-  const [quill, setQuill] = useState(null);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm({
+  const { addCommunity } = useCommunity();
+
+  const formController = useForm({
     resolver: zodResolver(boardWriteScheme),
   });
 
-  const { fetchData: postBoard } = useAxios();
-
-  const onSubmit = useCallback(
-    async (data) => {
-      await postBoard({
-        url: APIEndPoints.BOARD,
-        method: "POST",
-        data,
-      })
-        .then((response) => {
-          console.log("response", response);
-        })
-        .catch((error) => {
-          console.error("error", error);
-        });
-    },
-    [postBoard]
+  const { setQuill, tempId } = useQuillSetup(
+    formController,
+    "Community",
+    null,
+    false
   );
-
-  useQuillEvents(quill, setValue);
 
   return (
     <BaseLayout>
-      <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          placeholder="제목을 입력해주세요"
+      <FormEditor
+        formController={formController}
+        onSubmit={addCommunity}
+        setQuill={setQuill}
+        tempPostId={tempId}
+        category="Community"
+      >
+        <Button
+          type="submit"
+          variant="solid"
+          size="md"
           style={{
-            boxSizing: "border-box",
-            width: "100%",
+            marginLeft: "auto",
           }}
-          size="lg"
-          register={register}
-          name="title"
-        />
-        <div className={styles.editor}>
-          <Editor onLoaded={setQuill} />
-        </div>
-
-        <div className={styles.submit}>
-          {(errors.content || errors.title) && (
-            <p style={{ color: "red" }}>제목 또는 내용을 입력해주세요.</p>
-          )}
-          <Button
-            type="submit"
-            variant="solid"
-            size="md"
-            style={{
-              marginLeft: "auto",
-            }}
-          >
-            포스팅 완료
-          </Button>
-        </div>
-      </form>
+        >
+          포스팅 완료
+        </Button>
+      </FormEditor>
     </BaseLayout>
   );
 };

@@ -1,16 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
-import { PlanDetailContext } from "./PlanDetailContext";
-import { useAxios, usePlanReservation, usePlanItinerary } from "@/hooks";
+import { usePlan, usePlanItinerary, usePlanReservation } from "@/hooks";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { buildPath } from "@/utils";
-import { APIEndPoints } from "@/constants";
+import { PlanDetailContext } from "./PlanDetailContext";
 
 const PlanDetailProvider = ({ children }) => {
   const [flattendItinerary, setFlattendItinerary] = useState([]);
   const [focusDay, setFocusDay] = useState(null);
   const { id } = useParams();
-
-  const { response: tripDetail, fetchData: tripFetch } = useAxios();
 
   const { reservations, addReservation, updateReservation, deleteReservation } =
     usePlanReservation(id);
@@ -18,15 +14,7 @@ const PlanDetailProvider = ({ children }) => {
   const { itineraries, addItinerary, updateItinerary, deleteItinerary } =
     usePlanItinerary(id);
 
-  // 여행 계획의 기본 정보를 가져오는 함수
-  const fetchPlanDetail = useCallback(async () => {
-    const url = buildPath(APIEndPoints.TRIP_DETAIL, { id });
-    await tripFetch({ url, method: "GET" });
-  }, [id, tripFetch]);
-
-  useEffect(() => {
-    fetchPlanDetail();
-  }, [fetchPlanDetail]);
+  const { tripDetail, updatePlan, deletePlan } = usePlan(id);
 
   // 일정 정보를 날짜별로 정리하는 코드
   useEffect(() => {
@@ -63,6 +51,9 @@ const PlanDetailProvider = ({ children }) => {
         tripDetail,
         itineraries,
         reservations,
+
+        updatePlan,
+        deletePlan,
 
         addReservation,
         updateReservation,

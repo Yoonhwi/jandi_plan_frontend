@@ -3,11 +3,11 @@ import styles from "./CreateReservation.module.css";
 import { useForm } from "react-hook-form";
 import { usePlanDetail } from "../PlanDetailContext";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createReservationSchema } from "../../constants";
+import { createReservationScheme } from "../../constants";
 
 const CreateReservation = () => {
   const formController = useForm({
-    resolver: zodResolver(createReservationSchema),
+    resolver: zodResolver(createReservationScheme),
   });
 
   const {
@@ -37,9 +37,7 @@ const CreateReservation = () => {
           {...register("category")}
           value={watch("category")}
         >
-          <option value="교통편" defaultChecked>
-            교통편
-          </option>
+          <option value="교통편">교통편</option>
           <option value="숙박">숙박</option>
           <option value="기타">기타</option>
         </select>

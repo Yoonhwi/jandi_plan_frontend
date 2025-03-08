@@ -1,0 +1,35 @@
+.container {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.grid_container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.grid_item {
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.grid_item_title {
+  font-weight: var(--font-weight-semibold);
+}
