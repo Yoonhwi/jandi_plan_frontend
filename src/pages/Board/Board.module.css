@@ -49,6 +49,18 @@
   align-items: center;
 }
 
+.flex_column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.error_message {
+  color: var(--color-red-500);
+  font-size: var(--text-sm);
+  padding-left: 1rem;
+}
+
 .search_input {
   width: 15rem;
   position: relative;

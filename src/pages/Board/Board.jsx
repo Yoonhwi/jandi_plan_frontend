@@ -61,41 +61,43 @@ const BoardPage = () => {
             </Button>
           </div>
 
-          <form
-            className={styles.search_input}
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <Input
-              size="md"
-              placeholder="Search ..."
-              style={{
-                width: "100%",
-                borderRadius: "28px",
-                boxSizing: "border-box",
-                padding: "0.7rem 3rem 0.7rem 1.5rem",
-              }}
-              register={register}
-              name="keyword"
-            />
+          <div className={styles.flex_column}>
+            <form
+              className={styles.search_input}
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <Input
+                size="md"
+                placeholder="Search ..."
+                style={{
+                  width: "100%",
+                  borderRadius: "28px",
+                  boxSizing: "border-box",
+                  padding: "0.7rem 3rem 0.7rem 1.5rem",
+                }}
+                register={register}
+                name="keyword"
+              />
+
+              <Button
+                variant="none"
+                type="submit"
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  right: 0,
+                  transform: "translateY(-50%)",
+                  background: "transparent",
+                  border: "none",
+                }}
+              >
+                <FiSearch size={24} className={styles.icon_search} />
+              </Button>
+            </form>
             {errors.keyword && (
               <p className={styles.error_message}>{errors.keyword.message}</p>
             )}
-
-            <Button
-              variant="none"
-              type="submit"
-              style={{
-                position: "absolute",
-                top: "50%",
-                right: 0,
-                transform: "translateY(-50%)",
-                background: "transparent",
-                border: "none",
-              }}
-            >
-              <FiSearch size={24} className={styles.icon_search} />
-            </Button>
-          </form>
+          </div>
         </div>
 
         <div className={styles.content}>
